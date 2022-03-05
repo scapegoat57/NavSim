@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://radiation_shader.tres" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/origin = Vector2( 0, 0 )
+shader_param/ant1_pos = Vector2( 0, 0 )
+shader_param/ant1_amplitude = 1.0
+shader_param/ant1_phase = 0.0
+shader_param/ant2_pos = Vector2( 0, 0 )
+shader_param/ant2_phase = 0.0
+shader_param/ant2_amplitude = 1.0
+shader_param/timer = null
+shader_param/frequency = 1.0
+shader_param/zoom = 2.0
+shader_param/time_scale = 1.0
+shader_param/time_shift = 0.0
+shader_param/overlay = false
+shader_param/sip = 1.0
