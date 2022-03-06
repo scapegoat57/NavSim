@@ -20,6 +20,7 @@ func toggle_paused(is_paused):
 
 func reset_time():
 	timer=0.0
+	material.set_shader_param("timer",timer)
 
 func _on_overlay_button_toggled(button_pressed):
 	material.set_shader_param("overlay",button_pressed)
@@ -33,6 +34,20 @@ func set_pos_with_a_spacing(var a_spacing):
 	var pos2=Vector2(0,-a_spacing/360)
 	material.set_shader_param("ant1_pos",pos1)
 	material.set_shader_param("ant2_pos",pos2)
+
+func set_NWSE_with_a_space(var a_space):
+	var pos1=Vector2(-1,1)*(a_space/360)*sqrt(2)
+	var pos2=Vector2(1,-1)*(a_space/360)*sqrt(2)
+	material.set_shader_param("ant1_pos",pos1)
+	material.set_shader_param("ant2_pos",pos2)
+
+
+func set_NESW_with_a_space(var a_space):
+	var pos1=Vector2(1,1)*(a_space/360)*sqrt(2)
+	var pos2=Vector2(-1,-1)*(a_space/360)*sqrt(2)
+	material.set_shader_param("ant3_pos",pos1)
+	material.set_shader_param("ant4_pos",pos2)
+	
 
 var drag_start:Vector2=Vector2.ZERO
 func _on_Graph_gui_input(event):
@@ -71,3 +86,7 @@ func toggle_SIP(enabled):
 func set_antenna_phase(antenna, phase):
 	var param="ant" + String(antenna) + "_phase"
 	material.set_shader_param(param,phase)
+
+func set_antenna_amplitude(antenna, amplitude):
+	var param="ant" + String(antenna) + "_amplitude"
+	material.set_shader_param(param,amplitude)

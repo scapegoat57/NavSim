@@ -7,19 +7,24 @@ render_mode unshaded;
 const float TWO_PI = 6.2831853071795;
 
 uniform vec2 origin=vec2(0);
-uniform vec2 ant1_pos=vec2(0);
+uniform vec2 ant1_pos = vec2(0);
 uniform float ant1_amplitude:hint_range(0.0,1.0,0.1)=1.0;
 uniform float ant1_phase:hint_range(-360.0,360,0.1)=0.0;
 uniform vec2 ant2_pos=vec2(0);
 uniform float ant2_phase:hint_range(-360.0,360.0,0.1)=0.0;
 uniform float ant2_amplitude:hint_range(0.0,1.0,0.1)=1.0;
+uniform vec2 ant3_pos=vec2(0);
+uniform float ant3_phase:hint_range(-360.0,360.0,0.1)=0.0;
+uniform float ant3_amplitude:hint_range(0.0,1.0,0.1)=1.0;
+uniform vec2 ant4_pos=vec2(0);
+uniform float ant4_phase:hint_range(-360.0,360.0,0.1)=0.0;
+uniform float ant4_amplitude:hint_range(0.0,1.0,0.1)=0.0;
 uniform float timer;
 uniform float frequency=1.0;
 uniform float zoom:hint_range(0.5,20)=1.0;
 uniform float time_scale=1.0;
 uniform float time_shift=0;
 uniform bool overlay=false;
-uniform float sip:hint_range(-1.0,1.0,2)=1;
 
 vec2 uv_to_world(vec2 value)
 {
@@ -31,7 +36,7 @@ float intensity_from(vec2 antenna_position, vec2 field_position, float phase)
 	vec2 direction=field_position - antenna_position;
 	float dist=length(direction);
 	float intensity=sin(frequency * dist * TWO_PI - radians(phase) - (timer*time_scale)+time_shift);
-	intensity*=0.5;
+	//intensity*=0.5;
 	return intensity;
 }
 
@@ -42,14 +47,32 @@ float circle(vec2 dot_pos, vec2 world_pos,float radius)
 }
 
 void fragment(){
-	float ant1=intensity_from(ant1_pos,uv_to_world(UV.xy), ant1_phase) * ant1_amplitude;
-	float ant2=intensity_from(ant2_pos,uv_to_world(UV.xy), ant2_phase) * ant2_amplitude * sip;
-	float total=ant1+ant2;
+	vec2 world_pos = uv_to_world(UV.xy);
+	float total_enabled=4.0;
+//	if (ant1_amplitude>0.0)
+//		total_enabled+=1.0;
+//	if (ant2_amplitude>0.0)
+//		total_enabled+=1.0;
+//	if (ant3_amplitude>0.0)
+//		total_enabled+=1.0;
+//	if (ant4_amplitude>0.0)
+//		total_enabled+=1.0;
+	total_enabled=max(total_enabled,2);
+	float amp_share = 1.0/total_enabled;
+	float ant1 = intensity_from(ant1_pos, world_pos, ant1_phase) * ant1_amplitude / total_enabled;
+	float ant2 = intensity_from(ant2_pos, world_pos, ant2_phase) * ant2_amplitude / total_enabled;
+	float ant3 = intensity_from(ant3_pos, world_pos, ant3_phase) * ant3_amplitude / total_enabled;
+	float ant4 = intensity_from(ant4_pos, world_pos, ant4_phase) * ant4_amplitude / total_enabled;
+	float total= ant1 + ant2 + ant3 + ant4;
+//	total=total/total_enabled;
 	if (overlay)
-		COLOR=vec4(-min(0,ant1)-min(0,ant2),0,max(0,ant1)+max(0,ant2),1);
+		COLOR=vec4(-min(0,ant1)-min(0,ant2)-min(0,ant3)-min(0,ant4),0,
+					max(0,ant1)+max(0,ant2)+max(0,ant3)+max(0,ant4),1);
 	else
 		COLOR = vec4(-total,step(0.999,abs(total)),total,1);
 	COLOR=mix(COLOR,vec4(1,0,1,1),circle(ant1_pos,uv_to_world(UV.xy),0.0001));
 	COLOR=mix(COLOR,vec4(0,1,1,1),circle(ant2_pos,uv_to_world(UV.xy),0.0001));
+	COLOR=mix(COLOR,vec4(1,1,0,1),circle(ant3_pos,uv_to_world(UV.xy),0.0001));
+	COLOR=mix(COLOR,vec4(1,1,1,1),circle(ant4_pos,uv_to_world(UV.xy),0.0001));
 	
 }"

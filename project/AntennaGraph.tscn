@@ -139,17 +139,69 @@ value = -1.0
 tick_count = 5
 ticks_on_borders = true
 
-[node name="SipButton" type="Button" parent="GraphControls"]
+[node name="Antenna3Enabled" type="CheckBox" parent="GraphControls"]
 margin_top = 274.0
 margin_right = 209.0
-margin_bottom = 294.0
+margin_bottom = 298.0
+pressed = true
+text = "Antenna3 Enabled"
+
+[node name="Antenn3PhaseLabel" type="Label" parent="GraphControls"]
+margin_top = 302.0
+margin_right = 209.0
+margin_bottom = 316.0
+text = "Antenna1 phase:"
+
+[node name="Antenna3PhaseSlider" type="HSlider" parent="GraphControls"]
+margin_top = 320.0
+margin_right = 209.0
+margin_bottom = 336.0
+min_value = -360.0
+max_value = 360.0
+value = -1.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="Antenna4Enabled" type="CheckBox" parent="GraphControls"]
+margin_top = 340.0
+margin_right = 209.0
+margin_bottom = 364.0
+pressed = true
+text = "Antenna4 Enabled"
+
+[node name="Antenn4PhaseLabel" type="Label" parent="GraphControls"]
+margin_top = 368.0
+margin_right = 209.0
+margin_bottom = 382.0
+text = "Antenna1 phase:"
+
+[node name="Antenna4PhaseSlider" type="HSlider" parent="GraphControls"]
+margin_top = 386.0
+margin_right = 209.0
+margin_bottom = 402.0
+min_value = -360.0
+max_value = 360.0
+value = -1.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="SipButton" type="Button" parent="GraphControls"]
+margin_top = 406.0
+margin_right = 209.0
+margin_bottom = 426.0
 text = "SIP"
 
 [node name="SopButton" type="Button" parent="GraphControls"]
-margin_top = 298.0
+margin_top = 430.0
 margin_right = 209.0
-margin_bottom = 318.0
+margin_bottom = 450.0
 text = "Sop"
+
+[node name="VorButton" type="Button" parent="GraphControls"]
+margin_top = 454.0
+margin_right = 209.0
+margin_bottom = 474.0
+text = "VOR"
 
 [connection signal="gui_input" from="GraphContainer/Graph" to="GraphContainer/Graph" method="_on_Graph_gui_input"]
 [connection signal="pressed" from="GraphControls/ResetButton" to="GraphControls" method="_on_ResetButton_pressed"]
@@ -162,5 +214,10 @@ text = "Sop"
 [connection signal="value_changed" from="GraphControls/Antenna1PhaseSlider" to="GraphControls" method="_on_Antenna1PhaseSlider_value_changed"]
 [connection signal="toggled" from="GraphControls/Antenna2Enabled" to="GraphControls" method="_on_Antenna2Enabled_toggled"]
 [connection signal="value_changed" from="GraphControls/Antenna2PhaseSlider" to="GraphControls" method="_on_Antenna2PhaseSlider_value_changed"]
+[connection signal="toggled" from="GraphControls/Antenna3Enabled" to="GraphControls" method="_on_Antenna3Enabled_toggled"]
+[connection signal="value_changed" from="GraphControls/Antenna3PhaseSlider" to="GraphControls" method="_on_Antenna3PhaseSlider_value_changed"]
+[connection signal="toggled" from="GraphControls/Antenna4Enabled" to="GraphControls" method="_on_Antenna4Enabled_toggled"]
+[connection signal="value_changed" from="GraphControls/Antenna4PhaseSlider" to="GraphControls" method="_on_Antenna4PhaseSlider_value_changed"]
 [connection signal="pressed" from="GraphControls/SipButton" to="GraphControls" method="_on_SipButton_pressed"]
 [connection signal="pressed" from="GraphControls/SopButton" to="GraphControls" method="_on_SopButton_pressed"]
+[connection signal="pressed" from="GraphControls/VorButton" to="GraphControls" method="_on_VorButton_pressed"]
