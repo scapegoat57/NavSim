@@ -5,10 +5,12 @@ export var Paused=false;
 export var ZoomLevel=10.0
 export var Origin:Vector2=Vector2(0,0)
 export var a_label_path:NodePath
+export var Frequency=1
 var timer=0.0;
 
 func _ready():
 	material.set_shader_param("zoom",ZoomLevel)
+	material.set_shader_param("freq", Frequency)
 
 func _process(delta):
 	if (!Paused):
@@ -30,21 +32,21 @@ func _on_reset_time_button_pressed():
 	material.set_shader_param("timer",timer)
 
 func set_pos_with_a_spacing(var a_spacing):
-	var pos1=Vector2(0,a_spacing/360)
-	var pos2=Vector2(0,-a_spacing/360)
+	var pos1=Vector2(0,a_spacing/360/Frequency)
+	var pos2=Vector2(0,-a_spacing/360/Frequency)
 	material.set_shader_param("ant1_pos",pos1)
 	material.set_shader_param("ant2_pos",pos2)
 
 func set_NWSE_with_a_space(var a_space):
-	var pos1=Vector2(-1,1)*(a_space/360)*sqrt(2)
-	var pos2=Vector2(1,-1)*(a_space/360)*sqrt(2)
+	var pos1=Vector2(-1,1)*(a_space/360/Frequency)*sqrt(2)
+	var pos2=Vector2(1,-1)*(a_space/360/Frequency)*sqrt(2)
 	material.set_shader_param("ant1_pos",pos1)
 	material.set_shader_param("ant2_pos",pos2)
 
 
 func set_NESW_with_a_space(var a_space):
-	var pos1=Vector2(1,1)*(a_space/360)*sqrt(2)
-	var pos2=Vector2(-1,-1)*(a_space/360)*sqrt(2)
+	var pos1=Vector2(1,1)*(a_space/360/Frequency)*sqrt(2)
+	var pos2=Vector2(-1,-1)*(a_space/360/Frequency)*sqrt(2)
 	material.set_shader_param("ant3_pos",pos1)
 	material.set_shader_param("ant4_pos",pos2)
 	
@@ -90,3 +92,6 @@ func set_antenna_phase(antenna, phase):
 func set_antenna_amplitude(antenna, amplitude):
 	var param="ant" + String(antenna) + "_amplitude"
 	material.set_shader_param(param,amplitude)
+
+func set_carrier_freq(freq):
+	material.set_shader_param("carrier_freq",freq)

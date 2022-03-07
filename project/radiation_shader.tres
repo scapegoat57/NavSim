@@ -19,8 +19,11 @@ uniform float ant3_amplitude:hint_range(0.0,1.0,0.1)=1.0;
 uniform vec2 ant4_pos=vec2(0);
 uniform float ant4_phase:hint_range(-360.0,360.0,0.1)=0.0;
 uniform float ant4_amplitude:hint_range(0.0,1.0,0.1)=0.0;
+uniform float ant5_amplitude:hint_range(0.0,1.0,.1)=0.0;
+uniform float ant5_phase:hint_range(-360.0,360.0,0.1)=0.0;
 uniform float timer;
-uniform float frequency=1.0;
+uniform float freq=3.0;
+uniform float carrier_freq=1.0;
 uniform float zoom:hint_range(0.5,20)=1.0;
 uniform float time_scale=1.0;
 uniform float time_shift=0;
@@ -35,7 +38,16 @@ float intensity_from(vec2 antenna_position, vec2 field_position, float phase)
 {
 	vec2 direction=field_position - antenna_position;
 	float dist=length(direction);
-	float intensity=sin(frequency * dist * TWO_PI - radians(phase) - (timer*time_scale)+time_shift);
+	float intensity=sin(freq * dist * TWO_PI - radians(phase) - (timer*time_scale)+time_shift);
+	//intensity*=0.5;
+	return intensity;
+}
+
+float intensity_from_stationary(vec2 antenna_position, vec2 field_position, float phase)
+{
+	vec2 direction=field_position - antenna_position;
+	float dist=length(direction);
+	float intensity=sin(carrier_freq * dist * TWO_PI - radians(phase) - (timer*time_scale)+time_shift);
 	//intensity*=0.5;
 	return intensity;
 }
@@ -63,7 +75,8 @@ void fragment(){
 	float ant2 = intensity_from(ant2_pos, world_pos, ant2_phase) * ant2_amplitude / total_enabled;
 	float ant3 = intensity_from(ant3_pos, world_pos, ant3_phase) * ant3_amplitude / total_enabled;
 	float ant4 = intensity_from(ant4_pos, world_pos, ant4_phase) * ant4_amplitude / total_enabled;
-	float total= ant1 + ant2 + ant3 + ant4;
+	float carrier=intensity_from_stationary(vec2(0), world_pos, ant5_phase) * ant5_amplitude;
+	float total= ant1 + ant2 + ant3 + ant4 + carrier;
 //	total=total/total_enabled;
 	if (overlay)
 		COLOR=vec4(-min(0,ant1)-min(0,ant2)-min(0,ant3)-min(0,ant4),0,
