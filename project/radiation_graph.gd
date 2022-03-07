@@ -4,7 +4,6 @@ extends ColorRect
 export var Paused=false;
 export var ZoomLevel=10.0
 export var Origin:Vector2=Vector2(0,0)
-export var a_label_path:NodePath
 export var Frequency=1
 var timer=0.0;
 
@@ -30,6 +29,10 @@ func _on_overlay_button_toggled(button_pressed):
 func _on_reset_time_button_pressed():
 	timer=0
 	material.set_shader_param("timer",timer)
+	
+func set_antenna_pos(antenna, position):
+	var param="ant"+String(antenna)+"_pos"
+	material.set_shader_param(param, position)
 
 func set_pos_with_a_spacing(var a_spacing):
 	var pos1=Vector2(0,a_spacing/360/Frequency)
@@ -92,6 +95,3 @@ func set_antenna_phase(antenna, phase):
 func set_antenna_amplitude(antenna, amplitude):
 	var param="ant" + String(antenna) + "_amplitude"
 	material.set_shader_param(param,amplitude)
-
-func set_carrier_freq(freq):
-	material.set_shader_param("carrier_freq",freq)

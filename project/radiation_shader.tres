@@ -19,8 +19,6 @@ uniform float ant3_amplitude:hint_range(0.0,1.0,0.1)=1.0;
 uniform vec2 ant4_pos=vec2(0);
 uniform float ant4_phase:hint_range(-360.0,360.0,0.1)=0.0;
 uniform float ant4_amplitude:hint_range(0.0,1.0,0.1)=0.0;
-uniform float ant5_amplitude:hint_range(0.0,1.0,.1)=0.0;
-uniform float ant5_phase:hint_range(-360.0,360.0,0.1)=0.0;
 uniform float timer;
 uniform float freq=3.0;
 uniform float carrier_freq=1.0;
@@ -43,15 +41,6 @@ float intensity_from(vec2 antenna_position, vec2 field_position, float phase)
 	return intensity;
 }
 
-float intensity_from_stationary(vec2 antenna_position, vec2 field_position, float phase)
-{
-	vec2 direction=field_position - antenna_position;
-	float dist=length(direction);
-	float intensity=sin(carrier_freq * dist * TWO_PI - radians(phase) - (timer*time_scale)+time_shift);
-	//intensity*=0.5;
-	return intensity;
-}
-
 float circle(vec2 dot_pos, vec2 world_pos,float radius)
 {
 	vec2 position=dot_pos-world_pos;
@@ -60,23 +49,22 @@ float circle(vec2 dot_pos, vec2 world_pos,float radius)
 
 void fragment(){
 	vec2 world_pos = uv_to_world(UV.xy);
-	float total_enabled=4.0;
-//	if (ant1_amplitude>0.0)
-//		total_enabled+=1.0;
-//	if (ant2_amplitude>0.0)
-//		total_enabled+=1.0;
-//	if (ant3_amplitude>0.0)
-//		total_enabled+=1.0;
-//	if (ant4_amplitude>0.0)
-//		total_enabled+=1.0;
-	total_enabled=max(total_enabled,2);
+	float total_enabled=0.0;
+	if (ant1_amplitude>0.0)
+		total_enabled+=1.0;
+	if (ant2_amplitude>0.0)
+		total_enabled+=1.0;
+	if (ant3_amplitude>0.0)
+		total_enabled+=1.0;
+	if (ant4_amplitude>0.0)
+		total_enabled+=1.0;
+	total_enabled=max(total_enabled,1.75);
 	float amp_share = 1.0/total_enabled;
 	float ant1 = intensity_from(ant1_pos, world_pos, ant1_phase) * ant1_amplitude / total_enabled;
 	float ant2 = intensity_from(ant2_pos, world_pos, ant2_phase) * ant2_amplitude / total_enabled;
 	float ant3 = intensity_from(ant3_pos, world_pos, ant3_phase) * ant3_amplitude / total_enabled;
 	float ant4 = intensity_from(ant4_pos, world_pos, ant4_phase) * ant4_amplitude / total_enabled;
-	float carrier=intensity_from_stationary(vec2(0), world_pos, ant5_phase) * ant5_amplitude;
-	float total= ant1 + ant2 + ant3 + ant4 + carrier;
+	float total= ant1 + ant2 + ant3 + ant4;
 //	total=total/total_enabled;
 	if (overlay)
 		COLOR=vec4(-min(0,ant1)-min(0,ant2)-min(0,ant3)-min(0,ant4),0,

@@ -14,7 +14,6 @@ func _process(delta):
 	if vor_mode:
 		if not vor_paused:
 			vor_timer+=delta;
-		$CarrierPhaseSlider.value=lerp(0,-360,fmod(vor_timer,10.0/1.0)/(10.0/1))
 
 
 
@@ -44,8 +43,13 @@ func _on_ResetButton_pressed():
 	$ASpaceHBox/ASpaceToggle.pressed=true;
 	$Antenna1PhaseSlider.value = 0;
 	$Antenna2PhaseSlider.value = 0;
-	$CarrierFreqSlider.value=1.0;
+	$Antenna3PhaseSlider.value = 0;
+	$Antenna4PhaseSlider.value = 0;
 	vor_mode=false;
+	graph_node.set_antenna_pos(1,Vector2.ZERO)
+	graph_node.set_antenna_pos(2,Vector2.ZERO)
+	graph_node.set_antenna_pos(3,Vector2.ZERO)
+	graph_node.set_antenna_pos(4,Vector2.ZERO)
 	
 
 
@@ -101,7 +105,6 @@ func _on_VorButton_pressed():
 	$Antenna4PhaseSlider.value=-90.0
 	$Antenna3Enabled.pressed = true
 	$Antenna4Enabled.pressed = true
-	$CarrierAmplitudeSlider.value=0
 	vor_mode=true;
 
 
@@ -113,17 +116,3 @@ func _on_Antenna3PhaseSlider_value_changed(value):
 func _on_Antenna4PhaseSlider_value_changed(value):
 	graph_node.set_antenna_phase(4,value)
 	$Antenn4PhaseLabel.text="Phase: " + ("+" if value>0 else "") + String(value)
-
-
-func _on_CarrierAmplitudeSlider_value_changed(value):
-	graph_node.set_antenna_amplitude(5,value)
-
-
-func _on_CarrierPhaseSlider_value_changed(value):
-	graph_node.set_antenna_phase(5,value)
-	$CarrierPhaseLabel.text="Phase: " + ("+" if value>0 else "") + String(value)
-
-
-func _on_CarrierFreqSlider_value_changed(value):
-	graph_node.set_carrier_freq(value)
-	$CarrierFreqLabel.text="freq: "+String(value)
