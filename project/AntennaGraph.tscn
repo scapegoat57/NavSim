@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://radiation_material.tres" type="Material" id=1]
 [ext_resource path="res://radiation_graph.gd" type="Script" id=2]
 [ext_resource path="res://graph_controls.gd" type="Script" id=3]
+[ext_resource path="res://AngleRuler.gd" type="Script" id=4]
+[ext_resource path="res://vor_controls.gd" type="Script" id=5]
+[ext_resource path="res://CoarseFineButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://SliderLabel.tscn" type="PackedScene" id=7]
+[ext_resource path="res://GSControls.gd" type="Script" id=8]
 
 [node name="AntennaGraph" type="Control"]
 anchor_right = 1.0
@@ -19,61 +24,102 @@ position = Vector2( 350, 189 )
 points = PoolVector2Array( 50, -50, 50, 50 )
 
 [node name="GraphContainer" type="AspectRatioContainer" parent="."]
+anchor_left = 0.085
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -0.0400009
+margin_right = -243.0
 
 [node name="Graph" type="ColorRect" parent="GraphContainer"]
 material = ExtResource( 1 )
-margin_left = 212.0
-margin_right = 812.0
+margin_left = 47.0
+margin_right = 647.0
 margin_bottom = 600.0
 script = ExtResource( 2 )
 
-[node name="GraphControls" type="VBoxContainer" parent="."]
-anchor_left = 0.796
+[node name="Panel" type="Panel" parent="."]
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 81.0
+margin_bottom = 26.0
+
+[node name="AngleLabel" type="Label" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -0.104065
-script = ExtResource( 3 )
-graph_path = NodePath("../GraphContainer/Graph")
+valign = 1
 
-[node name="ResetButton" type="Button" parent="GraphControls"]
-margin_right = 209.0
+[node name="AngleRuler" type="Line2D" parent="."]
+points = PoolVector2Array( 0, 0, 100, 100 )
+width = 5.0
+end_cap_mode = 2
+script = ExtResource( 4 )
+graph_path = NodePath("../GraphContainer/Graph")
+label_path = NodePath("../Panel/AngleLabel")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -203.0
+
+[node name="Antenna" type="ScrollContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+scroll_horizontal_enabled = false
+
+[node name="GraphControls" type="VBoxContainer" parent="TabContainer/Antenna"]
+margin_right = 195.0
+margin_bottom = 564.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 3 )
+graph_path = NodePath("../../../GraphContainer/Graph")
+
+[node name="ResetButton" type="Button" parent="TabContainer/Antenna/GraphControls"]
+margin_right = 195.0
 margin_bottom = 20.0
 text = "Reset"
 
-[node name="overlay_button" type="CheckBox" parent="GraphControls"]
+[node name="overlay_button" type="CheckBox" parent="TabContainer/Antenna/GraphControls"]
 margin_top = 24.0
-margin_right = 209.0
+margin_right = 195.0
 margin_bottom = 48.0
 text = "Overlay"
 
-[node name="PauseButton" type="Button" parent="GraphControls"]
+[node name="PauseButton" type="Button" parent="TabContainer/Antenna/GraphControls"]
 margin_top = 52.0
-margin_right = 209.0
+margin_right = 195.0
 margin_bottom = 72.0
 toggle_mode = true
 text = "Paused"
 
-[node name="ResetTimeButton" type="Button" parent="GraphControls"]
+[node name="ResetTimeButton" type="Button" parent="TabContainer/Antenna/GraphControls"]
 margin_top = 76.0
-margin_right = 209.0
+margin_right = 195.0
 margin_bottom = 96.0
 text = "Reset Time"
 
-[node name="ASpaceLabel" type="Label" parent="GraphControls"]
+[node name="SliderLabel" parent="TabContainer/Antenna/GraphControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 100.0
-margin_right = 209.0
+margin_right = 195.0
 margin_bottom = 114.0
-text = "a spacing: "
+text = "a-spacing: %.2f"
+slider_path = NodePath("../ASpaceHBox/ASpaceSlider")
 
-[node name="ASpaceHBox" type="HBoxContainer" parent="GraphControls"]
+[node name="ASpaceHBox" type="HBoxContainer" parent="TabContainer/Antenna/GraphControls"]
 margin_top = 118.0
-margin_right = 209.0
+margin_right = 195.0
 margin_bottom = 138.0
 
-[node name="ASpaceSlider" type="HSlider" parent="GraphControls/ASpaceHBox"]
-margin_right = 185.0
+[node name="ASpaceSlider" type="HSlider" parent="TabContainer/Antenna/GraphControls/ASpaceHBox"]
+margin_right = 171.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 max_value = 720.0
@@ -82,145 +128,843 @@ value = 45.0
 tick_count = 5
 ticks_on_borders = true
 
-[node name="ASpaceToggle" type="Button" parent="GraphControls/ASpaceHBox"]
-margin_left = 189.0
-margin_right = 209.0
+[node name="ASpaceSliderButton" parent="TabContainer/Antenna/GraphControls/ASpaceHBox" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
 margin_bottom = 20.0
-grow_horizontal = 0
-size_flags_horizontal = 9
-toggle_mode = true
 pressed = true
-text = "C"
+coarse_step = 45.0
+fine_step = 0.5
+slider_path = NodePath("../ASpaceSlider")
 
-[node name="Antenna1Enabled" type="CheckBox" parent="GraphControls"]
+[node name="Antenna1Enabled" type="CheckBox" parent="TabContainer/Antenna/GraphControls"]
 margin_top = 142.0
-margin_right = 209.0
+margin_right = 195.0
 margin_bottom = 166.0
 pressed = true
 text = "Antenna1 Enabled"
 
-[node name="Antenn1PhaseLabel" type="Label" parent="GraphControls"]
+[node name="Antenna1PhaseSliderLabel" parent="TabContainer/Antenna/GraphControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 170.0
-margin_right = 209.0
+margin_right = 195.0
 margin_bottom = 184.0
-text = "Antenna1 phase:"
+text = "Phase: %.2f"
+slider_path = NodePath("../Antenna1Phase/Antenna1PhaseSlider")
 
-[node name="Antenna1PhaseSlider" type="HSlider" parent="GraphControls"]
+[node name="Antenna1Phase" type="HBoxContainer" parent="TabContainer/Antenna/GraphControls"]
 margin_top = 188.0
-margin_right = 209.0
-margin_bottom = 204.0
+margin_right = 195.0
+margin_bottom = 208.0
+
+[node name="Antenna1PhaseSlider" type="HSlider" parent="TabContainer/Antenna/GraphControls/Antenna1Phase"]
+margin_right = 171.0
+margin_bottom = 16.0
+hint_tooltip = "asdf"
+size_flags_horizontal = 3
 min_value = -360.0
 max_value = 360.0
 step = 11.25
-value = -1.0
+value = -22.5
 tick_count = 5
 ticks_on_borders = true
 
-[node name="Antenna2Enabled" type="CheckBox" parent="GraphControls"]
-margin_top = 208.0
-margin_right = 209.0
-margin_bottom = 232.0
+[node name="CoarseFineButton" parent="TabContainer/Antenna/GraphControls/Antenna1Phase" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 45.0
+slider_path = NodePath("../Antenna1PhaseSlider")
+
+[node name="Antenna1CurrentLabel" parent="TabContainer/Antenna/GraphControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 212.0
+margin_right = 195.0
+margin_bottom = 226.0
+text = "Current: %.2f"
+slider_path = NodePath("../Antenna1Current/Antenna1CurrentSlider")
+
+[node name="Antenna1Current" type="HBoxContainer" parent="TabContainer/Antenna/GraphControls"]
+margin_top = 230.0
+margin_right = 195.0
+margin_bottom = 250.0
+
+[node name="Antenna1CurrentSlider" type="HSlider" parent="TabContainer/Antenna/GraphControls/Antenna1Current"]
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/Antenna/GraphControls/Antenna1Current" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 0.1
+fine_step = 0.05
+slider_path = NodePath("../Antenna1CurrentSlider")
+
+[node name="Antenna2Enabled" type="CheckBox" parent="TabContainer/Antenna/GraphControls"]
+margin_top = 254.0
+margin_right = 195.0
+margin_bottom = 278.0
 pressed = true
 text = "Antenna2 Enabled"
 
-[node name="Antenn2PhaseLabel" type="Label" parent="GraphControls"]
-margin_top = 236.0
-margin_right = 209.0
-margin_bottom = 250.0
-text = "Antenna1 phase:"
+[node name="SliderLabel2" parent="TabContainer/Antenna/GraphControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 282.0
+margin_right = 195.0
+margin_bottom = 296.0
+text = "Phase: %.2f"
+slider_path = NodePath("../Antenna2Phase/Antenna2PhaseSlider")
 
-[node name="Antenna2PhaseSlider" type="HSlider" parent="GraphControls"]
-margin_top = 254.0
-margin_right = 209.0
-margin_bottom = 270.0
+[node name="Antenna2Phase" type="HBoxContainer" parent="TabContainer/Antenna/GraphControls"]
+margin_top = 300.0
+margin_right = 195.0
+margin_bottom = 320.0
+
+[node name="Antenna2PhaseSlider" type="HSlider" parent="TabContainer/Antenna/GraphControls/Antenna2Phase"]
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
 min_value = -360.0
 max_value = 360.0
 step = 11.25
-value = -1.0
 tick_count = 5
 ticks_on_borders = true
 
-[node name="Antenna3Enabled" type="CheckBox" parent="GraphControls"]
-margin_top = 274.0
-margin_right = 209.0
-margin_bottom = 298.0
+[node name="CoarseFineButton" parent="TabContainer/Antenna/GraphControls/Antenna2Phase" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
 pressed = true
-text = "Antenna3 Enabled"
+coarse_step = 45.0
+slider_path = NodePath("../Antenna2PhaseSlider")
 
-[node name="Antenn3PhaseLabel" type="Label" parent="GraphControls"]
-margin_top = 302.0
-margin_right = 209.0
-margin_bottom = 316.0
-text = "Antenna1 phase:"
+[node name="Antenna2CurrentLabel" parent="TabContainer/Antenna/GraphControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 324.0
+margin_right = 195.0
+margin_bottom = 338.0
+text = "Current: %.2f"
+slider_path = NodePath("../Antenna2Current/AntennaCurrentSlider")
 
-[node name="Antenna3PhaseSlider" type="HSlider" parent="GraphControls"]
-margin_top = 320.0
-margin_right = 209.0
-margin_bottom = 336.0
-min_value = -360.0
-max_value = 360.0
-step = 11.25
-value = -1.0
+[node name="Antenna2Current" type="HBoxContainer" parent="TabContainer/Antenna/GraphControls"]
+margin_top = 342.0
+margin_right = 195.0
+margin_bottom = 362.0
+
+[node name="AntennaCurrentSlider" type="HSlider" parent="TabContainer/Antenna/GraphControls/Antenna2Current"]
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.1
+value = 1.0
 tick_count = 5
 ticks_on_borders = true
 
-[node name="Antenna4Enabled" type="CheckBox" parent="GraphControls"]
-margin_top = 340.0
-margin_right = 209.0
-margin_bottom = 364.0
+[node name="CoarseFineButton" parent="TabContainer/Antenna/GraphControls/Antenna2Current" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
 pressed = true
-text = "Antenna4 Enabled"
+coarse_step = 0.1
+fine_step = 0.05
+slider_path = NodePath("../AntennaCurrentSlider")
 
-[node name="Antenn4PhaseLabel" type="Label" parent="GraphControls"]
-margin_top = 368.0
-margin_right = 209.0
-margin_bottom = 382.0
-text = "Antenna1 phase:"
-
-[node name="Antenna4PhaseSlider" type="HSlider" parent="GraphControls"]
-margin_top = 386.0
-margin_right = 209.0
-margin_bottom = 402.0
-min_value = -360.0
-max_value = 360.0
-step = 11.25
-value = -1.0
-tick_count = 5
-ticks_on_borders = true
-
-[node name="SipButton" type="Button" parent="GraphControls"]
-margin_top = 406.0
-margin_right = 209.0
-margin_bottom = 426.0
+[node name="SipButton" type="Button" parent="TabContainer/Antenna/GraphControls"]
+margin_top = 366.0
+margin_right = 195.0
+margin_bottom = 386.0
 text = "SIP"
 
-[node name="SopButton" type="Button" parent="GraphControls"]
-margin_top = 430.0
-margin_right = 209.0
-margin_bottom = 450.0
+[node name="SopButton" type="Button" parent="TabContainer/Antenna/GraphControls"]
+margin_top = 390.0
+margin_right = 195.0
+margin_bottom = 410.0
 text = "Sop"
 
-[node name="VorButton" type="Button" parent="GraphControls"]
+[node name="Vor" type="ScrollContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="VorControls" type="VBoxContainer" parent="TabContainer/Vor"]
+margin_right = 195.0
+margin_bottom = 586.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 5 )
+graph_path = NodePath("../../../GraphContainer/Graph")
+
+[node name="ResetButton" type="Button" parent="TabContainer/Vor/VorControls"]
+margin_right = 183.0
+margin_bottom = 20.0
+text = "Reset"
+
+[node name="overlay_button" type="CheckBox" parent="TabContainer/Vor/VorControls"]
+margin_top = 24.0
+margin_right = 183.0
+margin_bottom = 48.0
+text = "Overlay"
+
+[node name="PauseButton" type="Button" parent="TabContainer/Vor/VorControls"]
+margin_top = 52.0
+margin_right = 183.0
+margin_bottom = 72.0
+toggle_mode = true
+text = "Paused"
+
+[node name="ResetTimeButton" type="Button" parent="TabContainer/Vor/VorControls"]
+margin_top = 76.0
+margin_right = 183.0
+margin_bottom = 96.0
+text = "Reset Time"
+
+[node name="SliderLabel" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 100.0
+margin_right = 183.0
+margin_bottom = 114.0
+text = "a-spacing: %.2f"
+slider_path = NodePath("../ASpaceHBox/ASpaceSlider")
+
+[node name="ASpaceHBox" type="HBoxContainer" parent="TabContainer/Vor/VorControls"]
+margin_top = 118.0
+margin_right = 183.0
+margin_bottom = 138.0
+
+[node name="ASpaceSlider" type="HSlider" parent="TabContainer/Vor/VorControls/ASpaceHBox"]
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 17.5
+max_value = 37.5
+step = 0.0
+value = 17.5
+tick_count = 5
+ticks_on_borders = true
+
+[node name="ASpaceSliderButton" parent="TabContainer/Vor/VorControls/ASpaceHBox" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 163.0
+margin_right = 183.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 0.5
+fine_step = 0.1
+slider_path = NodePath("../ASpaceSlider")
+
+[node name="Antenna1Enabled" type="CheckBox" parent="TabContainer/Vor/VorControls"]
+margin_top = 142.0
+margin_right = 183.0
+margin_bottom = 166.0
+pressed = true
+text = "Antenna1 Enabled"
+
+[node name="Antenna1PhaseSliderLabel" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 170.0
+margin_right = 183.0
+margin_bottom = 184.0
+text = "Phase: %.2f"
+slider_path = NodePath("../Antenna1Phase/Antenna1PhaseSlider")
+
+[node name="Antenna1Phase" type="HBoxContainer" parent="TabContainer/Vor/VorControls"]
+margin_top = 188.0
+margin_right = 183.0
+margin_bottom = 208.0
+
+[node name="Antenna1PhaseSlider" type="HSlider" parent="TabContainer/Vor/VorControls/Antenna1Phase"]
+margin_right = 159.0
+margin_bottom = 16.0
+hint_tooltip = "asdf"
+size_flags_horizontal = 3
+min_value = -360.0
+max_value = 360.0
+step = 11.25
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna1Phase" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 163.0
+margin_right = 183.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 45.0
+slider_path = NodePath("../Antenna1PhaseSlider")
+
+[node name="Antenna1CurrentLabel" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 212.0
+margin_right = 183.0
+margin_bottom = 226.0
+text = "Current: %.2f"
+slider_path = NodePath("../Antenna1Current/Antenna1CurrentSlider")
+
+[node name="Antenna1Current" type="HBoxContainer" parent="TabContainer/Vor/VorControls"]
+margin_top = 230.0
+margin_right = 183.0
+margin_bottom = 250.0
+
+[node name="Antenna1CurrentSlider" type="HSlider" parent="TabContainer/Vor/VorControls/Antenna1Current"]
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna1Current" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 163.0
+margin_right = 183.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 0.1
+fine_step = 0.05
+slider_path = NodePath("../Antenna1CurrentSlider")
+
+[node name="Antenna2Enabled" type="CheckBox" parent="TabContainer/Vor/VorControls"]
+margin_top = 254.0
+margin_right = 183.0
+margin_bottom = 278.0
+pressed = true
+text = "Antenna2 Enabled"
+
+[node name="SliderLabel2" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 282.0
+margin_right = 183.0
+margin_bottom = 296.0
+text = "Phase: %.2f"
+slider_path = NodePath("../Antenna2Phase/Antenna2PhaseSlider")
+
+[node name="Antenna2Phase" type="HBoxContainer" parent="TabContainer/Vor/VorControls"]
+margin_top = 300.0
+margin_right = 183.0
+margin_bottom = 320.0
+
+[node name="Antenna2PhaseSlider" type="HSlider" parent="TabContainer/Vor/VorControls/Antenna2Phase"]
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = -360.0
+max_value = 360.0
+step = 11.25
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna2Phase" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 163.0
+margin_right = 183.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 45.0
+slider_path = NodePath("../Antenna2PhaseSlider")
+
+[node name="Antenna2CurrentLabel" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 324.0
+margin_right = 183.0
+margin_bottom = 338.0
+text = "Current: %.2f"
+slider_path = NodePath("../Antenna2Current/AntennaCurrentSlider")
+
+[node name="Antenna2Current" type="HBoxContainer" parent="TabContainer/Vor/VorControls"]
+margin_top = 342.0
+margin_right = 183.0
+margin_bottom = 362.0
+
+[node name="AntennaCurrentSlider" type="HSlider" parent="TabContainer/Vor/VorControls/Antenna2Current"]
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna2Current" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 163.0
+margin_right = 183.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 0.1
+fine_step = 0.05
+slider_path = NodePath("../AntennaCurrentSlider")
+
+[node name="Antenna3Enabled" type="CheckBox" parent="TabContainer/Vor/VorControls"]
+margin_top = 366.0
+margin_right = 183.0
+margin_bottom = 390.0
+text = "Antenna3 Enabled"
+
+[node name="SliderLabel3" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 394.0
+margin_right = 183.0
+margin_bottom = 408.0
+text = "Phase %.2f"
+slider_path = NodePath("../Antenna3Phase/Antenna3PhaseSlider")
+
+[node name="Antenna3Phase" type="HBoxContainer" parent="TabContainer/Vor/VorControls"]
+margin_top = 412.0
+margin_right = 183.0
+margin_bottom = 432.0
+
+[node name="Antenna3PhaseSlider" type="HSlider" parent="TabContainer/Vor/VorControls/Antenna3Phase"]
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = -360.0
+max_value = 360.0
+step = 11.25
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna3Phase" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 163.0
+margin_right = 183.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 45.0
+slider_path = NodePath("../Antenna3PhaseSlider")
+
+[node name="Antenna3CurrentLabel" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 436.0
+margin_right = 183.0
+margin_bottom = 450.0
+text = "Current: %.2f"
+slider_path = NodePath("../Antenna3Current/AntennaCurrentSlider")
+
+[node name="Antenna3Current" type="HBoxContainer" parent="TabContainer/Vor/VorControls"]
 margin_top = 454.0
-margin_right = 209.0
+margin_right = 183.0
 margin_bottom = 474.0
-text = "VOR"
+
+[node name="AntennaCurrentSlider" type="HSlider" parent="TabContainer/Vor/VorControls/Antenna3Current"]
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna3Current" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 163.0
+margin_right = 183.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 0.1
+fine_step = 0.05
+slider_path = NodePath("../AntennaCurrentSlider")
+
+[node name="Antenna4Enabled" type="CheckBox" parent="TabContainer/Vor/VorControls"]
+margin_top = 478.0
+margin_right = 183.0
+margin_bottom = 502.0
+text = "Antenna4 Enabled"
+
+[node name="SliderLabel4" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 506.0
+margin_right = 183.0
+margin_bottom = 520.0
+text = "Phase: %.2f"
+slider_path = NodePath("../Antenna4Phase/Antenna4PhaseSlider")
+
+[node name="Antenna4Phase" type="HBoxContainer" parent="TabContainer/Vor/VorControls"]
+margin_top = 524.0
+margin_right = 183.0
+margin_bottom = 544.0
+
+[node name="Antenna4PhaseSlider" type="HSlider" parent="TabContainer/Vor/VorControls/Antenna4Phase"]
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = -360.0
+max_value = 360.0
+step = 11.25
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna4Phase" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 163.0
+margin_right = 183.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 45.0
+slider_path = NodePath("../Antenna4PhaseSlider")
+
+[node name="Antenna4CurrentLabel" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 548.0
+margin_right = 183.0
+margin_bottom = 562.0
+text = "Current: %.2f"
+slider_path = NodePath("../Antenna4Current/AntennaCurrentSlider")
+
+[node name="Antenna4Current" type="HBoxContainer" parent="TabContainer/Vor/VorControls"]
+margin_top = 566.0
+margin_right = 183.0
+margin_bottom = 586.0
+
+[node name="AntennaCurrentSlider" type="HSlider" parent="TabContainer/Vor/VorControls/Antenna4Current"]
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.1
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna4Current" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 163.0
+margin_right = 183.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 0.1
+fine_step = 0.05
+slider_path = NodePath("../AntennaCurrentSlider")
+
+[node name="GS" type="ScrollContainer" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="GSControls" type="VBoxContainer" parent="TabContainer/GS"]
+margin_right = 195.0
+margin_bottom = 564.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 8 )
+graph_path = NodePath("../../../GraphContainer/Graph")
+
+[node name="ResetButton" type="Button" parent="TabContainer/GS/GSControls"]
+margin_right = 195.0
+margin_bottom = 20.0
+text = "Reset"
+
+[node name="overlay_button" type="CheckBox" parent="TabContainer/GS/GSControls"]
+margin_top = 24.0
+margin_right = 195.0
+margin_bottom = 48.0
+text = "Overlay"
+
+[node name="PauseButton" type="Button" parent="TabContainer/GS/GSControls"]
+margin_top = 52.0
+margin_right = 195.0
+margin_bottom = 72.0
+toggle_mode = true
+text = "Paused"
+
+[node name="ResetTimeButton" type="Button" parent="TabContainer/GS/GSControls"]
+margin_top = 76.0
+margin_right = 195.0
+margin_bottom = 96.0
+text = "Reset Time"
+
+[node name="SliderLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 100.0
+margin_right = 195.0
+margin_bottom = 114.0
+text = "a-spacing: %.2f"
+slider_path = NodePath("../ASpaceHBox/ASpaceSlider")
+
+[node name="ASpaceHBox" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 118.0
+margin_right = 195.0
+margin_bottom = 138.0
+
+[node name="ASpaceSlider" type="HSlider" parent="TabContainer/GS/GSControls/ASpaceHBox"]
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 3500.0
+step = 45.0
+value = 45.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="ASpaceSliderButton" parent="TabContainer/GS/GSControls/ASpaceHBox" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
+coarse_step = 45.0
+fine_step = 0.1
+slider_path = NodePath("../ASpaceSlider")
+
+[node name="Antenna1Enabled" type="CheckBox" parent="TabContainer/GS/GSControls"]
+margin_top = 142.0
+margin_right = 195.0
+margin_bottom = 166.0
+pressed = true
+text = "Antenna1 Enabled"
+
+[node name="Antenna1PhaseSliderLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 170.0
+margin_right = 195.0
+margin_bottom = 184.0
+text = "Phase: %.2f"
+slider_path = NodePath("../Antenna1Phase/Antenna1PhaseSlider")
+
+[node name="Antenna1Phase" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 188.0
+margin_right = 195.0
+margin_bottom = 208.0
+
+[node name="Antenna1PhaseSlider" type="HSlider" parent="TabContainer/GS/GSControls/Antenna1Phase"]
+margin_right = 171.0
+margin_bottom = 16.0
+hint_tooltip = "asdf"
+size_flags_horizontal = 3
+min_value = -360.0
+max_value = 360.0
+step = 11.25
+value = -22.5
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/Antenna1Phase" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 45.0
+slider_path = NodePath("../Antenna1PhaseSlider")
+
+[node name="Antenna1CurrentLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 212.0
+margin_right = 195.0
+margin_bottom = 226.0
+text = "Current: %.2f"
+slider_path = NodePath("../Antenna1Current/Antenna1CurrentSlider")
+
+[node name="Antenna1Current" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 230.0
+margin_right = 195.0
+margin_bottom = 250.0
+
+[node name="Antenna1CurrentSlider" type="HSlider" parent="TabContainer/GS/GSControls/Antenna1Current"]
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/Antenna1Current" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 0.1
+fine_step = 0.05
+slider_path = NodePath("../Antenna1CurrentSlider")
+
+[node name="Antenna2Enabled" type="CheckBox" parent="TabContainer/GS/GSControls"]
+margin_top = 254.0
+margin_right = 195.0
+margin_bottom = 278.0
+pressed = true
+text = "Antenna2 Enabled"
+
+[node name="SliderLabel2" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 282.0
+margin_right = 195.0
+margin_bottom = 296.0
+text = "Phase: %.2f"
+slider_path = NodePath("../Antenna2Phase/Antenna2PhaseSlider")
+
+[node name="Antenna2Phase" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 300.0
+margin_right = 195.0
+margin_bottom = 320.0
+
+[node name="Antenna2PhaseSlider" type="HSlider" parent="TabContainer/GS/GSControls/Antenna2Phase"]
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = -360.0
+max_value = 360.0
+step = 11.25
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/Antenna2Phase" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 45.0
+slider_path = NodePath("../Antenna2PhaseSlider")
+
+[node name="Antenna2CurrentLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 324.0
+margin_right = 195.0
+margin_bottom = 338.0
+text = "Current: %.2f"
+slider_path = NodePath("../Antenna2Current/AntennaCurrentSlider")
+
+[node name="Antenna2Current" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 342.0
+margin_right = 195.0
+margin_bottom = 362.0
+
+[node name="AntennaCurrentSlider" type="HSlider" parent="TabContainer/GS/GSControls/Antenna2Current"]
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/Antenna2Current" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
+pressed = true
+coarse_step = 0.1
+fine_step = 0.05
+slider_path = NodePath("../AntennaCurrentSlider")
+
+[node name="CSBButton" type="Button" parent="TabContainer/GS/GSControls"]
+margin_top = 366.0
+margin_right = 195.0
+margin_bottom = 386.0
+text = "CSB"
+
+[node name="SBOButton" type="Button" parent="TabContainer/GS/GSControls"]
+margin_top = 390.0
+margin_right = 195.0
+margin_bottom = 410.0
+text = "SBO"
 
 [connection signal="gui_input" from="GraphContainer/Graph" to="GraphContainer/Graph" method="_on_Graph_gui_input"]
-[connection signal="pressed" from="GraphControls/ResetButton" to="GraphControls" method="_on_ResetButton_pressed"]
-[connection signal="toggled" from="GraphControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
-[connection signal="toggled" from="GraphControls/PauseButton" to="GraphControls" method="_on_PauseButton_toggled"]
-[connection signal="pressed" from="GraphControls/ResetTimeButton" to="GraphControls" method="_on_ResetTimeButton_pressed"]
-[connection signal="value_changed" from="GraphControls/ASpaceHBox/ASpaceSlider" to="GraphControls" method="_on_ASpaceSlider_value_changed"]
-[connection signal="toggled" from="GraphControls/ASpaceHBox/ASpaceToggle" to="GraphControls" method="_on_ASpaceToggle_toggled"]
-[connection signal="toggled" from="GraphControls/Antenna1Enabled" to="GraphControls" method="_on_Antenna1Enabled_toggled"]
-[connection signal="value_changed" from="GraphControls/Antenna1PhaseSlider" to="GraphControls" method="_on_Antenna1PhaseSlider_value_changed"]
-[connection signal="toggled" from="GraphControls/Antenna2Enabled" to="GraphControls" method="_on_Antenna2Enabled_toggled"]
-[connection signal="value_changed" from="GraphControls/Antenna2PhaseSlider" to="GraphControls" method="_on_Antenna2PhaseSlider_value_changed"]
-[connection signal="toggled" from="GraphControls/Antenna3Enabled" to="GraphControls" method="_on_Antenna3Enabled_toggled"]
-[connection signal="value_changed" from="GraphControls/Antenna3PhaseSlider" to="GraphControls" method="_on_Antenna3PhaseSlider_value_changed"]
-[connection signal="toggled" from="GraphControls/Antenna4Enabled" to="GraphControls" method="_on_Antenna4Enabled_toggled"]
-[connection signal="value_changed" from="GraphControls/Antenna4PhaseSlider" to="GraphControls" method="_on_Antenna4PhaseSlider_value_changed"]
-[connection signal="pressed" from="GraphControls/SipButton" to="GraphControls" method="_on_SipButton_pressed"]
-[connection signal="pressed" from="GraphControls/SopButton" to="GraphControls" method="_on_SopButton_pressed"]
-[connection signal="pressed" from="GraphControls/VorButton" to="GraphControls" method="_on_VorButton_pressed"]
+[connection signal="pressed" from="TabContainer/Antenna/GraphControls/ResetButton" to="TabContainer/Antenna/GraphControls" method="_on_ResetButton_pressed"]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/PauseButton" to="GraphContainer/Graph" method="toggle_paused"]
+[connection signal="pressed" from="TabContainer/Antenna/GraphControls/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/ASpaceHBox/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing"]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/Antenna1Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna1Phase/Antenna1PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna1Current/Antenna1CurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 1 ]]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/Antenna2Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna2Phase/Antenna2PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna2Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 2 ]]
+[connection signal="pressed" from="TabContainer/Antenna/GraphControls/SipButton" to="TabContainer/Antenna/GraphControls" method="_on_SipButton_pressed"]
+[connection signal="pressed" from="TabContainer/Antenna/GraphControls/SopButton" to="TabContainer/Antenna/GraphControls" method="_on_SopButton_pressed"]
+[connection signal="pressed" from="TabContainer/Vor/VorControls/ResetButton" to="TabContainer/Vor/VorControls" method="_on_ResetButton_pressed"]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/PauseButton" to="GraphContainer/Graph" method="toggle_paused"]
+[connection signal="pressed" from="TabContainer/Vor/VorControls/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/ASpaceHBox/ASpaceSlider" to="TabContainer/Vor/VorControls" method="_on_ASpaceSlider_value_changed"]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna1Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna1Phase/Antenna1PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna1Current/Antenna1CurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 1 ]]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna2Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna2Phase/Antenna2PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna2Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 2 ]]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna3Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 3 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna3Phase/Antenna3PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 3 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna3Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 3 ]]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna4Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 4 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna4Phase/Antenna4PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 4 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna4Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 4 ]]
+[connection signal="pressed" from="TabContainer/GS/GSControls/ResetButton" to="TabContainer/Antenna/GraphControls" method="_on_ResetButton_pressed"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/PauseButton" to="GraphContainer/Graph" method="toggle_paused"]
+[connection signal="pressed" from="TabContainer/GS/GSControls/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/ASpaceHBox/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/Antenna1Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/Antenna1Phase/Antenna1PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/Antenna1Current/Antenna1CurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 1 ]]
+[connection signal="toggled" from="TabContainer/GS/GSControls/Antenna2Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/Antenna2Phase/Antenna2PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/Antenna2Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 2 ]]
+[connection signal="pressed" from="TabContainer/GS/GSControls/CSBButton" to="TabContainer/GS/GSControls" method="_on_CSBButton_pressed"]
+[connection signal="pressed" from="TabContainer/GS/GSControls/SBOButton" to="TabContainer/GS/GSControls" method="_on_SBOButton_pressed"]

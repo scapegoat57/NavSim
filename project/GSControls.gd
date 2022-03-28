@@ -1,0 +1,66 @@
+extends VBoxContainer
+
+export var graph_path:NodePath
+onready var graph_node=get_node(graph_path) as RadiationGraph;
+
+func _ready():
+	connect("visibility_changed",self,"changed")
+
+func changed():
+	if get_parent().visible:
+		graph_node.set_zoom_level(40)
+		_on_ResetButton_pressed()	
+	
+func _on_ResetButton_pressed():
+	$Antenna1Enabled.pressed=true;
+	$Antenna2Enabled.pressed=true;
+	graph_node.toggle_antenna(true, 1)
+	graph_node.toggle_antenna(true, 2)
+	graph_node.toggle_antenna(false, 3)
+	graph_node.toggle_antenna(false, 4)
+
+	$ASpaceHBox/ASpaceSlider.value=0
+	$ASpaceHBox/ASpaceSliderButton.pressed=false;
+	graph_node.set_pos_with_a_spacing(0)
+	$Antenna1Phase/Antenna1PhaseSlider.value = 0;
+	$Antenna2Phase/Antenna2PhaseSlider.value = 0;
+	graph_node.set_antenna_phase(0,1)
+	graph_node.set_antenna_phase(0,2)
+	$Antenna1Current/Antenna1CurrentSlider.value = 1
+	$Antenna2Current/AntennaCurrentSlider.value = 1
+	graph_node.set_antenna_amplitude(1,1)
+	graph_node.set_antenna_amplitude(1,2)
+	
+	graph_node.set_antenna_pos(1,Vector2.ZERO)
+	graph_node.set_antenna_pos(2,Vector2.ZERO)
+	graph_node.set_antenna_pos(3,Vector2.ZERO)
+	graph_node.set_antenna_pos(4,Vector2.ZERO)
+	
+	_on_CSBButton_pressed()
+
+
+func _on_CSBButton_pressed():
+	$ASpaceHBox/ASpaceSlider.value=1720.0
+	graph_node.set_pos_with_a_spacing(1720.0)
+	$Antenna1Phase/Antenna1PhaseSlider.value = 0;
+	$Antenna2Phase/Antenna2PhaseSlider.value = -180.0;
+	graph_node.set_antenna_phase(0,1)
+	graph_node.set_antenna_phase(-180,2)
+	$Antenna1Current/Antenna1CurrentSlider.value = 1
+	$Antenna2Current/AntennaCurrentSlider.value = 1
+	graph_node.set_antenna_amplitude(1,1)
+	graph_node.set_antenna_amplitude(1,2)
+	
+
+func _on_SBOButton_pressed():
+	$ASpaceHBox/ASpaceSlider.value=3439.3
+	graph_node.set_pos_with_a_spacing(3439.3)
+	$Antenna1Phase/Antenna1PhaseSlider.value = 0;
+	$Antenna2Phase/Antenna2PhaseSlider.value = -180;
+	graph_node.set_antenna_phase(0,1)
+	graph_node.set_antenna_phase(-180.0,2)
+	$Antenna1Current/Antenna1CurrentSlider.value = 1
+	$Antenna2Current/AntennaCurrentSlider.value = 1
+	graph_node.set_antenna_amplitude(1,1)
+	graph_node.set_antenna_amplitude(1,2)
+	
