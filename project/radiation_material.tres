@@ -25,6 +25,6 @@ shader_param/timer = null
 shader_param/freq = 3.0
 shader_param/carrier_freq = 1.0
 shader_param/zoom = 2.0
-shader_param/time_scale = 1.0
 shader_param/time_shift = 0.0
 shader_param/overlay = false
+shader_param/hide_below_ground = false

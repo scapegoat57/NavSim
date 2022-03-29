@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://radiation_material.tres" type="Material" id=1]
 [ext_resource path="res://radiation_graph.gd" type="Script" id=2]
@@ -8,6 +8,13 @@
 [ext_resource path="res://CoarseFineButton.tscn" type="PackedScene" id=6]
 [ext_resource path="res://SliderLabel.tscn" type="PackedScene" id=7]
 [ext_resource path="res://GSControls.gd" type="Script" id=8]
+[ext_resource path="res://sprites/pause.png" type="Texture" id=9]
+[ext_resource path="res://pause_play_button.gd" type="Script" id=10]
+[ext_resource path="res://sprites/forward.png" type="Texture" id=11]
+[ext_resource path="res://sprites/return.png" type="Texture" id=12]
+[ext_resource path="res://sprites/fastForward.png" type="Texture" id=13]
+[ext_resource path="res://sprites/rewind.png" type="Texture" id=14]
+[ext_resource path="res://sprites/target.png" type="Texture" id=15]
 
 [node name="AntennaGraph" type="Control"]
 anchor_right = 1.0
@@ -35,7 +42,60 @@ material = ExtResource( 1 )
 margin_left = 47.0
 margin_right = 647.0
 margin_bottom = 600.0
+rect_clip_content = true
 script = ExtResource( 2 )
+
+[node name="AngleRuler" type="Line2D" parent="GraphContainer/Graph"]
+visible = false
+position = Vector2( -134, 0 )
+points = PoolVector2Array( 0, 0, 100, 100 )
+width = 5.0
+end_cap_mode = 2
+antialiased = true
+script = ExtResource( 4 )
+graph_path = NodePath("..")
+label_path = NodePath("../../../Panel/AngleLabel")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GraphContainer/Graph"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -81.0
+margin_top = -34.0
+margin_right = 187.0
+margin_bottom = 22.0
+rect_scale = Vector2( 0.5, 0.5 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ResetTimeButton" type="Button" parent="GraphContainer/Graph/HBoxContainer"]
+margin_right = 62.0
+margin_bottom = 56.0
+icon = ExtResource( 12 )
+
+[node name="DecreaseButton" type="Button" parent="GraphContainer/Graph/HBoxContainer"]
+margin_left = 66.0
+margin_right = 128.0
+margin_bottom = 56.0
+icon = ExtResource( 14 )
+
+[node name="PausePlayButton" type="Button" parent="GraphContainer/Graph/HBoxContainer"]
+margin_left = 132.0
+margin_right = 194.0
+margin_bottom = 56.0
+toggle_mode = true
+icon = ExtResource( 9 )
+script = ExtResource( 10 )
+pause_texture = ExtResource( 9 )
+play_texture = ExtResource( 11 )
+graph_path = NodePath("../..")
+
+[node name="IncreaseButton" type="Button" parent="GraphContainer/Graph/HBoxContainer"]
+margin_left = 198.0
+margin_right = 260.0
+margin_bottom = 56.0
+icon = ExtResource( 13 )
 
 [node name="Panel" type="Panel" parent="."]
 margin_left = 2.0
@@ -47,14 +107,6 @@ margin_bottom = 26.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 valign = 1
-
-[node name="AngleRuler" type="Line2D" parent="."]
-points = PoolVector2Array( 0, 0, 100, 100 )
-width = 5.0
-end_cap_mode = 2
-script = ExtResource( 4 )
-graph_path = NodePath("../GraphContainer/Graph")
-label_path = NodePath("../Panel/AngleLabel")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_left = 1.0
@@ -90,19 +142,6 @@ margin_top = 24.0
 margin_right = 195.0
 margin_bottom = 48.0
 text = "Overlay"
-
-[node name="PauseButton" type="Button" parent="TabContainer/Antenna/GraphControls"]
-margin_top = 52.0
-margin_right = 195.0
-margin_bottom = 72.0
-toggle_mode = true
-text = "Paused"
-
-[node name="ResetTimeButton" type="Button" parent="TabContainer/Antenna/GraphControls"]
-margin_top = 76.0
-margin_right = 195.0
-margin_bottom = 96.0
-text = "Reset Time"
 
 [node name="SliderLabel" parent="TabContainer/Antenna/GraphControls" instance=ExtResource( 7 )]
 anchor_right = 0.0
@@ -305,6 +344,12 @@ margin_right = 195.0
 margin_bottom = 410.0
 text = "Sop"
 
+[node name="HideUnderground" type="CheckButton" parent="TabContainer/Antenna/GraphControls"]
+margin_top = 366.0
+margin_right = 195.0
+margin_bottom = 406.0
+text = "Hide underground"
+
 [node name="Vor" type="ScrollContainer" parent="TabContainer"]
 visible = false
 anchor_right = 1.0
@@ -332,19 +377,6 @@ margin_top = 24.0
 margin_right = 183.0
 margin_bottom = 48.0
 text = "Overlay"
-
-[node name="PauseButton" type="Button" parent="TabContainer/Vor/VorControls"]
-margin_top = 52.0
-margin_right = 183.0
-margin_bottom = 72.0
-toggle_mode = true
-text = "Paused"
-
-[node name="ResetTimeButton" type="Button" parent="TabContainer/Vor/VorControls"]
-margin_top = 76.0
-margin_right = 183.0
-margin_bottom = 96.0
-text = "Reset Time"
 
 [node name="SliderLabel" parent="TabContainer/Vor/VorControls" instance=ExtResource( 7 )]
 anchor_right = 0.0
@@ -711,44 +743,39 @@ margin_right = 195.0
 margin_bottom = 48.0
 text = "Overlay"
 
-[node name="PauseButton" type="Button" parent="TabContainer/GS/GSControls"]
+[node name="CSBEnabled" type="CheckBox" parent="TabContainer/GS/GSControls"]
 margin_top = 52.0
 margin_right = 195.0
-margin_bottom = 72.0
-toggle_mode = true
-text = "Paused"
+margin_bottom = 76.0
+pressed = true
+text = "CSB Enabled"
 
-[node name="ResetTimeButton" type="Button" parent="TabContainer/GS/GSControls"]
-margin_top = 76.0
-margin_right = 195.0
-margin_bottom = 96.0
-text = "Reset Time"
-
-[node name="SliderLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
+[node name="CSBASpaceLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 100.0
+margin_top = 80.0
 margin_right = 195.0
-margin_bottom = 114.0
+margin_bottom = 94.0
 text = "a-spacing: %.2f"
-slider_path = NodePath("../ASpaceHBox/ASpaceSlider")
+slider_path = NodePath("../CSBASpace/ASpaceSlider")
 
-[node name="ASpaceHBox" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
-margin_top = 118.0
+[node name="CSBASpace" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 98.0
 margin_right = 195.0
-margin_bottom = 138.0
+margin_bottom = 118.0
 
-[node name="ASpaceSlider" type="HSlider" parent="TabContainer/GS/GSControls/ASpaceHBox"]
+[node name="ASpaceSlider" type="HSlider" parent="TabContainer/GS/GSControls/CSBASpace"]
 margin_right = 171.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
-max_value = 3500.0
-step = 45.0
-value = 45.0
+min_value = 1620.0
+max_value = 1820.0
+step = 0.0
+value = 1720.0
 tick_count = 5
 ticks_on_borders = true
 
-[node name="ASpaceSliderButton" parent="TabContainer/GS/GSControls/ASpaceHBox" instance=ExtResource( 6 )]
+[node name="ASpaceSliderButton" parent="TabContainer/GS/GSControls/CSBASpace" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 175.0
@@ -758,28 +785,21 @@ coarse_step = 45.0
 fine_step = 0.1
 slider_path = NodePath("../ASpaceSlider")
 
-[node name="Antenna1Enabled" type="CheckBox" parent="TabContainer/GS/GSControls"]
-margin_top = 142.0
-margin_right = 195.0
-margin_bottom = 166.0
-pressed = true
-text = "Antenna1 Enabled"
-
 [node name="Antenna1PhaseSliderLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 170.0
+margin_top = 122.0
 margin_right = 195.0
-margin_bottom = 184.0
+margin_bottom = 136.0
 text = "Phase: %.2f"
-slider_path = NodePath("../Antenna1Phase/Antenna1PhaseSlider")
+slider_path = NodePath("../CSBPhase/CSBPhaseSlider")
 
-[node name="Antenna1Phase" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
-margin_top = 188.0
+[node name="CSBPhase" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 140.0
 margin_right = 195.0
-margin_bottom = 208.0
+margin_bottom = 160.0
 
-[node name="Antenna1PhaseSlider" type="HSlider" parent="TabContainer/GS/GSControls/Antenna1Phase"]
+[node name="CSBPhaseSlider" type="HSlider" parent="TabContainer/GS/GSControls/CSBPhase"]
 margin_right = 171.0
 margin_bottom = 16.0
 hint_tooltip = "asdf"
@@ -791,7 +811,7 @@ value = -22.5
 tick_count = 5
 ticks_on_borders = true
 
-[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/Antenna1Phase" instance=ExtResource( 6 )]
+[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/CSBPhase" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 175.0
@@ -799,23 +819,23 @@ margin_right = 195.0
 margin_bottom = 20.0
 pressed = true
 coarse_step = 45.0
-slider_path = NodePath("../Antenna1PhaseSlider")
+slider_path = NodePath("../CSBPhaseSlider")
 
 [node name="Antenna1CurrentLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 212.0
+margin_top = 164.0
 margin_right = 195.0
-margin_bottom = 226.0
+margin_bottom = 178.0
 text = "Current: %.2f"
-slider_path = NodePath("../Antenna1Current/Antenna1CurrentSlider")
+slider_path = NodePath("../CSBCurrent/CSBCurrentSlider")
 
-[node name="Antenna1Current" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
-margin_top = 230.0
+[node name="CSBCurrent" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 182.0
 margin_right = 195.0
-margin_bottom = 250.0
+margin_bottom = 202.0
 
-[node name="Antenna1CurrentSlider" type="HSlider" parent="TabContainer/GS/GSControls/Antenna1Current"]
+[node name="CSBCurrentSlider" type="HSlider" parent="TabContainer/GS/GSControls/CSBCurrent"]
 margin_right = 171.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
@@ -825,7 +845,7 @@ value = 1.0
 tick_count = 5
 ticks_on_borders = true
 
-[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/Antenna1Current" instance=ExtResource( 6 )]
+[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/CSBCurrent" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 175.0
@@ -834,40 +854,76 @@ margin_bottom = 20.0
 pressed = true
 coarse_step = 0.1
 fine_step = 0.05
-slider_path = NodePath("../Antenna1CurrentSlider")
+slider_path = NodePath("../CSBCurrentSlider")
 
-[node name="Antenna2Enabled" type="CheckBox" parent="TabContainer/GS/GSControls"]
-margin_top = 254.0
+[node name="SBOEnabled" type="CheckBox" parent="TabContainer/GS/GSControls"]
+margin_top = 206.0
 margin_right = 195.0
-margin_bottom = 278.0
+margin_bottom = 230.0
 pressed = true
-text = "Antenna2 Enabled"
+text = "SBO Enabled"
+
+[node name="SBOASpaceLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 234.0
+margin_right = 195.0
+margin_bottom = 248.0
+text = "a-spacing: %.2f"
+slider_path = NodePath("../SBOASpace/ASpaceSlider")
+
+[node name="SBOASpace" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 252.0
+margin_right = 195.0
+margin_bottom = 272.0
+
+[node name="ASpaceSlider" type="HSlider" parent="TabContainer/GS/GSControls/SBOASpace"]
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 3339.3
+max_value = 3539.3
+step = 0.0
+value = 3439.3
+tick_count = 5
+ticks_on_borders = true
+
+[node name="ASpaceSliderButton" parent="TabContainer/GS/GSControls/SBOASpace" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 195.0
+margin_bottom = 20.0
+coarse_step = 45.0
+fine_step = 0.1
+slider_path = NodePath("../ASpaceSlider")
 
 [node name="SliderLabel2" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 282.0
+margin_top = 276.0
 margin_right = 195.0
-margin_bottom = 296.0
+margin_bottom = 290.0
 text = "Phase: %.2f"
-slider_path = NodePath("../Antenna2Phase/Antenna2PhaseSlider")
+slider_path = NodePath("../SBOPhase/SBOPhaseSlider")
 
-[node name="Antenna2Phase" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
-margin_top = 300.0
+[node name="SBOPhase" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 294.0
 margin_right = 195.0
-margin_bottom = 320.0
+margin_bottom = 314.0
 
-[node name="Antenna2PhaseSlider" type="HSlider" parent="TabContainer/GS/GSControls/Antenna2Phase"]
+[node name="SBOPhaseSlider" type="HSlider" parent="TabContainer/GS/GSControls/SBOPhase"]
 margin_right = 171.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 min_value = -360.0
 max_value = 360.0
 step = 11.25
+value = -11.25
 tick_count = 5
 ticks_on_borders = true
 
-[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/Antenna2Phase" instance=ExtResource( 6 )]
+[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/SBOPhase" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 175.0
@@ -875,23 +931,24 @@ margin_right = 195.0
 margin_bottom = 20.0
 pressed = true
 coarse_step = 45.0
-slider_path = NodePath("../Antenna2PhaseSlider")
+fine_step = 0.1
+slider_path = NodePath("../SBOPhaseSlider")
 
 [node name="Antenna2CurrentLabel" parent="TabContainer/GS/GSControls" instance=ExtResource( 7 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 324.0
+margin_top = 318.0
 margin_right = 195.0
-margin_bottom = 338.0
+margin_bottom = 332.0
 text = "Current: %.2f"
-slider_path = NodePath("../Antenna2Current/AntennaCurrentSlider")
+slider_path = NodePath("../SBOCurrent/SBOCurrentSlider")
 
-[node name="Antenna2Current" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
-margin_top = 342.0
+[node name="SBOCurrent" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
+margin_top = 336.0
 margin_right = 195.0
-margin_bottom = 362.0
+margin_bottom = 356.0
 
-[node name="AntennaCurrentSlider" type="HSlider" parent="TabContainer/GS/GSControls/Antenna2Current"]
+[node name="SBOCurrentSlider" type="HSlider" parent="TabContainer/GS/GSControls/SBOCurrent"]
 margin_right = 171.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
@@ -901,7 +958,7 @@ value = 1.0
 tick_count = 5
 ticks_on_borders = true
 
-[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/Antenna2Current" instance=ExtResource( 6 )]
+[node name="CoarseFineButton" parent="TabContainer/GS/GSControls/SBOCurrent" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 175.0
@@ -910,26 +967,38 @@ margin_bottom = 20.0
 pressed = true
 coarse_step = 0.1
 fine_step = 0.05
-slider_path = NodePath("../AntennaCurrentSlider")
+slider_path = NodePath("../SBOCurrentSlider")
 
-[node name="CSBButton" type="Button" parent="TabContainer/GS/GSControls"]
-margin_top = 366.0
+[node name="HideUnderground" type="CheckButton" parent="TabContainer/GS/GSControls"]
+margin_top = 360.0
 margin_right = 195.0
-margin_bottom = 386.0
-text = "CSB"
+margin_bottom = 400.0
+text = "Hide underground"
 
-[node name="SBOButton" type="Button" parent="TabContainer/GS/GSControls"]
-margin_top = 390.0
+[node name="Button" type="Button" parent="TabContainer/GS/GSControls"]
+margin_top = 404.0
 margin_right = 195.0
-margin_bottom = 410.0
-text = "SBO"
+margin_bottom = 424.0
+text = "Swap"
+
+[node name="RulerVisibleButton" type="Button" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -28.0
+margin_right = 62.0
+margin_bottom = 28.0
+rect_scale = Vector2( 0.5, 0.5 )
+toggle_mode = true
+icon = ExtResource( 15 )
 
 [connection signal="gui_input" from="GraphContainer/Graph" to="GraphContainer/Graph" method="_on_Graph_gui_input"]
+[connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
+[connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/DecreaseButton" to="GraphContainer/Graph" method="increase_time_scale" binds= [ -2 ]]
+[connection signal="toggled" from="GraphContainer/Graph/HBoxContainer/PausePlayButton" to="GraphContainer/Graph/HBoxContainer/PausePlayButton" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/IncreaseButton" to="GraphContainer/Graph" method="increase_time_scale" binds= [ 2 ]]
 [connection signal="pressed" from="TabContainer/Antenna/GraphControls/ResetButton" to="TabContainer/Antenna/GraphControls" method="_on_ResetButton_pressed"]
 [connection signal="toggled" from="TabContainer/Antenna/GraphControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
-[connection signal="toggled" from="TabContainer/Antenna/GraphControls/PauseButton" to="GraphContainer/Graph" method="toggle_paused"]
-[connection signal="pressed" from="TabContainer/Antenna/GraphControls/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
-[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/ASpaceHBox/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing"]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/ASpaceHBox/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing" binds= [ 1, 2 ]]
 [connection signal="toggled" from="TabContainer/Antenna/GraphControls/Antenna1Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 1 ]]
 [connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna1Phase/Antenna1PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 1 ]]
 [connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna1Current/Antenna1CurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 1 ]]
@@ -938,10 +1007,9 @@ text = "SBO"
 [connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna2Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 2 ]]
 [connection signal="pressed" from="TabContainer/Antenna/GraphControls/SipButton" to="TabContainer/Antenna/GraphControls" method="_on_SipButton_pressed"]
 [connection signal="pressed" from="TabContainer/Antenna/GraphControls/SopButton" to="TabContainer/Antenna/GraphControls" method="_on_SopButton_pressed"]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/HideUnderground" to="GraphContainer/Graph" method="hide_below_ground"]
 [connection signal="pressed" from="TabContainer/Vor/VorControls/ResetButton" to="TabContainer/Vor/VorControls" method="_on_ResetButton_pressed"]
 [connection signal="toggled" from="TabContainer/Vor/VorControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
-[connection signal="toggled" from="TabContainer/Vor/VorControls/PauseButton" to="GraphContainer/Graph" method="toggle_paused"]
-[connection signal="pressed" from="TabContainer/Vor/VorControls/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
 [connection signal="value_changed" from="TabContainer/Vor/VorControls/ASpaceHBox/ASpaceSlider" to="TabContainer/Vor/VorControls" method="_on_ASpaceSlider_value_changed"]
 [connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna1Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 1 ]]
 [connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna1Phase/Antenna1PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 1 ]]
@@ -955,16 +1023,16 @@ text = "SBO"
 [connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna4Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 4 ]]
 [connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna4Phase/Antenna4PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 4 ]]
 [connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna4Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 4 ]]
-[connection signal="pressed" from="TabContainer/GS/GSControls/ResetButton" to="TabContainer/Antenna/GraphControls" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="TabContainer/GS/GSControls/ResetButton" to="TabContainer/GS/GSControls" method="_on_ResetButton_pressed"]
 [connection signal="toggled" from="TabContainer/GS/GSControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
-[connection signal="toggled" from="TabContainer/GS/GSControls/PauseButton" to="GraphContainer/Graph" method="toggle_paused"]
-[connection signal="pressed" from="TabContainer/GS/GSControls/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
-[connection signal="value_changed" from="TabContainer/GS/GSControls/ASpaceHBox/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing"]
-[connection signal="toggled" from="TabContainer/GS/GSControls/Antenna1Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 1 ]]
-[connection signal="value_changed" from="TabContainer/GS/GSControls/Antenna1Phase/Antenna1PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 1 ]]
-[connection signal="value_changed" from="TabContainer/GS/GSControls/Antenna1Current/Antenna1CurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 1 ]]
-[connection signal="toggled" from="TabContainer/GS/GSControls/Antenna2Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 2 ]]
-[connection signal="value_changed" from="TabContainer/GS/GSControls/Antenna2Phase/Antenna2PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 2 ]]
-[connection signal="value_changed" from="TabContainer/GS/GSControls/Antenna2Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 2 ]]
-[connection signal="pressed" from="TabContainer/GS/GSControls/CSBButton" to="TabContainer/GS/GSControls" method="_on_CSBButton_pressed"]
-[connection signal="pressed" from="TabContainer/GS/GSControls/SBOButton" to="TabContainer/GS/GSControls" method="_on_SBOButton_pressed"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/CSBEnabled" to="TabContainer/GS/GSControls" method="_on_CSBEnabled_toggled"]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/CSBASpace/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing" binds= [ 1, 2 ]]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/CSBPhase/CSBPhaseSlider" to="TabContainer/GS/GSControls" method="_on_CSBPhaseSlider_value_changed"]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/CSBCurrent/CSBCurrentSlider" to="TabContainer/GS/GSControls" method="_on_CSBCurrentSlider_value_changed"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/SBOEnabled" to="TabContainer/GS/GSControls" method="_on_SBOEnabled_toggled"]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/SBOASpace/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing" binds= [ 3, 4 ]]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/SBOPhase/SBOPhaseSlider" to="TabContainer/GS/GSControls" method="_on_SBOPhaseSlider_value_changed"]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/SBOCurrent/SBOCurrentSlider" to="TabContainer/GS/GSControls" method="_on_SBOCurrentSlider_value_changed"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/HideUnderground" to="GraphContainer/Graph" method="hide_below_ground"]
+[connection signal="pressed" from="TabContainer/GS/GSControls/Button" to="TabContainer/GS/GSControls" method="_on_Swap_pressed"]
+[connection signal="toggled" from="RulerVisibleButton" to="GraphContainer/Graph/AngleRuler" method="set_visible"]

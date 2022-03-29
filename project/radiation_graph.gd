@@ -5,6 +5,7 @@ export var paused=false;
 export var zoom_level=10.0
 export var origin:Vector2=Vector2(0,0)
 export var frequency=1
+export var time_scale = 1.0
 var timer=0.0;
 
 func _ready():
@@ -14,7 +15,7 @@ func _ready():
 
 func _process(delta):
 	if (!paused):
-		timer+=delta
+		timer+=delta*time_scale
 		material.set_shader_param("timer",timer)
 
 
@@ -41,11 +42,11 @@ func set_antenna_pos(antenna, position):
 	material.set_shader_param(param, position)
 
 
-func set_pos_with_a_spacing(var a_spacing):
+func set_pos_with_a_spacing(var a_spacing, ant_a, ant_b):
 	var pos1=Vector2(0,a_spacing/360/frequency)
 	var pos2=Vector2(0,-a_spacing/360/frequency)
-	material.set_shader_param("ant1_pos",pos1)
-	material.set_shader_param("ant2_pos",pos2)
+	material.set_shader_param("ant%d_pos" % ant_a,pos1)
+	material.set_shader_param("ant%d_pos" % ant_b,pos2)
 
 
 func set_NWSE_with_a_space(var a_space):
@@ -111,3 +112,12 @@ func set_antenna_amplitude(amplitude, antenna):
 func set_zoom_level(value):
 	zoom_level=value
 	material.set_shader_param("zoom",value)
+
+func hide_below_ground(value):
+	material.set_shader_param("hide_below_ground", value)
+	
+func set_time_scale(value):
+	time_scale=value;
+	
+func increase_time_scale(value):
+	set_time_scale(time_scale + value)

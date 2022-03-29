@@ -8,6 +8,7 @@ func _ready():
 
 func changed():
 	if get_parent().visible:
+		graph_node.set_zoom_level(10)
 		_on_ResetButton_pressed()
 	
 
@@ -31,7 +32,7 @@ func _on_ResetButton_pressed():
 
 	$ASpaceHBox/ASpaceSlider.value=0
 	$ASpaceHBox/ASpaceSliderButton.pressed=true;
-	graph_node.set_pos_with_a_spacing(0)
+	graph_node.set_pos_with_a_spacing(0, 1, 2)
 	$Antenna1Phase/Antenna1PhaseSlider.value = 0;
 	graph_node.set_antenna_phase(0,1)
 	$Antenna2Phase/Antenna2PhaseSlider.value = 0;
@@ -45,4 +46,7 @@ func _on_ResetButton_pressed():
 	graph_node.set_antenna_pos(2,Vector2.ZERO)
 	graph_node.set_antenna_pos(3,Vector2.ZERO)
 	graph_node.set_antenna_pos(4,Vector2.ZERO)
+	
+	$HideUnderground.pressed=false
+	graph_node.hide_below_ground(false)
 	

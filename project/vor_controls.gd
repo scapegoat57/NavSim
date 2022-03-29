@@ -9,6 +9,7 @@ func _ready():
 
 func changed():
 	if get_parent().visible:
+		graph_node.set_zoom_level(10)
 		_on_ResetButton_pressed()
 
 func _on_ResetButton_pressed():
@@ -42,6 +43,7 @@ func _on_ResetButton_pressed():
 	graph_node.set_antenna_amplitude(1,3)
 	graph_node.set_antenna_amplitude(1,4)
 
+	graph_node.hide_below_ground(false)
 
 func _on_ASpaceSlider_value_changed(value):
 	graph_node.set_NWSE_with_a_space(value)
