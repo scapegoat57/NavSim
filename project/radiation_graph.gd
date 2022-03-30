@@ -7,6 +7,7 @@ export var origin:Vector2=Vector2(0,0)
 export var frequency=1
 export var time_scale = 1.0
 var timer=0.0;
+signal zoom_level_changed(new_value)
 
 func _ready():
 	material.set_shader_param("zoom",zoom_level)
@@ -79,10 +80,9 @@ func _on_Graph_gui_input(event):
 				drag_start=event.position/rect_size
 			if event.button_index == BUTTON_WHEEL_UP:
 				zoom_level -= 1 if zoom_level > 1 else 0
-				material.set_shader_param("zoom",zoom_level)
+				set_zoom_level(zoom_level)
 			if event.button_index == BUTTON_WHEEL_DOWN:
-				zoom_level+=1
-				material.set_shader_param("zoom",zoom_level)
+				set_zoom_level(zoom_level+1)
 #		if !event.pressed:
 #			print(event.as_text())
 
@@ -116,6 +116,10 @@ func set_antenna_amplitude(amplitude, antenna):
 func set_zoom_level(value):
 	zoom_level=value
 	material.set_shader_param("zoom",value)
+	emit_signal("zoom_level_changed",value)
+
+func increment_zoom_level(delta):
+	set_zoom_level(zoom_level + delta)
 
 func hide_below_ground(value):
 	material.set_shader_param("hide_below_ground", value)

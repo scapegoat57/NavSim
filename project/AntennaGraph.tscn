@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://radiation_material.tres" type="Material" id=1]
 [ext_resource path="res://radiation_graph.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://sprites/target.png" type="Texture" id=15]
 [ext_resource path="res://AngleOverlay.gd" type="Script" id=16]
 [ext_resource path="res://sprites/home.png" type="Texture" id=17]
+[ext_resource path="res://ZoomSlider.gd" type="Script" id=18]
 
 [node name="AntennaGraph" type="Control"]
 anchor_right = 1.0
@@ -1075,6 +1076,23 @@ margin_bottom = 59.0
 rect_scale = Vector2( 0.5, 0.5 )
 icon = ExtResource( 17 )
 
+[node name="ZoomSlider" type="VSlider" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 8.0
+margin_top = 40.0
+margin_right = 24.0
+margin_bottom = 168.0
+min_value = 1.0
+max_value = 10000.0
+step = 0.0
+value = 10.0
+exp_edit = true
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource( 18 )
+graph_path = NodePath("../GraphContainer/Graph")
+
 [connection signal="gui_input" from="GraphContainer/Graph" to="GraphContainer/Graph" method="_on_Graph_gui_input"]
 [connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
 [connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/DecreaseButton" to="GraphContainer/Graph" method="increase_time_scale" binds= [ -2 ]]
@@ -1124,3 +1142,4 @@ icon = ExtResource( 17 )
 [connection signal="pressed" from="TabContainer/GS/GSControls/Button" to="TabContainer/GS/GSControls" method="_on_Swap_pressed"]
 [connection signal="toggled" from="RulerVisibleButton" to="GraphContainer/Graph/AngleRuler" method="set_visible"]
 [connection signal="pressed" from="HomeButton" to="GraphContainer/Graph" method="set_origin" binds= [ Vector2( 0, 0 ) ]]
+[connection signal="value_changed" from="ZoomSlider" to="GraphContainer/Graph" method="set_zoom_level"]
