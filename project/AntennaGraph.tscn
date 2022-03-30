@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://radiation_material.tres" type="Material" id=1]
 [ext_resource path="res://radiation_graph.gd" type="Script" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://sprites/fastForward.png" type="Texture" id=13]
 [ext_resource path="res://sprites/rewind.png" type="Texture" id=14]
 [ext_resource path="res://sprites/target.png" type="Texture" id=15]
+[ext_resource path="res://AngleOverlay.gd" type="Script" id=16]
+[ext_resource path="res://sprites/home.png" type="Texture" id=17]
 
 [node name="AntennaGraph" type="Control"]
 anchor_right = 1.0
@@ -96,6 +98,58 @@ margin_left = 198.0
 margin_right = 260.0
 margin_bottom = 56.0
 icon = ExtResource( 13 )
+
+[node name="GlidePath" type="Line2D" parent="GraphContainer/Graph"]
+visible = false
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 1.0
+default_color = Color( 0.937255, 1, 0.4, 1 )
+antialiased = true
+script = ExtResource( 16 )
+graph_path = NodePath("..")
+angle = 3.0
+
+[node name="PW" type="Node2D" parent="GraphContainer/Graph"]
+visible = false
+
+[node name="PW+" type="Line2D" parent="GraphContainer/Graph/PW"]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 1.0
+default_color = Color( 0.8, 0.4, 1, 1 )
+antialiased = true
+script = ExtResource( 16 )
+graph_path = NodePath("../..")
+angle = 3.7
+
+[node name="PW-" type="Line2D" parent="GraphContainer/Graph/PW"]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 1.0
+default_color = Color( 0.8, 0.4, 1, 1 )
+antialiased = true
+script = ExtResource( 16 )
+graph_path = NodePath("../..")
+angle = 2.3
+
+[node name="PEW" type="Node2D" parent="GraphContainer/Graph"]
+visible = false
+
+[node name="PEW-" type="Line2D" parent="GraphContainer/Graph/PEW"]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 1.0
+default_color = Color( 0.4, 1, 0.972549, 1 )
+antialiased = true
+script = ExtResource( 16 )
+graph_path = NodePath("../..")
+angle = 2.65
+
+[node name="PEW+" type="Line2D" parent="GraphContainer/Graph/PEW"]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 1.0
+default_color = Color( 0.4, 1, 0.972549, 1 )
+antialiased = true
+script = ExtResource( 16 )
+graph_path = NodePath("../..")
+angle = 3.35
 
 [node name="Panel" type="Panel" parent="."]
 margin_left = 2.0
@@ -361,7 +415,7 @@ margin_bottom = -4.0
 
 [node name="VorControls" type="VBoxContainer" parent="TabContainer/Vor"]
 margin_right = 195.0
-margin_bottom = 586.0
+margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 5 )
@@ -731,6 +785,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 8 )
 graph_path = NodePath("../../../GraphContainer/Graph")
+glide_path_path = NodePath("../../../GraphContainer/Graph/GlidePath")
+path_width_path = NodePath("../../../GraphContainer/Graph/PW")
+pew_path = NodePath("../../../GraphContainer/Graph/PEW")
 
 [node name="ResetButton" type="Button" parent="TabContainer/GS/GSControls"]
 margin_right = 195.0
@@ -975,10 +1032,28 @@ margin_right = 195.0
 margin_bottom = 400.0
 text = "Hide underground"
 
-[node name="Button" type="Button" parent="TabContainer/GS/GSControls"]
+[node name="GlideAngleButton" type="CheckButton" parent="TabContainer/GS/GSControls"]
 margin_top = 404.0
 margin_right = 195.0
-margin_bottom = 424.0
+margin_bottom = 444.0
+text = "Glide Angle"
+
+[node name="PathWidthButton" type="CheckButton" parent="TabContainer/GS/GSControls"]
+margin_top = 448.0
+margin_right = 195.0
+margin_bottom = 488.0
+text = "Path Width"
+
+[node name="PEWButton" type="CheckButton" parent="TabContainer/GS/GSControls"]
+margin_top = 492.0
+margin_right = 195.0
+margin_bottom = 532.0
+text = "PEW"
+
+[node name="Button" type="Button" parent="TabContainer/GS/GSControls"]
+margin_top = 536.0
+margin_right = 195.0
+margin_bottom = 556.0
 text = "Swap"
 
 [node name="RulerVisibleButton" type="Button" parent="."]
@@ -990,6 +1065,15 @@ margin_bottom = 28.0
 rect_scale = Vector2( 0.5, 0.5 )
 toggle_mode = true
 icon = ExtResource( 15 )
+
+[node name="HomeButton" type="Button" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = 3.0
+margin_right = 62.0
+margin_bottom = 59.0
+rect_scale = Vector2( 0.5, 0.5 )
+icon = ExtResource( 17 )
 
 [connection signal="gui_input" from="GraphContainer/Graph" to="GraphContainer/Graph" method="_on_Graph_gui_input"]
 [connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
@@ -1034,5 +1118,9 @@ icon = ExtResource( 15 )
 [connection signal="value_changed" from="TabContainer/GS/GSControls/SBOPhase/SBOPhaseSlider" to="TabContainer/GS/GSControls" method="_on_SBOPhaseSlider_value_changed"]
 [connection signal="value_changed" from="TabContainer/GS/GSControls/SBOCurrent/SBOCurrentSlider" to="TabContainer/GS/GSControls" method="_on_SBOCurrentSlider_value_changed"]
 [connection signal="toggled" from="TabContainer/GS/GSControls/HideUnderground" to="GraphContainer/Graph" method="hide_below_ground"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/GlideAngleButton" to="TabContainer/GS/GSControls" method="_on_GlideAngleButton_toggled"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/PathWidthButton" to="TabContainer/GS/GSControls" method="_on_PathWidthButton_toggled"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/PEWButton" to="TabContainer/GS/GSControls" method="_on_PEWButton_toggled"]
 [connection signal="pressed" from="TabContainer/GS/GSControls/Button" to="TabContainer/GS/GSControls" method="_on_Swap_pressed"]
 [connection signal="toggled" from="RulerVisibleButton" to="GraphContainer/Graph/AngleRuler" method="set_visible"]
+[connection signal="pressed" from="HomeButton" to="GraphContainer/Graph" method="set_origin" binds= [ Vector2( 0, 0 ) ]]

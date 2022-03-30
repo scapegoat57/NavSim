@@ -2,6 +2,9 @@ extends VBoxContainer
 
 export var graph_path:NodePath
 onready var graph_node=get_node(graph_path) as RadiationGraph;
+export var glide_path_path:NodePath
+export var path_width_path:NodePath
+export var pew_path:NodePath
 
 func _ready():
 	connect("visibility_changed",self,"changed")
@@ -9,7 +12,12 @@ func _ready():
 func changed():
 	if get_parent().visible:
 		graph_node.set_zoom_level(40)
-		_on_ResetButton_pressed()	
+		graph_node.set_origin(Vector2.ZERO)
+		_on_ResetButton_pressed()
+	else:
+		$GlideAngleButton.pressed=false
+		$PathWidthButton.pressed=false
+		$PEWButton.pressed=false
 	
 func _on_ResetButton_pressed():
 	$CSBEnabled.pressed=true;
@@ -41,6 +49,9 @@ func _on_ResetButton_pressed():
 	$HideUnderground.pressed=false
 	graph_node.hide_below_ground(false)
 	
+	$GlideAngleButton.pressed=false
+	$PathWidthButton.pressed=false
+	$PEWButton.pressed=false
 
 
 func _on_CSBEnabled_toggled(button_pressed):
@@ -81,3 +92,15 @@ func _on_Swap_pressed():
 	else:
 		$CSBEnabled.pressed=true
 		$SBOEnabled.pressed=false
+
+
+func _on_GlideAngleButton_toggled(button_pressed):
+	(get_node(glide_path_path) as Node2D).visible=button_pressed
+
+
+func _on_PathWidthButton_toggled(button_pressed):
+	(get_node(path_width_path) as Node2D).visible=button_pressed
+
+
+func _on_PEWButton_toggled(button_pressed):
+	(get_node(pew_path) as Node2D).visible=button_pressed

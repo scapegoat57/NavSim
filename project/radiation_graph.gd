@@ -93,6 +93,10 @@ func local_to_world(local_coordinates):
 	var local_to_uv= (local_coordinates+origin)/-zoom_level+Vector2(0.5,0.5)
 	return local_to_uv * self.rect_size
 
+func world_to_local(world_coordinates):
+	var uv=world_coordinates/rect_size
+	return uv_to_local(uv)
+	
 
 func toggle_antenna(enabled, index):
 	var param="ant"+String(index)+"_enabled"
@@ -121,3 +125,7 @@ func set_time_scale(value):
 	
 func increase_time_scale(value):
 	set_time_scale(time_scale + value)
+	
+func set_origin(value):
+	origin=value
+	material.set_shader_param("origin",value)

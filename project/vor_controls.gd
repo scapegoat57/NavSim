@@ -10,6 +10,7 @@ func _ready():
 func changed():
 	if get_parent().visible:
 		graph_node.set_zoom_level(10)
+		graph_node.set_origin(Vector2.ZERO)
 		_on_ResetButton_pressed()
 
 func _on_ResetButton_pressed():
