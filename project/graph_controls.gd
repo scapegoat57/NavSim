@@ -10,6 +10,7 @@ func changed():
 	if get_parent().visible:
 		graph_node.set_zoom_level(10)
 		graph_node.set_origin(Vector2.ZERO)
+		$PhaseModeButton.pressed=true
 		_on_ResetButton_pressed()
 	
 

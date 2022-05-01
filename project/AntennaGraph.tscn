@@ -198,6 +198,12 @@ margin_right = 195.0
 margin_bottom = 48.0
 text = "Overlay"
 
+[node name="PhaseModeButton" type="CheckBox" parent="TabContainer/Antenna/GraphControls"]
+margin_top = 24.0
+margin_right = 195.0
+margin_bottom = 48.0
+text = "Phase Mode"
+
 [node name="SliderLabel" parent="TabContainer/Antenna/GraphControls" instance=ExtResource( 7 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -781,7 +787,7 @@ margin_bottom = -4.0
 
 [node name="GSControls" type="VBoxContainer" parent="TabContainer/GS"]
 margin_right = 195.0
-margin_bottom = 564.0
+margin_bottom = 584.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 8 )
@@ -1057,6 +1063,12 @@ margin_right = 195.0
 margin_bottom = 556.0
 text = "Swap"
 
+[node name="PhaseModeButton" type="CheckBox" parent="TabContainer/GS/GSControls"]
+margin_top = 560.0
+margin_right = 195.0
+margin_bottom = 584.0
+text = "Phase Mode"
+
 [node name="RulerVisibleButton" type="Button" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -1100,6 +1112,7 @@ graph_path = NodePath("../GraphContainer/Graph")
 [connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/IncreaseButton" to="GraphContainer/Graph" method="increase_time_scale" binds= [ 2 ]]
 [connection signal="pressed" from="TabContainer/Antenna/GraphControls/ResetButton" to="TabContainer/Antenna/GraphControls" method="_on_ResetButton_pressed"]
 [connection signal="toggled" from="TabContainer/Antenna/GraphControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/PhaseModeButton" to="GraphContainer/Graph" method="set_phase_mode"]
 [connection signal="value_changed" from="TabContainer/Antenna/GraphControls/ASpaceHBox/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing" binds= [ 1, 2 ]]
 [connection signal="toggled" from="TabContainer/Antenna/GraphControls/Antenna1Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 1 ]]
 [connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna1Phase/Antenna1PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 1 ]]
@@ -1140,6 +1153,7 @@ graph_path = NodePath("../GraphContainer/Graph")
 [connection signal="toggled" from="TabContainer/GS/GSControls/PathWidthButton" to="TabContainer/GS/GSControls" method="_on_PathWidthButton_toggled"]
 [connection signal="toggled" from="TabContainer/GS/GSControls/PEWButton" to="TabContainer/GS/GSControls" method="_on_PEWButton_toggled"]
 [connection signal="pressed" from="TabContainer/GS/GSControls/Button" to="TabContainer/GS/GSControls" method="_on_Swap_pressed"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/PhaseModeButton" to="GraphContainer/Graph" method="set_phase_mode"]
 [connection signal="toggled" from="RulerVisibleButton" to="GraphContainer/Graph/AngleRuler" method="set_visible"]
 [connection signal="pressed" from="HomeButton" to="GraphContainer/Graph" method="set_origin" binds= [ Vector2( 0, 0 ) ]]
 [connection signal="value_changed" from="ZoomSlider" to="GraphContainer/Graph" method="set_zoom_level"]

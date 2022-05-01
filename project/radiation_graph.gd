@@ -133,3 +133,6 @@ func increase_time_scale(value):
 func set_origin(value):
 	origin=value
 	material.set_shader_param("origin",value)
+
+func set_phase_mode(value):
+	material.set_shader_param("phase_mode",value)
