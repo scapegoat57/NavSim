@@ -11,6 +11,7 @@ func changed():
 		graph_node.set_zoom_level(10)
 		graph_node.set_origin(Vector2.ZERO)
 		$PhaseModeButton.pressed=true
+#		$PhaseModeButton.pressed=true
 		_on_ResetButton_pressed()
 	
 
