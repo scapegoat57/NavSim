@@ -77,16 +77,16 @@ var drag_start:Vector2=Vector2.ZERO
 func _on_Graph_gui_input(event):
 	if event is InputEventMouseMotion:
 		if event.button_mask == BUTTON_LEFT:
-			var drag_end=event.position/rect_size
+			var drag_end=world_to_uv(event.position)
 			
-			origin+=(uv_to_local(drag_end)-uv_to_local(drag_start))
+			origin-=(uv_to_graph(drag_end)-uv_to_graph(drag_start))*Vector2(1,-1)
 			material.set_shader_param("origin",origin)
 			drag_start=drag_end
 			
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.button_index == BUTTON_LEFT:
-				drag_start=event.position/rect_size
+				drag_start=world_to_uv(event.position)
 			if event.button_index == BUTTON_WHEEL_UP:
 				zoom_level -= 1 if zoom_level > 1 else 0
 				set_zoom_level(zoom_level)
@@ -95,22 +95,26 @@ func _on_Graph_gui_input(event):
 #		if !event.pressed:
 #			print(event.as_text())
 
-func uv_to_local(uv:Vector2):
-#	uv*=aspect_ratio;
+func uv_to_graph(uv:Vector2):
 	var offset=Vector2(0.5,0.5)
-	return (uv-offset)*aspect_ratio*-zoom_level+origin
+	return ((uv-offset)*aspect_ratio*zoom_level+origin)*Vector2(1,-1)
 
-func local_to_uv(local:Vector2):
+func graph_to_uv(graph:Vector2):
 	var offset=Vector2(0.5,0.5)
-	return (local - origin) / (aspect_ratio * zoom_level) + offset
+	return (graph*Vector2(1,-1) - origin) / (aspect_ratio * zoom_level) + offset
 
-func local_to_world(local):
-	var uv=local_to_uv(local)
-	return uv * self.rect_size
+func world_to_uv(world:Vector2):
+	return (world - get_global_rect().position) / get_rect().size
 
-func world_to_local(world_coordinates):
-	var uv=world_coordinates/rect_size
-	return uv_to_local(uv)
+func uv_to_world(uv:Vector2):
+	return uv * get_rect().size + get_global_rect().position
+
+func graph_to_world(graph):
+	return uv_to_world(graph_to_uv(graph))
+
+func world_to_graph(world_coordinates):
+	var uv = world_to_uv(world_coordinates)
+	return uv_to_graph(uv)
 	
 
 func toggle_antenna(enabled, index):

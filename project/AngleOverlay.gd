@@ -9,9 +9,8 @@ func _ready():
 	pass
 
 func _process(delta):
-	global_position=Vector2.ZERO
-	self.points[0] = graph_node.local_to_world(Vector2.ZERO)+graph_node.rect_global_position
-	var far_point=Vector2(-100000,sin(deg2rad(angle))*100000)
-	points[1]=graph_node.local_to_world(far_point)
+	points[0] = graph_node.graph_to_world(Vector2.ZERO)
+	var far_point=Vector2(10, sin(deg2rad(angle)) * 10)
+	points[1]= graph_node.graph_to_world(far_point)
 
 

@@ -23,40 +23,19 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="OriginX" type="Line2D" parent="."]
-visible = false
-position = Vector2( 350, 189 )
-points = PoolVector2Array( 0, 0, 100, 0 )
-
-[node name="OriginY" type="Line2D" parent="."]
-visible = false
-position = Vector2( 350, 189 )
-points = PoolVector2Array( 50, -50, 50, 50 )
-
-[node name="GraphContainer" type="MarginContainer" parent="."]
+[node name="Graph Panel" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -255.0
+margin_right = -296.0
 
-[node name="Graph" type="ColorRect" parent="GraphContainer"]
+[node name="Graph" type="ColorRect" parent="Graph Panel"]
 material = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_clip_content = true
 script = ExtResource( 2 )
 
-[node name="AngleRuler" type="Line2D" parent="GraphContainer/Graph"]
-visible = false
-position = Vector2( -134, 0 )
-points = PoolVector2Array( 0, 0, 100, 100 )
-width = 5.0
-end_cap_mode = 2
-antialiased = true
-script = ExtResource( 4 )
-graph_path = NodePath("..")
-label_path = NodePath("../../../Panel/AngleLabel")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GraphContainer/Graph"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Graph Panel/Graph"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -69,18 +48,18 @@ rect_scale = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ResetTimeButton" type="Button" parent="GraphContainer/Graph/HBoxContainer"]
+[node name="ResetTimeButton" type="Button" parent="Graph Panel/Graph/HBoxContainer"]
 margin_right = 62.0
 margin_bottom = 56.0
 icon = ExtResource( 12 )
 
-[node name="DecreaseButton" type="Button" parent="GraphContainer/Graph/HBoxContainer"]
+[node name="DecreaseButton" type="Button" parent="Graph Panel/Graph/HBoxContainer"]
 margin_left = 66.0
 margin_right = 128.0
 margin_bottom = 56.0
 icon = ExtResource( 14 )
 
-[node name="PausePlayButton" type="Button" parent="GraphContainer/Graph/HBoxContainer"]
+[node name="PausePlayButton" type="Button" parent="Graph Panel/Graph/HBoxContainer"]
 margin_left = 132.0
 margin_right = 194.0
 margin_bottom = 56.0
@@ -91,13 +70,13 @@ pause_texture = ExtResource( 9 )
 play_texture = ExtResource( 11 )
 graph_path = NodePath("../..")
 
-[node name="IncreaseButton" type="Button" parent="GraphContainer/Graph/HBoxContainer"]
+[node name="IncreaseButton" type="Button" parent="Graph Panel/Graph/HBoxContainer"]
 margin_left = 198.0
 margin_right = 260.0
 margin_bottom = 56.0
 icon = ExtResource( 13 )
 
-[node name="GlidePath" type="Line2D" parent="GraphContainer/Graph"]
+[node name="GlidePath" type="Line2D" parent="Graph Panel/Graph"]
 visible = false
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 1.0
@@ -107,10 +86,10 @@ script = ExtResource( 16 )
 graph_path = NodePath("..")
 angle = 3.0
 
-[node name="PW" type="Node2D" parent="GraphContainer/Graph"]
+[node name="PW" type="Node2D" parent="Graph Panel/Graph"]
 visible = false
 
-[node name="PW+" type="Line2D" parent="GraphContainer/Graph/PW"]
+[node name="PW+" type="Line2D" parent="Graph Panel/Graph/PW"]
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 1.0
 default_color = Color( 0.8, 0.4, 1, 1 )
@@ -119,7 +98,7 @@ script = ExtResource( 16 )
 graph_path = NodePath("../..")
 angle = 3.7
 
-[node name="PW-" type="Line2D" parent="GraphContainer/Graph/PW"]
+[node name="PW-" type="Line2D" parent="Graph Panel/Graph/PW"]
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 1.0
 default_color = Color( 0.8, 0.4, 1, 1 )
@@ -128,10 +107,10 @@ script = ExtResource( 16 )
 graph_path = NodePath("../..")
 angle = 2.3
 
-[node name="PEW" type="Node2D" parent="GraphContainer/Graph"]
+[node name="PEW" type="Node2D" parent="Graph Panel/Graph"]
 visible = false
 
-[node name="PEW-" type="Line2D" parent="GraphContainer/Graph/PEW"]
+[node name="PEW-" type="Line2D" parent="Graph Panel/Graph/PEW"]
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 1.0
 default_color = Color( 0.4, 1, 0.972549, 1 )
@@ -140,7 +119,7 @@ script = ExtResource( 16 )
 graph_path = NodePath("../..")
 angle = 2.65
 
-[node name="PEW+" type="Line2D" parent="GraphContainer/Graph/PEW"]
+[node name="PEW+" type="Line2D" parent="Graph Panel/Graph/PEW"]
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 1.0
 default_color = Color( 0.4, 1, 0.972549, 1 )
@@ -149,22 +128,57 @@ script = ExtResource( 16 )
 graph_path = NodePath("../..")
 angle = 3.35
 
-[node name="Panel" type="Panel" parent="."]
-margin_left = 2.0
-margin_top = 1.0
-margin_right = 81.0
-margin_bottom = 26.0
+[node name="AngleRuler" type="Line2D" parent="Graph Panel"]
+visible = false
+points = PoolVector2Array( 0, 0, 100, 100 )
+width = 5.0
+end_cap_mode = 2
+antialiased = true
+script = ExtResource( 4 )
+graph_path = NodePath("../Graph")
+label_path = NodePath("../AngleLabel")
 
-[node name="AngleLabel" type="Label" parent="Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="AngleLabel" type="Label" parent="Graph Panel"]
+margin_bottom = 14.0
 valign = 1
+
+[node name="RulerVisibleButton" type="Button" parent="Graph Panel"]
+margin_left = 10.0
+margin_top = 135.0
+margin_right = 72.0
+margin_bottom = 191.0
+rect_scale = Vector2( 0.5, 0.5 )
+toggle_mode = true
+icon = ExtResource( 15 )
+
+[node name="HomeButton" type="Button" parent="Graph Panel"]
+margin_left = 10.0
+margin_top = 170.0
+margin_right = 72.0
+margin_bottom = 226.0
+rect_scale = Vector2( 0.5, 0.5 )
+icon = ExtResource( 17 )
+
+[node name="ZoomSlider" type="VSlider" parent="Graph Panel"]
+margin_left = 10.0
+margin_top = 269.0
+margin_right = 26.0
+margin_bottom = 469.0
+min_value = 1.0
+max_value = 10000.0
+step = 0.0
+value = 10.0
+exp_edit = true
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource( 18 )
+graph_path = NodePath("../Graph")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -252.0
+margin_left = -292.0
 
 [node name="Antenna" type="ScrollContainer" parent="TabContainer"]
 visible = false
@@ -177,12 +191,12 @@ margin_bottom = -4.0
 scroll_horizontal_enabled = false
 
 [node name="GraphControls" type="VBoxContainer" parent="TabContainer/Antenna"]
-margin_right = 244.0
+margin_right = 284.0
 margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 3 )
-graph_path = NodePath("../../../GraphContainer/Graph")
+graph_path = NodePath("../../../Graph Panel/Graph")
 
 [node name="ResetButton" type="Button" parent="TabContainer/Antenna/GraphControls"]
 margin_right = 195.0
@@ -418,12 +432,12 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="VorControls" type="VBoxContainer" parent="TabContainer/Vor"]
-margin_right = 244.0
+margin_right = 284.0
 margin_bottom = 602.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 5 )
-graph_path = NodePath("../../../GraphContainer/Graph")
+graph_path = NodePath("../../../Graph Panel/Graph")
 
 [node name="ResetButton" type="Button" parent="TabContainer/Vor/VorControls"]
 margin_right = 183.0
@@ -783,30 +797,30 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="GSControls" type="VBoxContainer" parent="TabContainer/GS"]
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 588.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 8 )
-graph_path = NodePath("../../../GraphContainer/Graph")
-glide_path_path = NodePath("../../../GraphContainer/Graph/GlidePath")
-path_width_path = NodePath("../../../GraphContainer/Graph/PW")
-pew_path = NodePath("../../../GraphContainer/Graph/PEW")
+graph_path = NodePath("../../../Graph Panel/Graph")
+glide_path_path = NodePath("../../../Graph Panel/Graph/GlidePath")
+path_width_path = NodePath("../../../Graph Panel/Graph/PW")
+pew_path = NodePath("../../../Graph Panel/Graph/PEW")
 
 [node name="ResetButton" type="Button" parent="TabContainer/GS/GSControls"]
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 20.0
 text = "Reset"
 
 [node name="overlay_button" type="CheckBox" parent="TabContainer/GS/GSControls"]
 margin_top = 24.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 48.0
 text = "Overlay"
 
 [node name="CSBEnabled" type="CheckButton" parent="TabContainer/GS/GSControls"]
 margin_top = 52.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 92.0
 pressed = true
 text = "CSB"
@@ -815,18 +829,18 @@ text = "CSB"
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 96.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 110.0
 text = "a-spacing: %.2f"
 slider_path = NodePath("../CSBASpace/ASpaceSlider")
 
 [node name="CSBASpace" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
 margin_top = 114.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 134.0
 
 [node name="ASpaceSlider" type="HSlider" parent="TabContainer/GS/GSControls/CSBASpace"]
-margin_right = 208.0
+margin_right = 248.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 min_value = 1620.0
@@ -839,8 +853,8 @@ ticks_on_borders = true
 [node name="ASpaceSliderButton" parent="TabContainer/GS/GSControls/CSBASpace" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 212.0
-margin_right = 232.0
+margin_left = 252.0
+margin_right = 272.0
 margin_bottom = 20.0
 coarse_step = 45.0
 fine_step = 0.1
@@ -850,18 +864,18 @@ slider_path = NodePath("../ASpaceSlider")
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 138.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 152.0
 text = "Phase: %.2f"
 slider_path = NodePath("../CSBPhase/CSBPhaseSlider")
 
 [node name="CSBPhase" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
 margin_top = 156.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 176.0
 
 [node name="CSBPhaseSlider" type="HSlider" parent="TabContainer/GS/GSControls/CSBPhase"]
-margin_right = 208.0
+margin_right = 248.0
 margin_bottom = 16.0
 hint_tooltip = "asdf"
 size_flags_horizontal = 3
@@ -875,8 +889,8 @@ ticks_on_borders = true
 [node name="CoarseFineButton" parent="TabContainer/GS/GSControls/CSBPhase" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 212.0
-margin_right = 232.0
+margin_left = 252.0
+margin_right = 272.0
 margin_bottom = 20.0
 pressed = true
 coarse_step = 45.0
@@ -886,18 +900,18 @@ slider_path = NodePath("../CSBPhaseSlider")
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 180.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 194.0
 text = "Current: %.2f"
 slider_path = NodePath("../CSBCurrent/CSBCurrentSlider")
 
 [node name="CSBCurrent" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
 margin_top = 198.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 218.0
 
 [node name="CSBCurrentSlider" type="HSlider" parent="TabContainer/GS/GSControls/CSBCurrent"]
-margin_right = 208.0
+margin_right = 248.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 max_value = 2.0
@@ -909,8 +923,8 @@ ticks_on_borders = true
 [node name="CoarseFineButton" parent="TabContainer/GS/GSControls/CSBCurrent" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 212.0
-margin_right = 232.0
+margin_left = 252.0
+margin_right = 272.0
 margin_bottom = 20.0
 pressed = true
 coarse_step = 0.1
@@ -919,7 +933,7 @@ slider_path = NodePath("../CSBCurrentSlider")
 
 [node name="SBOEnabled" type="CheckButton" parent="TabContainer/GS/GSControls"]
 margin_top = 222.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 262.0
 pressed = true
 text = "SBO"
@@ -928,18 +942,18 @@ text = "SBO"
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 266.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 280.0
 text = "a-spacing: %.2f"
 slider_path = NodePath("../SBOASpace/ASpaceSlider")
 
 [node name="SBOASpace" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
 margin_top = 284.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 304.0
 
 [node name="ASpaceSlider" type="HSlider" parent="TabContainer/GS/GSControls/SBOASpace"]
-margin_right = 208.0
+margin_right = 248.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 min_value = 3339.3
@@ -952,8 +966,8 @@ ticks_on_borders = true
 [node name="ASpaceSliderButton" parent="TabContainer/GS/GSControls/SBOASpace" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 212.0
-margin_right = 232.0
+margin_left = 252.0
+margin_right = 272.0
 margin_bottom = 20.0
 coarse_step = 45.0
 fine_step = 0.1
@@ -963,18 +977,18 @@ slider_path = NodePath("../ASpaceSlider")
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 308.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 322.0
 text = "Phase: %.2f"
 slider_path = NodePath("../SBOPhase/SBOPhaseSlider")
 
 [node name="SBOPhase" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
 margin_top = 326.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 346.0
 
 [node name="SBOPhaseSlider" type="HSlider" parent="TabContainer/GS/GSControls/SBOPhase"]
-margin_right = 208.0
+margin_right = 248.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 min_value = -360.0
@@ -987,8 +1001,8 @@ ticks_on_borders = true
 [node name="CoarseFineButton" parent="TabContainer/GS/GSControls/SBOPhase" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 212.0
-margin_right = 232.0
+margin_left = 252.0
+margin_right = 272.0
 margin_bottom = 20.0
 pressed = true
 coarse_step = 45.0
@@ -999,18 +1013,18 @@ slider_path = NodePath("../SBOPhaseSlider")
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 350.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 364.0
 text = "Current: %.2f"
 slider_path = NodePath("../SBOCurrent/SBOCurrentSlider")
 
 [node name="SBOCurrent" type="HBoxContainer" parent="TabContainer/GS/GSControls"]
 margin_top = 368.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 388.0
 
 [node name="SBOCurrentSlider" type="HSlider" parent="TabContainer/GS/GSControls/SBOCurrent"]
-margin_right = 208.0
+margin_right = 248.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 max_value = 2.0
@@ -1022,8 +1036,8 @@ ticks_on_borders = true
 [node name="CoarseFineButton" parent="TabContainer/GS/GSControls/SBOCurrent" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 212.0
-margin_right = 232.0
+margin_left = 252.0
+margin_right = 272.0
 margin_bottom = 20.0
 pressed = true
 coarse_step = 0.1
@@ -1032,118 +1046,82 @@ slider_path = NodePath("../SBOCurrentSlider")
 
 [node name="HideUnderground" type="CheckButton" parent="TabContainer/GS/GSControls"]
 margin_top = 392.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 432.0
 text = "Hide underground"
 
 [node name="GlideAngleButton" type="CheckButton" parent="TabContainer/GS/GSControls"]
 margin_top = 436.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 476.0
 text = "Glide Angle"
 
 [node name="PathWidthButton" type="CheckButton" parent="TabContainer/GS/GSControls"]
 margin_top = 480.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 520.0
 text = "Path Width"
 
 [node name="PEWButton" type="CheckButton" parent="TabContainer/GS/GSControls"]
 margin_top = 524.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 564.0
 text = "PEW"
 
 [node name="Button" type="Button" parent="TabContainer/GS/GSControls"]
 margin_top = 568.0
-margin_right = 232.0
+margin_right = 272.0
 margin_bottom = 588.0
 text = "Swap"
 
-[node name="RulerVisibleButton" type="Button" parent="."]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_top = -28.0
-margin_right = 62.0
-margin_bottom = 28.0
-rect_scale = Vector2( 0.5, 0.5 )
-toggle_mode = true
-icon = ExtResource( 15 )
-
-[node name="HomeButton" type="Button" parent="."]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_top = 3.0
-margin_right = 62.0
-margin_bottom = 59.0
-rect_scale = Vector2( 0.5, 0.5 )
-icon = ExtResource( 17 )
-
-[node name="ZoomSlider" type="VSlider" parent="."]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 8.0
-margin_top = 40.0
-margin_right = 24.0
-margin_bottom = 168.0
-min_value = 1.0
-max_value = 10000.0
-step = 0.0
-value = 10.0
-exp_edit = true
-tick_count = 5
-ticks_on_borders = true
-script = ExtResource( 18 )
-graph_path = NodePath("../GraphContainer/Graph")
-
-[connection signal="gui_input" from="GraphContainer/Graph" to="GraphContainer/Graph" method="_on_Graph_gui_input"]
-[connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/ResetTimeButton" to="GraphContainer/Graph" method="reset_time"]
-[connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/DecreaseButton" to="GraphContainer/Graph" method="increase_time_scale" binds= [ -2 ]]
-[connection signal="toggled" from="GraphContainer/Graph/HBoxContainer/PausePlayButton" to="GraphContainer/Graph/HBoxContainer/PausePlayButton" method="_on_PausePlayButton_toggled"]
-[connection signal="pressed" from="GraphContainer/Graph/HBoxContainer/IncreaseButton" to="GraphContainer/Graph" method="increase_time_scale" binds= [ 2 ]]
+[connection signal="gui_input" from="Graph Panel/Graph" to="Graph Panel/Graph" method="_on_Graph_gui_input"]
+[connection signal="pressed" from="Graph Panel/Graph/HBoxContainer/ResetTimeButton" to="Graph Panel/Graph" method="reset_time"]
+[connection signal="pressed" from="Graph Panel/Graph/HBoxContainer/DecreaseButton" to="Graph Panel/Graph" method="increase_time_scale" binds= [ -2 ]]
+[connection signal="toggled" from="Graph Panel/Graph/HBoxContainer/PausePlayButton" to="Graph Panel/Graph/HBoxContainer/PausePlayButton" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="Graph Panel/Graph/HBoxContainer/IncreaseButton" to="Graph Panel/Graph" method="increase_time_scale" binds= [ 2 ]]
+[connection signal="toggled" from="Graph Panel/RulerVisibleButton" to="Graph Panel/AngleRuler" method="set_visible"]
+[connection signal="pressed" from="Graph Panel/HomeButton" to="Graph Panel/Graph" method="set_origin" binds= [ Vector2( 0, 0 ) ]]
+[connection signal="value_changed" from="Graph Panel/ZoomSlider" to="Graph Panel/Graph" method="set_zoom_level"]
 [connection signal="pressed" from="TabContainer/Antenna/GraphControls/ResetButton" to="TabContainer/Antenna/GraphControls" method="_on_ResetButton_pressed"]
-[connection signal="toggled" from="TabContainer/Antenna/GraphControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
-[connection signal="toggled" from="TabContainer/Antenna/GraphControls/PhaseModeButton" to="GraphContainer/Graph" method="set_phase_mode"]
-[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/ASpaceHBox/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing" binds= [ 1, 2 ]]
-[connection signal="toggled" from="TabContainer/Antenna/GraphControls/Antenna1Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 1 ]]
-[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna1Phase/Antenna1PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 1 ]]
-[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna1Current/Antenna1CurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 1 ]]
-[connection signal="toggled" from="TabContainer/Antenna/GraphControls/Antenna2Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 2 ]]
-[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna2Phase/Antenna2PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 2 ]]
-[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna2Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 2 ]]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/overlay_button" to="Graph Panel/Graph" method="_on_overlay_button_toggled"]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/PhaseModeButton" to="Graph Panel/Graph" method="set_phase_mode"]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/ASpaceHBox/ASpaceSlider" to="Graph Panel/Graph" method="set_pos_with_a_spacing" binds= [ 1, 2 ]]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/Antenna1Enabled" to="Graph Panel/Graph" method="toggle_antenna" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna1Phase/Antenna1PhaseSlider" to="Graph Panel/Graph" method="set_antenna_phase" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna1Current/Antenna1CurrentSlider" to="Graph Panel/Graph" method="set_antenna_amplitude" binds= [ 1 ]]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/Antenna2Enabled" to="Graph Panel/Graph" method="toggle_antenna" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna2Phase/Antenna2PhaseSlider" to="Graph Panel/Graph" method="set_antenna_phase" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/Antenna/GraphControls/Antenna2Current/AntennaCurrentSlider" to="Graph Panel/Graph" method="set_antenna_amplitude" binds= [ 2 ]]
 [connection signal="pressed" from="TabContainer/Antenna/GraphControls/SipButton" to="TabContainer/Antenna/GraphControls" method="_on_SipButton_pressed"]
 [connection signal="pressed" from="TabContainer/Antenna/GraphControls/SopButton" to="TabContainer/Antenna/GraphControls" method="_on_SopButton_pressed"]
-[connection signal="toggled" from="TabContainer/Antenna/GraphControls/HideUnderground" to="GraphContainer/Graph" method="hide_below_ground"]
+[connection signal="toggled" from="TabContainer/Antenna/GraphControls/HideUnderground" to="Graph Panel/Graph" method="hide_below_ground"]
 [connection signal="pressed" from="TabContainer/Vor/VorControls/ResetButton" to="TabContainer/Vor/VorControls" method="_on_ResetButton_pressed"]
-[connection signal="toggled" from="TabContainer/Vor/VorControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/overlay_button" to="Graph Panel/Graph" method="_on_overlay_button_toggled"]
 [connection signal="value_changed" from="TabContainer/Vor/VorControls/ASpaceHBox/ASpaceSlider" to="TabContainer/Vor/VorControls" method="_on_ASpaceSlider_value_changed"]
-[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna1Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 1 ]]
-[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna1Phase/Antenna1PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 1 ]]
-[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna1Current/Antenna1CurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 1 ]]
-[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna2Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 2 ]]
-[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna2Phase/Antenna2PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 2 ]]
-[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna2Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 2 ]]
-[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna3Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 3 ]]
-[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna3Phase/Antenna3PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 3 ]]
-[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna3Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 3 ]]
-[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna4Enabled" to="GraphContainer/Graph" method="toggle_antenna" binds= [ 4 ]]
-[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna4Phase/Antenna4PhaseSlider" to="GraphContainer/Graph" method="set_antenna_phase" binds= [ 4 ]]
-[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna4Current/AntennaCurrentSlider" to="GraphContainer/Graph" method="set_antenna_amplitude" binds= [ 4 ]]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna1Enabled" to="Graph Panel/Graph" method="toggle_antenna" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna1Phase/Antenna1PhaseSlider" to="Graph Panel/Graph" method="set_antenna_phase" binds= [ 1 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna1Current/Antenna1CurrentSlider" to="Graph Panel/Graph" method="set_antenna_amplitude" binds= [ 1 ]]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna2Enabled" to="Graph Panel/Graph" method="toggle_antenna" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna2Phase/Antenna2PhaseSlider" to="Graph Panel/Graph" method="set_antenna_phase" binds= [ 2 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna2Current/AntennaCurrentSlider" to="Graph Panel/Graph" method="set_antenna_amplitude" binds= [ 2 ]]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna3Enabled" to="Graph Panel/Graph" method="toggle_antenna" binds= [ 3 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna3Phase/Antenna3PhaseSlider" to="Graph Panel/Graph" method="set_antenna_phase" binds= [ 3 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna3Current/AntennaCurrentSlider" to="Graph Panel/Graph" method="set_antenna_amplitude" binds= [ 3 ]]
+[connection signal="toggled" from="TabContainer/Vor/VorControls/Antenna4Enabled" to="Graph Panel/Graph" method="toggle_antenna" binds= [ 4 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna4Phase/Antenna4PhaseSlider" to="Graph Panel/Graph" method="set_antenna_phase" binds= [ 4 ]]
+[connection signal="value_changed" from="TabContainer/Vor/VorControls/Antenna4Current/AntennaCurrentSlider" to="Graph Panel/Graph" method="set_antenna_amplitude" binds= [ 4 ]]
 [connection signal="pressed" from="TabContainer/GS/GSControls/ResetButton" to="TabContainer/GS/GSControls" method="_on_ResetButton_pressed"]
-[connection signal="toggled" from="TabContainer/GS/GSControls/overlay_button" to="GraphContainer/Graph" method="_on_overlay_button_toggled"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/overlay_button" to="Graph Panel/Graph" method="_on_overlay_button_toggled"]
 [connection signal="toggled" from="TabContainer/GS/GSControls/CSBEnabled" to="TabContainer/GS/GSControls" method="_on_CSBEnabled_toggled"]
-[connection signal="value_changed" from="TabContainer/GS/GSControls/CSBASpace/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing" binds= [ 1, 2 ]]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/CSBASpace/ASpaceSlider" to="Graph Panel/Graph" method="set_pos_with_a_spacing" binds= [ 1, 2 ]]
 [connection signal="value_changed" from="TabContainer/GS/GSControls/CSBPhase/CSBPhaseSlider" to="TabContainer/GS/GSControls" method="_on_CSBPhaseSlider_value_changed"]
 [connection signal="value_changed" from="TabContainer/GS/GSControls/CSBCurrent/CSBCurrentSlider" to="TabContainer/GS/GSControls" method="_on_CSBCurrentSlider_value_changed"]
 [connection signal="toggled" from="TabContainer/GS/GSControls/SBOEnabled" to="TabContainer/GS/GSControls" method="_on_SBOEnabled_toggled"]
-[connection signal="value_changed" from="TabContainer/GS/GSControls/SBOASpace/ASpaceSlider" to="GraphContainer/Graph" method="set_pos_with_a_spacing" binds= [ 3, 4 ]]
+[connection signal="value_changed" from="TabContainer/GS/GSControls/SBOASpace/ASpaceSlider" to="Graph Panel/Graph" method="set_pos_with_a_spacing" binds= [ 3, 4 ]]
 [connection signal="value_changed" from="TabContainer/GS/GSControls/SBOPhase/SBOPhaseSlider" to="TabContainer/GS/GSControls" method="_on_SBOPhaseSlider_value_changed"]
 [connection signal="value_changed" from="TabContainer/GS/GSControls/SBOCurrent/SBOCurrentSlider" to="TabContainer/GS/GSControls" method="_on_SBOCurrentSlider_value_changed"]
-[connection signal="toggled" from="TabContainer/GS/GSControls/HideUnderground" to="GraphContainer/Graph" method="hide_below_ground"]
+[connection signal="toggled" from="TabContainer/GS/GSControls/HideUnderground" to="Graph Panel/Graph" method="hide_below_ground"]
 [connection signal="toggled" from="TabContainer/GS/GSControls/GlideAngleButton" to="TabContainer/GS/GSControls" method="_on_GlideAngleButton_toggled"]
 [connection signal="toggled" from="TabContainer/GS/GSControls/PathWidthButton" to="TabContainer/GS/GSControls" method="_on_PathWidthButton_toggled"]
 [connection signal="toggled" from="TabContainer/GS/GSControls/PEWButton" to="TabContainer/GS/GSControls" method="_on_PEWButton_toggled"]
 [connection signal="pressed" from="TabContainer/GS/GSControls/Button" to="TabContainer/GS/GSControls" method="_on_Swap_pressed"]
-[connection signal="toggled" from="RulerVisibleButton" to="GraphContainer/Graph/AngleRuler" method="set_visible"]
-[connection signal="pressed" from="HomeButton" to="GraphContainer/Graph" method="set_origin" binds= [ Vector2( 0, 0 ) ]]
-[connection signal="value_changed" from="ZoomSlider" to="GraphContainer/Graph" method="set_zoom_level"]
