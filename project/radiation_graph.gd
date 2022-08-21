@@ -7,6 +7,7 @@ export var origin:Vector2=Vector2(0,0)
 export var frequency=1
 export var time_scale = 1.0
 var timer=0.0;
+var aspect_ratio=Vector2.ONE;
 signal zoom_level_changed(new_value)
 
 func _ready():
@@ -15,6 +16,14 @@ func _ready():
 
 
 func _process(delta):
+	var aspect=.get_rect().size.x/.get_rect().size.y;
+	if aspect < 1.0:
+		aspect_ratio.x=aspect;
+		aspect_ratio.y=1.0; 
+	else:
+		aspect_ratio.x=1.0;
+		aspect_ratio.y=1/aspect;
+	material.set_shader_param("aspect_ratio", aspect_ratio);
 	if (!paused):
 		timer+=delta*time_scale
 		material.set_shader_param("timer",timer)
@@ -87,11 +96,17 @@ func _on_Graph_gui_input(event):
 #			print(event.as_text())
 
 func uv_to_local(uv:Vector2):
-	return (uv-Vector2(0.5,0.5))*-zoom_level+origin
+#	uv*=aspect_ratio;
+	var offset=Vector2(0.5,0.5)
+	return (uv-offset)*aspect_ratio*-zoom_level+origin
 
-func local_to_world(local_coordinates):
-	var local_to_uv= (local_coordinates+origin)/-zoom_level+Vector2(0.5,0.5)
-	return local_to_uv * self.rect_size
+func local_to_uv(local:Vector2):
+	var offset=Vector2(0.5,0.5)
+	return (local - origin) / (aspect_ratio * zoom_level) + offset
+
+func local_to_world(local):
+	var uv=local_to_uv(local)
+	return uv * self.rect_size
 
 func world_to_local(world_coordinates):
 	var uv=world_coordinates/rect_size

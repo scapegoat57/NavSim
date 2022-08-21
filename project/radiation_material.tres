@@ -4,6 +4,7 @@
 
 [resource]
 shader = ExtResource( 1 )
+shader_param/aspect_ratio = Vector2( 1, 1 )
 shader_param/origin = Vector2( 0, 0 )
 shader_param/ant1_pos = Vector2( 0, 0 )
 shader_param/ant1_enabled = 1.0
