@@ -10,7 +10,7 @@ func _ready():
 
 func _process(delta):
 	points[0] = graph_node.graph_to_world(Vector2.ZERO)
-	var far_point=Vector2(10, sin(deg2rad(angle)) * 10)
+	var far_point=Vector2(cos(deg2rad(angle)), sin(deg2rad(angle)))*10_000
 	points[1]= graph_node.graph_to_world(far_point)
 
 
