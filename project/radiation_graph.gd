@@ -9,10 +9,16 @@ export var time_scale = 1.0
 var timer=0.0;
 var aspect_ratio=Vector2.ONE;
 signal zoom_level_changed(new_value)
+var antennas=[]
 
 func _ready():
 	material.set_shader_param("zoom",zoom_level)
 	material.set_shader_param("freq", frequency)
+	antennas.append(AntennaModel.new());
+	antennas.append(AntennaModel.new());
+	antennas.append(AntennaModel.new());
+	antennas.append(AntennaModel.new());
+	antennas.append(AntennaModel.new());
 
 
 func _process(delta):
@@ -50,6 +56,7 @@ func _on_reset_time_button_pressed():
 func set_antenna_pos(antenna, position):
 	var param="ant"+String(antenna)+"_pos"
 	material.set_shader_param(param, position)
+	antennas[antenna-1].position=position
 
 
 func set_pos_with_a_spacing(var a_spacing, ant_a, ant_b):
@@ -57,6 +64,8 @@ func set_pos_with_a_spacing(var a_spacing, ant_a, ant_b):
 	var pos2=Vector2(0,-a_spacing/360/frequency)
 	material.set_shader_param("ant%d_pos" % ant_a,pos1)
 	material.set_shader_param("ant%d_pos" % ant_b,pos2)
+	antennas[ant_a-1].position=pos1
+	antennas[ant_b-1].position=pos2
 
 
 func set_NWSE_with_a_space(var a_space):
@@ -64,6 +73,8 @@ func set_NWSE_with_a_space(var a_space):
 	var pos2=Vector2(1,-1)*(a_space/360/frequency)*sqrt(2)
 	material.set_shader_param("ant1_pos",pos1)
 	material.set_shader_param("ant2_pos",pos2)
+	antennas[0].position=pos1
+	antennas[1].position=pos2
 
 
 func set_NESW_with_a_space(var a_space):
@@ -72,6 +83,8 @@ func set_NESW_with_a_space(var a_space):
 	material.set_shader_param("ant3_pos",pos1)
 	material.set_shader_param("ant4_pos",pos2)
 	
+	antennas[2].position=pos1
+	antennas[3].position=pos2
 
 var drag_start:Vector2=Vector2.ZERO
 func _on_Graph_gui_input(event):
@@ -92,8 +105,25 @@ func _on_Graph_gui_input(event):
 				set_zoom_level(zoom_level)
 			if event.button_index == BUTTON_WHEEL_DOWN:
 				set_zoom_level(zoom_level+1)
-#		if !event.pressed:
-#			print(event.as_text())
+
+func phase_from_antenna(index, graph_pos):
+	var a = antennas[index]
+	return phase_from(a.position, graph_pos, a.phase);
+
+func phase_from(antenna_pos, field_pos, phase_offset):
+	var dist=(field_pos- antenna_pos).length()
+	var phase = (frequency * dist * 2 * PI - deg2rad(phase_offset) - timer);
+	return phase
+
+func phasor_from(antenna_pos, field_pos, phase_offset):
+	var phase=phase_from(antenna_pos, field_pos, phase_offset)
+	return Vector2(cos(phase), sin(phase));
+
+func phasor_from_antenna(index, graph_pos):
+	var a=antennas[index]
+	if !a.enabled: return Vector2.ZERO
+	return phasor_from(a.position, graph_pos, a.phase) * a.amplitude
+
 
 func uv_to_graph(uv:Vector2):
 	var offset=Vector2(0.5,0.5)
@@ -120,16 +150,20 @@ func world_to_graph(world_coordinates):
 func toggle_antenna(enabled, index):
 	var param="ant"+String(index)+"_enabled"
 	material.set_shader_param(param,1 if enabled else 0)
-	
+	antennas[index-1].enabled=enabled
 	
 func set_antenna_phase(phase, antenna):
 	var param="ant" + String(antenna) + "_phase"
 	material.set_shader_param(param,phase)
+	
+	antennas[antenna-1].phase=phase
 
 
 func set_antenna_amplitude(amplitude, antenna):
 	var param="ant" + String(antenna) + "_amplitude"
 	material.set_shader_param(param,amplitude)
+	
+	antennas[antenna-1].amplitude=amplitude
 
 
 func set_zoom_level(value):
