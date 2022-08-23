@@ -182,7 +182,7 @@ margin_right = 394.0
 margin_bottom = 143.0
 script = ExtResource( 19 )
 graph_path = NodePath("../Graph")
-graph_pos = Vector2( 0, 5 )
+distance = 3.0
 
 [node name="Label" type="Label" parent="Graph Panel/PhaseReader"]
 margin_left = 7.0
@@ -192,13 +192,14 @@ margin_bottom = 21.0
 text = "000.00"
 
 [node name="PhaseReader2" type="PanelContainer" parent="Graph Panel"]
-margin_left = 568.0
-margin_top = 286.0
-margin_right = 626.0
-margin_bottom = 314.0
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
 script = ExtResource( 19 )
 graph_path = NodePath("../Graph")
-graph_pos = Vector2( 5, 0 )
+distance = 3.0
+angle = 22.5
 
 [node name="Label" type="Label" parent="Graph Panel/PhaseReader2"]
 margin_left = 7.0
@@ -208,13 +209,14 @@ margin_bottom = 21.0
 text = "000.00"
 
 [node name="PhaseReader3" type="PanelContainer" parent="Graph Panel"]
-margin_left = 568.0
-margin_top = 286.0
-margin_right = 626.0
-margin_bottom = 314.0
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
 script = ExtResource( 19 )
 graph_path = NodePath("../Graph")
-graph_pos = Vector2( -5, 0 )
+distance = 3.0
+angle = 45.0
 
 [node name="Label" type="Label" parent="Graph Panel/PhaseReader3"]
 margin_left = 7.0
@@ -224,15 +226,220 @@ margin_bottom = 21.0
 text = "000.00"
 
 [node name="PhaseReader4" type="PanelContainer" parent="Graph Panel"]
-margin_left = 568.0
-margin_top = 286.0
-margin_right = 626.0
-margin_bottom = 314.0
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
 script = ExtResource( 19 )
 graph_path = NodePath("../Graph")
-graph_pos = Vector2( 0, -5 )
+distance = 3.0
+angle = 67.5
 
 [node name="Label" type="Label" parent="Graph Panel/PhaseReader4"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader5" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 90.0
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader5"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader6" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 112.5
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader6"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader7" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 135.0
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader7"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader8" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 157.5
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader8"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader9" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 180.0
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader9"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader10" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 202.5
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader10"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader11" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 225.0
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader11"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader12" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 247.5
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader12"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader13" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 270.0
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader13"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader14" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 292.5
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader14"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader15" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 315.0
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader15"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 21.0
+text = "000.00"
+
+[node name="PhaseReader16" type="PanelContainer" parent="Graph Panel"]
+margin_left = 336.0
+margin_top = 115.0
+margin_right = 394.0
+margin_bottom = 143.0
+script = ExtResource( 19 )
+graph_path = NodePath("../Graph")
+distance = 3.0
+angle = 337.5
+
+[node name="Label" type="Label" parent="Graph Panel/PhaseReader16"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 51.0

@@ -1,6 +1,9 @@
 extends PanelContainer
 export var graph_path:NodePath
-export var graph_pos:Vector2
+export var distance:float
+export var angle:float
+
+var graph_pos:Vector2
 onready var label:=$Label
 onready var graph: RadiationGraph=get_node(graph_path)
 
@@ -8,6 +11,7 @@ onready var graph: RadiationGraph=get_node(graph_path)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	label.text="test"
+	graph_pos=Vector2(cos(deg2rad(angle)), sin(deg2rad(angle)))*distance
 
 
 
@@ -33,6 +37,9 @@ func _process(delta):
 	
 	total_phase=rad2deg(total_phase - carrier_phase)
 	total_phase=fmod(total_phase, 360.0)
+	if total_phase+0.05 >=360: total_phase=0
 	if total_phase < 0: total_phase=total_phase + 360
-	if total_phase+0.01 >=360.0: total_phase=0
+	total_phase=total_phase-fmod(360-angle+90,360)
+	if total_phase<-180: total_phase+=360
+	else:if total_phase>180: total_phase-=360
 	label.text="%5.2f" % total_phase
