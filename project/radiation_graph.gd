@@ -69,8 +69,8 @@ func set_pos_with_a_spacing(var a_spacing, ant_a, ant_b):
 
 
 func set_NWSE_with_a_space(var a_space):
-	var pos1=Vector2(-1,1)*(a_space/360/frequency)*sqrt(2)
-	var pos2=Vector2(1,-1)*(a_space/360/frequency)*sqrt(2)
+	var pos1=Vector2(-1,1)*(a_space/360/frequency)#*sqrt(2)
+	var pos2=Vector2(1,-1)*(a_space/360/frequency)#*sqrt(2)
 	material.set_shader_param("ant1_pos",pos1)
 	material.set_shader_param("ant2_pos",pos2)
 	antennas[0].position=pos1
@@ -78,8 +78,8 @@ func set_NWSE_with_a_space(var a_space):
 
 
 func set_NESW_with_a_space(var a_space):
-	var pos1=Vector2(1,1)*(a_space/360/frequency)*sqrt(2)
-	var pos2=Vector2(-1,-1)*(a_space/360/frequency)*sqrt(2)
+	var pos1=Vector2(1,1)*(a_space/360/frequency)#*sqrt(2)
+	var pos2=Vector2(-1,-1)*(a_space/360/frequency)#*sqrt(2)
 	material.set_shader_param("ant3_pos",pos1)
 	material.set_shader_param("ant4_pos",pos2)
 	
