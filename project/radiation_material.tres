@@ -30,3 +30,4 @@ shader_param/time_shift = 0.0
 shader_param/overlay = false
 shader_param/hide_below_ground = false
 shader_param/phase_mode = false
+shader_param/show_vor_circle = false

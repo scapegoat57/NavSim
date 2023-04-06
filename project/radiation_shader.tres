@@ -38,6 +38,7 @@ uniform float time_shift=0;
 uniform bool overlay=false;
 uniform bool hide_below_ground=false;
 uniform bool phase_mode=false;
+uniform bool show_vor_circle=false;
 
 vec2 uv_to_graph(vec2 value)
 {
@@ -144,5 +145,6 @@ void fragment(){
 	COLOR=mix(COLOR,vec4(0,1,1,1),filled_circle(ant2_pos,world_pos,0.0001) * ant2_enabled);
 	COLOR=mix(COLOR,vec4(1,1,0,1),filled_circle(ant3_pos,world_pos,0.0001) * ant3_enabled);
 	COLOR=mix(COLOR,vec4(1,1,1,1),filled_circle(ant4_pos,world_pos,0.0001) * ant4_enabled);
-	COLOR=mix(COLOR,vec4(0,0,0,1), circle(vec2(0), world_pos, 3.0, 0.1));
+	if (show_vor_circle)
+		COLOR=mix(COLOR,vec4(0.95, 0.611, 0.06,1), circle(vec2(0), world_pos, 3.0, 0.1));
 }"

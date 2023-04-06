@@ -189,3 +189,6 @@ func set_origin(value):
 
 func set_phase_mode(value):
 	material.set_shader_param("phase_mode",value)
+
+func set_show_vor_circle(value):
+	material.set_shader_param("show_vor_circle", value)

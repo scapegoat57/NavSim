@@ -14,7 +14,6 @@ func _ready():
 	graph_pos=Vector2(cos(deg2rad(angle)), sin(deg2rad(angle)))*distance
 
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var pos=graph.graph_to_world(graph_pos)-get_rect().size/2

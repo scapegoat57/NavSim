@@ -51,4 +51,5 @@ func _on_ResetButton_pressed():
 	
 	$HideUnderground.pressed=false
 	graph_node.hide_below_ground(false)
+	graph_node.set_show_vor_circle(false);
 	
