@@ -6,7 +6,7 @@ var time_start;
 var measured_time=0;
 var measured_course;
 var omni_course;
-var m_a;
+var m_a=0;
 var dragging=false;
 var drag_offset
 var ref_points=[]
