@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/rewind.png-40df91599622445d375161ed174073a4.stex"
+path="res://.import/colored-transparent.png-b796b4958734c305b3aaae2cfc0b08b2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/rewind.png"
-dest_files=[ "res://.import/rewind.png-40df91599622445d375161ed174073a4.stex" ]
+source_file="res://sprites/colored-transparent.png"
+dest_files=[ "res://.import/colored-transparent.png-b796b4958734c305b3aaae2cfc0b08b2.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

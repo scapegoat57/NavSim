@@ -30,6 +30,14 @@ config/name="NAVSIM"
 run/main_scene="res://AntennaGraph.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://global.gd"
+
+[display]
+
+window/stretch/aspect="keep"
+
 [physics]
 
 common/enable_pause_aware_picking=true

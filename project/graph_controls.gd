@@ -53,3 +53,8 @@ func _on_ResetButton_pressed():
 	graph_node.hide_below_ground(false)
 	graph_node.set_show_vor_circle(false);
 	
+
+
+func _on_Button_pressed():
+	$"../../..".queue_free();
+	get_tree().root.add_child(load("res://Lighthouse/Lighthouse_player.tscn").instance())

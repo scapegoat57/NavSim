@@ -8,15 +8,15 @@
 [ext_resource path="res://CoarseFineButton.tscn" type="PackedScene" id=6]
 [ext_resource path="res://SliderLabel.tscn" type="PackedScene" id=7]
 [ext_resource path="res://GSControls.gd" type="Script" id=8]
-[ext_resource path="res://sprites/pause.png" type="Texture" id=9]
+[ext_resource path="res://sprites/ui/pause.png" type="Texture" id=9]
 [ext_resource path="res://pause_play_button.gd" type="Script" id=10]
-[ext_resource path="res://sprites/forward.png" type="Texture" id=11]
-[ext_resource path="res://sprites/return.png" type="Texture" id=12]
-[ext_resource path="res://sprites/fastForward.png" type="Texture" id=13]
-[ext_resource path="res://sprites/rewind.png" type="Texture" id=14]
-[ext_resource path="res://sprites/target.png" type="Texture" id=15]
+[ext_resource path="res://sprites/ui/forward.png" type="Texture" id=11]
+[ext_resource path="res://sprites/ui/return.png" type="Texture" id=12]
+[ext_resource path="res://sprites/ui/fastForward.png" type="Texture" id=13]
+[ext_resource path="res://sprites/ui/rewind.png" type="Texture" id=14]
+[ext_resource path="res://sprites/ui/target.png" type="Texture" id=15]
 [ext_resource path="res://AngleOverlay.gd" type="Script" id=16]
-[ext_resource path="res://sprites/home.png" type="Texture" id=17]
+[ext_resource path="res://sprites/ui/home.png" type="Texture" id=17]
 [ext_resource path="res://ZoomSlider.gd" type="Script" id=18]
 [ext_resource path="res://PhaseReader.gd" type="Script" id=19]
 
@@ -459,7 +459,6 @@ anchor_bottom = 1.0
 margin_left = -292.0
 
 [node name="Antenna" type="ScrollContainer" parent="TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -701,6 +700,7 @@ margin_bottom = 466.0
 text = "Hide underground"
 
 [node name="Vor" type="ScrollContainer" parent="TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -709,7 +709,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="VorControls" type="VBoxContainer" parent="TabContainer/Vor"]
-margin_right = 272.0
+margin_right = 284.0
 margin_bottom = 734.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1382,6 +1382,13 @@ margin_right = 272.0
 margin_bottom = 588.0
 text = "Swap"
 
+[node name="LightHouseButton" type="Button" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -20.0
+margin_right = 79.0
+text = "lighthouse"
+
 [connection signal="gui_input" from="Graph Panel/Graph" to="Graph Panel/Graph" method="_on_Graph_gui_input"]
 [connection signal="pressed" from="Graph Panel/Graph/HBoxContainer/ResetTimeButton" to="Graph Panel/Graph" method="reset_time"]
 [connection signal="pressed" from="Graph Panel/Graph/HBoxContainer/DecreaseButton" to="Graph Panel/Graph" method="increase_time_scale" binds= [ -2 ]]
@@ -1438,3 +1445,4 @@ text = "Swap"
 [connection signal="toggled" from="TabContainer/GS/GSControls/PathWidthButton" to="TabContainer/GS/GSControls" method="_on_PathWidthButton_toggled"]
 [connection signal="toggled" from="TabContainer/GS/GSControls/PEWButton" to="TabContainer/GS/GSControls" method="_on_PEWButton_toggled"]
 [connection signal="pressed" from="TabContainer/GS/GSControls/Button" to="TabContainer/GS/GSControls" method="_on_Swap_pressed"]
+[connection signal="pressed" from="LightHouseButton" to="TabContainer/Antenna/GraphControls" method="_on_Button_pressed"]

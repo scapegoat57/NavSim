@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Lighthouse/Lighthouse.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Lighthouse/Dude.tscn" type="PackedScene" id=2]
+
+[node name="LighthouseScene0" type="Node2D"]
+
+[node name="Lighthouse" parent="." instance=ExtResource( 1 )]
+position = Vector2( 512, 300 )
+
+[node name="Dude" parent="." instance=ExtResource( 2 )]
+position = Vector2( 646, 300 )
+
+[node name="Dude2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 512, 455 )
+
+[node name="Dude3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 341, 218 )

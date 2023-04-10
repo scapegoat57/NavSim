@@ -1,0 +1,14 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+void fragment(){
+	float alpha=0.0;
+	float d = abs(UV.y-0.5)*2.0;
+	alpha=smoothstep(UV.x,0.0, d);
+	if (UV.x<0.01)
+		alpha=0.0;
+	COLOR=vec4(1,0,0,alpha);
+}"

@@ -136,10 +136,27 @@ void fragment(){
 		vec2 ant2=phasor_from(ant2_pos, world_pos, ant2_phase) * ant2_amplitude * ant2_enabled;
 		vec2 ant3=phasor_from(ant3_pos, world_pos, ant3_phase) * ant3_amplitude * ant3_enabled;
 		vec2 ant4=phasor_from(ant4_pos, world_pos, ant4_phase) * ant4_amplitude * ant4_enabled;
+		vec2 time_phasor = phasor_from(vec2(0,0), world_pos, 0);
 
 		vec2 total_phasor=ant1 + ant2 + ant3 + ant4;
 		float total_phase=atan(total_phasor.y,total_phasor.x) + TWO_PI;
+		float val = total_phase / PI;
+//		float val = dot(time_phasor, total_phasor);
+//		COLOR=vec4(val < 0.0 ? -val : 0.0, 0.0, val > 0.0? val : 0.0,length(total_phasor));
 		COLOR=hsv_to_rgb(mod(total_phase, TWO_PI)/ TWO_PI, 1.0, 1.0, length(total_phasor));
+
+//		float ant1= distance(world_pos, ant1_pos);
+//		float ant2= distance(world_pos, ant2_pos);
+//		float diff=ant1-ant2;
+//		float val=sin(diff * PI);
+
+//		float ant1=phase_from(ant1_pos, world_pos, ant1_phase)  * ant1_enabled;
+//		float ant2=phase_from(ant2_pos, world_pos, ant2_phase)  * ant2_enabled;
+//		float ant3=phase_from(ant3_pos, world_pos, ant3_phase)  * ant3_enabled;
+//		float ant4=phase_from(ant4_pos, world_pos, ant3_phase)  * ant3_enabled;
+//		float diff = ant1 - ant2;
+//		float val = sin((diff - PI) / 2.0);
+//		COLOR = vec4(val<0.0? -val: 0.0, 0.0, val>0.0? val: 0.0, 1);
 	}
 	COLOR=mix(COLOR,vec4(1,0,1,1),filled_circle(ant1_pos,world_pos,0.0001) * ant1_enabled);
 	COLOR=mix(COLOR,vec4(0,1,1,1),filled_circle(ant2_pos,world_pos,0.0001) * ant2_enabled);

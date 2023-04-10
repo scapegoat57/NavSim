@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/home.png-b9f2d22c8e67b3fa7789006766ad8661.stex"
+path="res://.import/rewind.png-11acd0835f5b4df3e428220167ce7208.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/home.png"
-dest_files=[ "res://.import/home.png-b9f2d22c8e67b3fa7789006766ad8661.stex" ]
+source_file="res://sprites/ui/rewind.png"
+dest_files=[ "res://.import/rewind.png-11acd0835f5b4df3e428220167ce7208.stex" ]
 
 [params]
 
