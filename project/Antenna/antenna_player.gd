@@ -6,7 +6,8 @@ var cont_timer=-1;
 var is_cont=false;
 
 func _ready():
-	get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_2D, SceneTree.STRETCH_ASPECT_KEEP, Vector2(1024,600))
+	get_tree().root.content_scale_mode=Window.CONTENT_SCALE_MODE_VIEWPORT
+	#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_2D, SceneTree.STRETCH_ASPECT_KEEP, Vector2(1024,600))
 #	for i in 5:
 #		var s = "res://Lighthouse/LighthouseScene%d.tscn" % i
 #		scenes.push_back(load(s))
@@ -30,7 +31,7 @@ func load_scene(index):
 	
 	for i in $"%SceneHolder".get_children():
 		i.queue_free();
-	$"%SceneHolder".add_child(scenes[scene_index].instance());
+	$"%SceneHolder".add_child(scenes[scene_index].instantiate());
 	
 	if scene_index == 2:
 		$VBoxContainer/IntelSlider.value=1

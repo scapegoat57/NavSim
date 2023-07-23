@@ -1,11 +1,8 @@
-[gd_resource type="Shader" format=2]
+[gd_resource type="Shader" format=3 uid="uid://c8mf2oywgrqpd"]
 
 [resource]
 code = "shader_type canvas_item;
 render_mode unshaded;
-
-const float TWO_PI = 6.2831853071795;
-const float PI = TWO_PI/2.0;
 
 uniform vec2 aspect_ratio=vec2(1.0);
 
@@ -53,14 +50,14 @@ float intensity_from(vec2 antenna_position, vec2 field_position, float phase)
 	
 
 	float dist= distance(field_position, antenna_position);
-	float intensity=sin(freq * dist * TWO_PI - radians(phase) - (timer)+time_shift);
+	float intensity=sin(freq * dist * TAU - radians(phase) - (timer)+time_shift);
 	return intensity;
 }
 
 float phase_from(vec2 antenna_position, vec2 field_position, float phase_offset)
 {
 	float dist= distance(field_position, antenna_position);//length(direction);
-	float phase=(freq * dist * TWO_PI - radians(phase_offset) - (timer)+time_shift);
+	float phase=(freq * dist * TAU - radians(phase_offset) - (timer)+time_shift);
 	return phase;
 }
 
@@ -139,11 +136,11 @@ void fragment(){
 		vec2 time_phasor = phasor_from(vec2(0,0), world_pos, 0);
 
 		vec2 total_phasor=ant1 + ant2 + ant3 + ant4;
-		float total_phase=atan(total_phasor.y,total_phasor.x) + TWO_PI;
+		float total_phase=atan(total_phasor.y,total_phasor.x) + TAU;
 		float val = total_phase / PI;
 //		float val = dot(time_phasor, total_phasor);
 //		COLOR=vec4(val < 0.0 ? -val : 0.0, 0.0, val > 0.0? val : 0.0,length(total_phasor));
-		COLOR=hsv_to_rgb(mod(total_phase, TWO_PI)/ TWO_PI, 1.0, 1.0, length(total_phasor));
+		COLOR=hsv_to_rgb(mod(total_phase, TAU)/ TAU, 1.0, 1.0, length(total_phasor));
 
 //		float ant1= distance(world_pos, ant1_pos);
 //		float ant2= distance(world_pos, ant2_pos);

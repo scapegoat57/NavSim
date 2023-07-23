@@ -16,28 +16,28 @@ var var_invalidated=false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Global.connect("intel_changed", self, "intel_changed");
+	Global.connect("intel_changed", Callable(self, "intel_changed"));
 #	intel_changed(Global.intel_level);
-	Global.connect("reference_output", self, "reference_output_received")
-	Global.connect("variable_output", self, "variable_output_received")
+	Global.connect("reference_output", Callable(self, "reference_output_received"))
+	Global.connect("variable_output", Callable(self, "variable_output_received"))
 	for i in 160:
 		ref_points.append(Vector2(i/2.0,0))
 		var_points.append(Vector2(i/2.0, 0))
-	$"%ReferenceLine".points=PoolVector2Array(ref_points);
-	$"%VariableLine".points = PoolVector2Array(var_points);
+	$"%ReferenceLine".points=PackedVector2Array(ref_points);
+	$"%VariableLine".points = PackedVector2Array(var_points);
 
 func _physics_process(delta):
-	m_a=rad2deg(self.position.angle_to_point(Global.reference_antenna.position))+90
+	m_a=rad_to_deg(self.position.angle_to_point(Global.reference_antenna.position))+90
 	if m_a < 0:
 		m_a+=360
 	if ref_invalidated:
 		for i in ref_points.size():
 			ref_points[i].x=i/2.0;
-		$"%ReferenceLine".points=PoolVector2Array(ref_points);
+		$"%ReferenceLine".points=PackedVector2Array(ref_points);
 	if var_invalidated:
 		for i in var_points.size():
 			var_points[i].x=i/2.0;
-		$"%VariableLine".points=PoolVector2Array(var_points);
+		$"%VariableLine".points=PackedVector2Array(var_points);
 
 func reference_output_received(value):
 	ref_points.append(Vector2(0,value * 20))
@@ -49,7 +49,7 @@ func reference_output_received(value):
 func variable_output_received(angle):
 	var diff=(angle-m_a) * 4.0
 	diff = clamp(diff, -180, 180)
-	var value=cos(deg2rad(diff)) * 0.75;
+	var value=cos(deg_to_rad(diff)) * 0.75;
 	if angle ==-1 or value < 0:
 		value=0;
 	var_points.append(Vector2(0, value * 20))

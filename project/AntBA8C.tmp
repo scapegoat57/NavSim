@@ -1,6 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://3cbksw70iql5"]
+[gd_scene load_steps=20 format=3 uid="uid://3cbksw70iql5"]
 
-[ext_resource type="Material" uid="uid://bj8wvt8vvie5w" path="res://radiation_material.tres" id="1"]
+[ext_resource type="Material" path="res://radiation_material.tres" id="1"]
 [ext_resource type="Script" path="res://radiation_graph.gd" id="2"]
 [ext_resource type="Script" path="res://graph_controls.gd" id="3"]
 [ext_resource type="Script" path="res://AngleRuler.gd" id="4"]
@@ -20,15 +20,11 @@
 [ext_resource type="Script" path="res://ZoomSlider.gd" id="18"]
 [ext_resource type="Script" path="res://PhaseReader.gd" id="19"]
 
-[sub_resource type="Theme" id="Theme_hscdq"]
-
 [node name="AntennaGraph" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Graph Panel" type="Control" parent="."]
 anchors_preset = 0
@@ -436,12 +432,12 @@ offset_left = -292.0
 [node name="Antenna" type="ScrollContainer" parent="TabContainer"]
 layout_mode = 2
 
-[node name="GraphControls" type="VBoxContainer" parent="TabContainer/Antenna" node_paths=PackedStringArray("graph_node")]
+[node name="GraphControls" type="VBoxContainer" parent="TabContainer/Antenna"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3")
-graph_node = NodePath("../../../Graph Panel/Graph")
+graph_path = NodePath("../../../Graph Panel/Graph")
 
 [node name="ResetButton" type="Button" parent="TabContainer/Antenna/GraphControls"]
 layout_mode = 2
@@ -474,6 +470,7 @@ ticks_on_borders = true
 
 [node name="ASpaceSliderButton" parent="TabContainer/Antenna/GraphControls/ASpaceHBox" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 45.0
 fine_step = 0.5
 slider_path = NodePath("../ASpaceSlider")
@@ -503,6 +500,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Antenna/GraphControls/Antenna1Phase" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 45.0
 slider_path = NodePath("../Antenna1PhaseSlider")
 
@@ -525,6 +523,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Antenna/GraphControls/Antenna1Current" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 0.1
 fine_step = 0.05
 slider_path = NodePath("../Antenna1CurrentSlider")
@@ -552,6 +551,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Antenna/GraphControls/Antenna2Phase" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 45.0
 slider_path = NodePath("../Antenna2PhaseSlider")
 
@@ -574,6 +574,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Antenna/GraphControls/Antenna2Current" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 0.1
 fine_step = 0.05
 slider_path = NodePath("../AntennaCurrentSlider")
@@ -589,11 +590,6 @@ text = "Sop"
 [node name="HideUnderground" type="CheckButton" parent="TabContainer/Antenna/GraphControls"]
 layout_mode = 2
 text = "Hide underground"
-
-[node name="Button" type="Button" parent="TabContainer/Antenna/GraphControls"]
-layout_mode = 2
-theme = SubResource("Theme_hscdq")
-text = "asdf"
 
 [node name="Vor" type="ScrollContainer" parent="TabContainer"]
 visible = false
@@ -646,6 +642,7 @@ ticks_on_borders = true
 
 [node name="ASpaceSliderButton" parent="TabContainer/Vor/VorControls/ASpaceHBox" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 0.5
 fine_step = 0.1
 slider_path = NodePath("../ASpaceSlider")
@@ -674,6 +671,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna1Phase" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 45.0
 slider_path = NodePath("../Antenna1PhaseSlider")
 
@@ -696,6 +694,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna1Current" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 0.1
 fine_step = 0.05
 slider_path = NodePath("../Antenna1CurrentSlider")
@@ -723,6 +722,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna2Phase" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 45.0
 slider_path = NodePath("../Antenna2PhaseSlider")
 
@@ -745,6 +745,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna2Current" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 0.1
 fine_step = 0.05
 slider_path = NodePath("../AntennaCurrentSlider")
@@ -772,6 +773,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna3Phase" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 45.0
 slider_path = NodePath("../Antenna3PhaseSlider")
 
@@ -794,6 +796,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna3Current" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 0.1
 fine_step = 0.05
 slider_path = NodePath("../AntennaCurrentSlider")
@@ -821,6 +824,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna4Phase" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 45.0
 slider_path = NodePath("../Antenna4PhaseSlider")
 
@@ -842,6 +846,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/Vor/VorControls/Antenna4Current" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 0.1
 fine_step = 0.05
 slider_path = NodePath("../AntennaCurrentSlider")
@@ -925,6 +930,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/GS/GSControls/CSBPhase" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 45.0
 slider_path = NodePath("../CSBPhaseSlider")
 
@@ -947,6 +953,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/GS/GSControls/CSBCurrent" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 0.1
 fine_step = 0.05
 slider_path = NodePath("../CSBCurrentSlider")
@@ -999,6 +1006,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/GS/GSControls/SBOPhase" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 45.0
 fine_step = 0.1
 slider_path = NodePath("../SBOPhaseSlider")
@@ -1022,6 +1030,7 @@ ticks_on_borders = true
 
 [node name="CoarseFineButton" parent="TabContainer/GS/GSControls/SBOCurrent" instance=ExtResource("6")]
 layout_mode = 2
+pressed = true
 coarse_step = 0.1
 fine_step = 0.05
 slider_path = NodePath("../SBOCurrentSlider")
@@ -1047,15 +1056,11 @@ layout_mode = 2
 text = "Swap"
 
 [node name="LightHouseButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 2
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_top = -32.0
-offset_right = 91.0
-offset_bottom = -1.0
-grow_vertical = 0
+offset_top = -20.0
+offset_right = 79.0
 text = "lighthouse"
 
 [connection signal="gui_input" from="Graph Panel/Graph" to="Graph Panel/Graph" method="_on_Graph_gui_input"]

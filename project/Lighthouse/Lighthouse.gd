@@ -13,9 +13,9 @@ func _ready():
 	Global.lighthouse=self;
 	pass
 
-func _process(delta):
+func _process(_delta):
 	if (sweep_tween and sweep_tween.is_running()):
-		emit_signal("sweeping", $Beam.rect_rotation+90);
+		emit_signal("sweeping", $Beam.rotation+90);
 
 
 func blink():
@@ -23,7 +23,7 @@ func blink():
 		blink_tween.kill();
 	blink_tween=get_tree().create_tween()
 	emit_signal("blinking")
-	blink_tween.tween_callback(self, "stop_blink").set_delay(1)
+	blink_tween.tween_callback(Callable(self, "stop_blink")).set_delay(1)
 	$GreenLight.visible=true;
 
 func stop_blink():
@@ -32,14 +32,14 @@ func stop_blink():
 func sweep():
 	if sweep_tween:
 		sweep_tween.kill();
-	$Beam.rect_rotation = -90;
+	$Beam.rotation = -90;
 	sweep_tween=get_tree().create_tween()
-	sweep_tween.tween_property($Beam,"rect_rotation",270.0, Global.sweep_time);
-	sweep_tween.tween_callback(self,"stop_sweep");
+	sweep_tween.tween_property($Beam,"rotation",270.0, Global.sweep_time);
+	sweep_tween.tween_callback(Callable(self, "stop_sweep"));
 	$Beam.visible=true;
 
-func step(value):
-	print($Beam.rect_rotation+90)
+func step(_value):
+	print($Beam.rotation+90)
 	
 func stop_sweep():
 	$Beam.visible = false;
@@ -52,7 +52,7 @@ func cycle_toggled(button_pressed):
 	if (button_pressed):
 		sweep_and_blink()
 		cont_tween=get_tree().create_tween()
-		cont_tween.tween_callback(self, "sweep_and_blink").set_delay(Global.sweep_time)
+		cont_tween.tween_callback(Callable(self, "sweep_and_blink")).set_delay(Global.sweep_time)
 		cont_tween.set_loops();
 	else:
 		if cont_tween:

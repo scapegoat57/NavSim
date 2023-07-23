@@ -5,7 +5,7 @@
 [node name="CoarseFineButton" type="Button"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-hint_tooltip = "Coarse"
+tooltip_text = "Coarse"
 toggle_mode = true
 text = "C"
 script = ExtResource( 1 )

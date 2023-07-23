@@ -1,8 +1,8 @@
 extends HBoxContainer
 
-export var coarse_step: float = 10 setget coarse_step_set
-export var fine_step: float = 1 setget fine_step_set
-export var is_coarse: bool = true setget is_coarse_set
+@export var coarse_step: float = 10: set = coarse_step_set
+@export var fine_step: float = 1: set = fine_step_set
+@export var is_coarse: bool = true: set = is_coarse_set
 
 func coarse_step_set(value):
 	coarse_step=value

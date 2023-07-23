@@ -1,11 +1,11 @@
 extends VBoxContainer
 
-export var graph_path:NodePath
-onready var graph_node=get_node(graph_path) as RadiationGraph;
+@export var graph_path:NodePath
+@onready var graph_node=get_node(graph_path) as RadiationGraph;
 
 func _ready():
 # warning-ignore:return_value_discarded
-	connect("visibility_changed",self,"changed")
+	connect("visibility_changed", Callable(self, "changed"))
 
 func changed():
 	if get_parent().visible:
@@ -14,10 +14,10 @@ func changed():
 		_on_ResetButton_pressed()
 
 func _on_ResetButton_pressed():
-	$Antenna1Enabled.pressed=true;
-	$Antenna2Enabled.pressed=true;
-	$Antenna3Enabled.pressed=true;
-	$Antenna4Enabled.pressed=true;
+	$Antenna1Enabled.button_pressed=true;
+	$Antenna2Enabled.button_pressed=true;
+	$Antenna3Enabled.button_pressed=true;
+	$Antenna4Enabled.button_pressed=true;
 	graph_node.toggle_antenna(true, 1)
 	graph_node.toggle_antenna(true, 2)
 	graph_node.toggle_antenna(true, 3)
@@ -25,7 +25,7 @@ func _on_ResetButton_pressed():
 	$ASpaceHBox/ASpaceSlider.value=27.5
 	graph_node.set_NESW_with_a_space(27.5)
 	graph_node.set_NWSE_with_a_space(27.5)
-	$ASpaceHBox/ASpaceSliderButton.pressed=true;
+	$ASpaceHBox/ASpaceSliderButton.button_pressed=true;
 	$Antenna1Phase/Antenna1PhaseSlider.value = 180.0;
 	$Antenna2Phase/Antenna2PhaseSlider.value = 0.0;
 	$Antenna3Phase/Antenna3PhaseSlider.value = -270.0;
@@ -55,10 +55,10 @@ func _on_ASpaceSlider_value_changed(value):
 
 
 func _on_CarrierButton_pressed():
-	$Antenna1Enabled.pressed=true;
-	$Antenna2Enabled.pressed=true;
-	$Antenna3Enabled.pressed=true;
-	$Antenna4Enabled.pressed=true;
+	$Antenna1Enabled.button_pressed=true;
+	$Antenna2Enabled.button_pressed=true;
+	$Antenna3Enabled.button_pressed=true;
+	$Antenna4Enabled.button_pressed=true;
 	graph_node.toggle_antenna(true, 1)
 	graph_node.toggle_antenna(true, 2)
 	graph_node.toggle_antenna(true, 3)
@@ -66,7 +66,7 @@ func _on_CarrierButton_pressed():
 	$ASpaceHBox/ASpaceSlider.value=27.5
 	graph_node.set_NESW_with_a_space(27.5)
 	graph_node.set_NWSE_with_a_space(27.5)
-	$ASpaceHBox/ASpaceSliderButton.pressed=true;
+	$ASpaceHBox/ASpaceSliderButton.button_pressed=true;
 	$Antenna1Phase/Antenna1PhaseSlider.value = 225.0;
 	$Antenna2Phase/Antenna2PhaseSlider.value = 225.0;
 	$Antenna3Phase/Antenna3PhaseSlider.value = 225.0;
@@ -91,10 +91,10 @@ func _on_CarrierButton_pressed():
 
 func _on_SidebandButton_pressed():
 #	_on_ResetButton_pressed()
-	$Antenna1Enabled.pressed=true;
-	$Antenna2Enabled.pressed=true;
-	$Antenna3Enabled.pressed=true;
-	$Antenna4Enabled.pressed=true;
+	$Antenna1Enabled.button_pressed=true;
+	$Antenna2Enabled.button_pressed=true;
+	$Antenna3Enabled.button_pressed=true;
+	$Antenna4Enabled.button_pressed=true;
 	graph_node.toggle_antenna(true, 1)
 	graph_node.toggle_antenna(true, 2)
 	graph_node.toggle_antenna(true, 3)
@@ -102,7 +102,7 @@ func _on_SidebandButton_pressed():
 	$ASpaceHBox/ASpaceSlider.value=27.5
 	graph_node.set_NESW_with_a_space(27.5)
 	graph_node.set_NWSE_with_a_space(27.5)
-	$ASpaceHBox/ASpaceSliderButton.pressed=true;
+	$ASpaceHBox/ASpaceSliderButton.button_pressed=true;
 	$Antenna1Phase/Antenna1PhaseSlider.value = 180.0;
 	$Antenna2Phase/Antenna2PhaseSlider.value = 0.0;
 	$Antenna3Phase/Antenna3PhaseSlider.value = -270.0;

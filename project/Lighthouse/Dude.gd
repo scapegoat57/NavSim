@@ -11,11 +11,11 @@ var drag_offset
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Global.connect("intel_changed", self, "intel_changed");
+	Global.connect("intel_changed", Callable(self, "intel_changed"));
 	intel_changed(Global.intel_level);
 	if Global.lighthouse:
-		Global.lighthouse.connect("blinking", self, "blink");
-		Global.lighthouse.connect("sweeping", self, "sweep");
+		Global.lighthouse.connect("blinking", Callable(self, "blink"));
+		Global.lighthouse.connect("sweeping", Callable(self, "sweep"));
 
 func intel_changed(value):
 	$"%Bubble".visible= value >0;
@@ -59,7 +59,7 @@ func blink():
 
 func sweep(value):		
 	if is_timer_running:
-		m_a=rad2deg(self.position.angle_to_point(Global.lighthouse.position))+90
+		m_a=rad_to_deg(self.position.angle_to_point(Global.lighthouse.position))+90
 		if m_a < 0:
 			m_a+=360
 		if (value>=m_a):

@@ -1,13 +1,13 @@
 extends VBoxContainer
 
-export var graph_path:NodePath
-onready var graph_node=get_node(graph_path) as RadiationGraph;
-export var glide_path_path:NodePath
-export var path_width_path:NodePath
-export var pew_path:NodePath
+@export var graph_path:NodePath
+@onready var graph_node=get_node(graph_path) as RadiationGraph;
+@export var glide_path_path:NodePath
+@export var path_width_path:NodePath
+@export var pew_path:NodePath
 
 func _ready():
-	connect("visibility_changed",self,"changed")
+	connect("visibility_changed", Callable(self, "changed"))
 
 func changed():
 	if get_parent().visible:
@@ -15,23 +15,23 @@ func changed():
 		graph_node.set_origin(Vector2.ZERO)
 		_on_ResetButton_pressed()
 	else:
-		$GlideAngleButton.pressed=false
-		$PathWidthButton.pressed=false
-		$PEWButton.pressed=false
+		$GlideAngleButton.button_pressed=false
+		$PathWidthButton.button_pressed=false
+		$PEWButton.button_pressed=false
 	
 func _on_ResetButton_pressed():
-	$CSBEnabled.pressed=true;
-	$SBOEnabled.pressed=false;
+	$CSBEnabled.button_pressed=true;
+	$SBOEnabled.button_pressed=false;
 	graph_node.toggle_antenna(true, 1)
 	graph_node.toggle_antenna(true, 2)
 	graph_node.toggle_antenna(false, 3)
 	graph_node.toggle_antenna(false, 4)
 
 	$CSBASpace/ASpaceSlider.value=1720.0
-	$CSBASpace/ASpaceSliderButton.pressed=false;
+	$CSBASpace/ASpaceSliderButton.button_pressed=false;
 	graph_node.set_pos_with_a_spacing(1720.0, 1, 2)
 	$SBOASpace/ASpaceSlider.value=3440.0
-	$SBOASpace/ASpaceSliderButton.pressed=false;
+	$SBOASpace/ASpaceSliderButton.button_pressed=false;
 	graph_node.set_pos_with_a_spacing(3440.0, 3, 4)
 	$CSBPhase/CSBPhaseSlider.value = 0;
 	$SBOPhase/SBOPhaseSlider.value = 0;
@@ -46,12 +46,12 @@ func _on_ResetButton_pressed():
 	graph_node.set_antenna_amplitude(1,3)
 	graph_node.set_antenna_amplitude(1,4)
 	
-	$HideUnderground.pressed=false
+	$HideUnderground.button_pressed=false
 	graph_node.hide_below_ground(false)
 	
-	$GlideAngleButton.pressed=false
-	$PathWidthButton.pressed=false
-	$PEWButton.pressed=false
+	$GlideAngleButton.button_pressed=false
+	$PathWidthButton.button_pressed=false
+	$PEWButton.button_pressed=false
 
 
 func _on_CSBEnabled_toggled(button_pressed):
@@ -87,11 +87,11 @@ func _on_SBOPhaseSlider_value_changed(value):
 
 func _on_Swap_pressed():
 	if $CSBEnabled.pressed:
-		$CSBEnabled.pressed=false
-		$SBOEnabled.pressed=true
+		$CSBEnabled.button_pressed=false
+		$SBOEnabled.button_pressed=true
 	else:
-		$CSBEnabled.pressed=true
-		$SBOEnabled.pressed=false
+		$CSBEnabled.button_pressed=true
+		$SBOEnabled.button_pressed=false
 
 
 func _on_GlideAngleButton_toggled(button_pressed):

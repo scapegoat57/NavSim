@@ -1,10 +1,10 @@
 extends Button
 
-export(StreamTexture) var pause_texture
-export(StreamTexture) var play_texture
-export(NodePath) var graph_path
+@export var pause_texture: CompressedTexture2D
+@export var play_texture: CompressedTexture2D
+@export var graph_path: NodePath
 
-onready var graph_node = get_node(graph_path)
+@onready var graph_node = get_node(graph_path)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,7 +16,7 @@ func _ready():
 #	pass
 
 
-func _on_PausePlayButton_toggled(button_pressed):
-	graph_node.toggle_paused(button_pressed)
-	icon = play_texture if button_pressed else pause_texture
+func _on_PausePlayButton_toggled(value):
+	graph_node.toggle_paused(value)
+	icon = play_texture if value else pause_texture
 	

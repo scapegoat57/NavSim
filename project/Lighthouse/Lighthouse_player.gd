@@ -5,7 +5,7 @@ var scenes=[]
 
 
 func _ready():
-	get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_2D, SceneTree.STRETCH_ASPECT_KEEP, Vector2(1024,600))
+	#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_2D, SceneTree.STRETCH_ASPECT_KEEP, Vector2(1024,600))
 	for i in 5:
 		var s = "res://Lighthouse/LighthouseScene%d.tscn" % i
 		scenes.push_back(load(s))
@@ -19,14 +19,14 @@ func _on_IntelSlider_value_changed(value):
 func load_scene(index):
 	if index==scenes.size():
 		self.queue_free()
-		get_tree().root.add_child(load("res://Antenna/antenna_player.tscn").instance())
+		get_tree().root.add_child(load("res://Antenna/antenna_player.tscn").instantiate())
 	scene_index=index;
 	scene_index=min(scene_index, scenes.size() - 1)
 	scene_index=max(scene_index, 0)
 	
 	for i in $"%SceneHolder".get_children():
 		i.queue_free();
-	$"%SceneHolder".add_child(scenes[scene_index].instance());
+	$"%SceneHolder".add_child(scenes[scene_index].instantiate());
 	
 	if scene_index == 2:
 		$VBoxContainer/IntelSlider.value=1
