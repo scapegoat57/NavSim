@@ -142,7 +142,7 @@ void fragment(){
 		
 		float x = ant1_amplitude * cos(radians(ant1_phase + pr)) + ant2_amplitude * cos(radians(ant2_phase - pr));
 		float y = ant1_amplitude * sin(radians(ant1_phase + pr)) + ant2_amplitude * sin(radians(ant2_phase - pr));
-		float b = mod(atan(y, x) + TAU, TAU)- radians(ant1_phase);
+		float b = mod(atan(y, x) + TAU - radians(ant1_phase+ant2_phase)/2.0, TAU);
 		
 		float r = sqrt(pow(x, 2) + pow(y, 2));
 		
