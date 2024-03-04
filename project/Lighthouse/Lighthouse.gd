@@ -15,7 +15,7 @@ func _ready():
 
 func _process(_delta):
 	if (sweep_tween and sweep_tween.is_running()):
-		emit_signal("sweeping", $Beam.rotation+90);
+		emit_signal("sweeping", $Beam.rotation_degrees+90);
 
 
 func blink():
@@ -32,14 +32,12 @@ func stop_blink():
 func sweep():
 	if sweep_tween:
 		sweep_tween.kill();
-	$Beam.rotation = -90;
-	sweep_tween=get_tree().create_tween()
-	sweep_tween.tween_property($Beam,"rotation",270.0, Global.sweep_time);
+	$Beam.rotation_degrees=-90
+	sweep_tween=get_tree().create_tween()#.set_trans(Tween.TRANS_LINEAR)
+	sweep_tween.tween_property($Beam,"rotation_degrees",270, Global.sweep_time);
 	sweep_tween.tween_callback(Callable(self, "stop_sweep"));
 	$Beam.visible=true;
-
-func step(_value):
-	print($Beam.rotation+90)
+	#sweep_tween.set_speed_scale(.01);
 	
 func stop_sweep():
 	$Beam.visible = false;

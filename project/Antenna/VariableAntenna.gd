@@ -13,16 +13,16 @@ func _ready():
 
 func _physics_process(delta):
 	if (sweep_tween and sweep_tween.is_running()):
-		Global.emit_signal("variable_output", $Beam.rotation+90);
+		Global.emit_signal("variable_output", $Beam.rotation_degrees+90);
 	else:
 		Global.emit_signal("variable_output", -1)
 
 func sweep():
 	if sweep_tween:
 		sweep_tween.kill();
-	$Beam.rotation = -90;
+	$Beam.rotation_degrees = -90;
 	sweep_tween=get_tree().create_tween()
-	sweep_tween.tween_property($Beam,"rotation",270.0, Global.sweep_time);
+	sweep_tween.tween_property($Beam,"rotation_degrees",270.0, Global.sweep_time);
 	sweep_tween.tween_callback(Callable(self, "stop_sweep"));
 	$Beam.visible=true;
 

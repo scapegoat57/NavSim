@@ -27,7 +27,7 @@ func _ready():
 	$"%VariableLine".points = PackedVector2Array(var_points);
 
 func _physics_process(delta):
-	m_a=rad_to_deg(self.position.angle_to_point(Global.reference_antenna.position))+90
+	m_a=rad_to_deg(Global.reference_antenna.position.angle_to_point(self.position))+90
 	if m_a < 0:
 		m_a+=360
 	if ref_invalidated:
@@ -41,7 +41,7 @@ func _physics_process(delta):
 
 func reference_output_received(value):
 	ref_points.append(Vector2(0,value * 20))
-	ref_points.remove(0)
+	ref_points.remove_at(0)
 	ref_invalidated=true;
 	if not is_timer_running and value>0:
 		blink()
@@ -54,17 +54,17 @@ func variable_output_received(angle):
 		value=0;
 	var_points.append(Vector2(0, value * 20))
 	var_points.append(Vector2(0, -value * 20))
-	var_points.remove(0)
-	var_points.remove(0)
+	var_points.remove_at(0)
+	var_points.remove_at(0)
 	var_invalidated=true;
 	
 	if value > 0.749 and is_timer_running:
 		measured_time = (Time.get_ticks_msec()-time_start)/1000.0
-		$"%TimerLabel".text=String(measured_time).pad_decimals(2).pad_zeros(1);
+		$"%TimerLabel".text=str(measured_time).pad_decimals(2).pad_zeros(1);
 		omni_course=measured_time / Global.sweep_time * 360
-		$"%CourseLabel".text=String(omni_course).pad_decimals(1).pad_zeros(3)
-		$"%ALabel".text=String(m_a).pad_decimals(1).pad_zeros(3)
-		$"%ErrorLabel".text = String(omni_course - m_a).pad_decimals(2).pad_zeros(1)
+		$"%CourseLabel".text=str(omni_course).pad_decimals(1).pad_zeros(3)
+		$"%ALabel".text=str(m_a).pad_decimals(1).pad_zeros(3)
+		$"%ErrorLabel".text = str(omni_course - m_a).pad_decimals(2).pad_zeros(1)
 #			ce = oc - ma
 #			oc=detected azimuth
 #			ma= actual azimuth
@@ -96,7 +96,7 @@ func _input(event):
 func _process(delta):
 	if (is_timer_running):
 		measured_time = (Time.get_ticks_msec()-time_start)/1000.0
-		$"%TimerLabel".text=String(measured_time).pad_decimals(2).pad_zeros(1);
+		$"%TimerLabel".text=str(measured_time).pad_decimals(2).pad_zeros(1);
 	pass
 
 func _input_event(viewport, event, shape_idx):

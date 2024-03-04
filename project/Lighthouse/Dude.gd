@@ -43,7 +43,7 @@ func _input(event):
 func _process(delta):
 	if (is_timer_running):
 		measured_time = (Time.get_ticks_msec()-time_start)/1000.0
-		$"%TimerLabel".text=String(measured_time).pad_decimals(2).pad_zeros(1);
+		$"%TimerLabel".text=str(measured_time).pad_decimals(2).pad_zeros(1);
 	pass
 
 func _input_event(viewport, event, shape_idx):
@@ -59,17 +59,17 @@ func blink():
 
 func sweep(value):		
 	if is_timer_running:
-		m_a=rad_to_deg(self.position.angle_to_point(Global.lighthouse.position))+90
+		m_a=rad_to_deg(Global.lighthouse.position.angle_to_point(self.position))+90
 		if m_a < 0:
 			m_a+=360
 		if (value>=m_a):
 			measured_time = (Time.get_ticks_msec()-time_start)/1000.0
-			$"%TimerLabel".text=String(measured_time).pad_decimals(2).pad_zeros(1);
+			$"%TimerLabel".text=str(measured_time).pad_decimals(2).pad_zeros(1);
 			omni_course=measured_time / Global.sweep_time * 360
 			$"%RedPlayer".play("blink")
-			$"%CourseLabel".text=String(omni_course).pad_decimals(1).pad_zeros(3)
-			$"%ALabel".text=String(m_a).pad_decimals(1).pad_zeros(3)
-			$"%ErrorLabel".text = String(omni_course - m_a).pad_decimals(2).pad_zeros(1)
+			$"%CourseLabel".text=str(omni_course).pad_decimals(1).pad_zeros(3)
+			$"%ALabel".text=str(m_a).pad_decimals(1).pad_zeros(3)
+			$"%ErrorLabel".text = str(omni_course - m_a).pad_decimals(2).pad_zeros(1)
 #			ce = oc - ma
 #			oc=detected azimuth
 #			ma= actual azimuth
