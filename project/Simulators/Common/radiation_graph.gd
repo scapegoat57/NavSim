@@ -9,10 +9,14 @@ extends ColorRect
 var timer=0.0;
 var aspect_ratio=Vector2.ONE;
 signal zoom_level_changed(new_value)
+signal right_clicked(world_pos)
 var antennas=[]
-var shader_material=self.material as ShaderMaterial
+var shader_material
+var diagram_mode
+var a_space=0
 
 func _ready():
+	shader_material=%Graph.material as ShaderMaterial
 	shader_material.set_shader_parameter("zoom",zoom_level)
 	shader_material.set_shader_parameter("freq", frequency)
 	antennas.append(AntennaModel.new());
@@ -30,23 +34,18 @@ func _process(delta):
 	else:
 		aspect_ratio.x=1.0;
 		aspect_ratio.y=1/aspect;
-	material.set_shader_parameter("aspect_ratio", aspect_ratio);
+	shader_material.set_shader_parameter("aspect_ratio", aspect_ratio);
 	if (!paused):
 		timer+=delta*time_scale
-		material.set_shader_parameter("timer",timer)
+		shader_material.set_shader_parameter("timer",timer)
 
 
-func toggle_paused(is_paused):
+func set_paused(is_paused):
 	paused=is_paused
 
 
-func reset_time():
-	timer=0.0
-	shader_material.set_shader_parameter("timer",timer)
-
-
-func _on_overlay_button_toggled(button_pressed):
-	shader_material.set_shader_parameter("overlay",button_pressed)
+func set_overlay(enabled):
+	shader_material.set_shader_parameter("overlay",enabled)
 	
 	
 func _on_reset_time_button_pressed():
@@ -65,6 +64,8 @@ func set_pos_with_a_spacing(a_spacing, ant_a, ant_b):
 	var pos2=Vector2(0,-a_spacing/360/frequency)
 	shader_material.set_shader_parameter("ant%d_pos" % ant_a,pos1)
 	shader_material.set_shader_parameter("ant%d_pos" % ant_b,pos2)
+	shader_material.set_shader_parameter("a_space",a_spacing)
+	a_space=a_spacing
 	antennas[ant_a-1].position=pos1
 	antennas[ant_b-1].position=pos2
 
@@ -89,14 +90,18 @@ func set_NESW_with_a_space(a_space):
 
 var drag_start:Vector2=Vector2.ZERO
 func _on_Graph_gui_input(event):
+	if event is InputEventMouse:
+		if event.button_mask == MOUSE_BUTTON_RIGHT:
+				emit_signal("right_clicked", world_to_graph(get_global_mouse_position()))
 	if event is InputEventMouseMotion:
 		if event.button_mask == MOUSE_BUTTON_LEFT:
 			var drag_end=world_to_uv(event.position)
 			
 			origin-=(uv_to_graph(drag_end)-uv_to_graph(drag_start))*Vector2(1,-1)
-			material.set_shader_parameter("origin",origin)
+			shader_material.set_shader_parameter("origin",origin)
 			drag_start=drag_end
-			
+		#if event.button_mask == MOUSE_BUTTON_RIGHT:
+				#emit_signal("right_clicked", world_to_graph(get_global_mouse_position()))
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.button_index == MOUSE_BUTTON_LEFT:
@@ -106,6 +111,7 @@ func _on_Graph_gui_input(event):
 				set_zoom_level(zoom_level)
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				set_zoom_level(zoom_level+1)
+			
 
 func phase_from_antenna(index, graph_pos):
 	var a = antennas[index]
@@ -125,6 +131,11 @@ func phasor_from_antenna(index, graph_pos):
 	if !a.enabled: return Vector2.ZERO
 	return phasor_from(a.position, graph_pos, a.phase) * a.amplitude
 
+func phasor_from_antenna_with_phase(index, graph_pos, phase_offset):
+	var a=antennas[index]
+	if !a.enabled: return Vector2.ZERO
+	return phasor_from(a.position, graph_pos, a.phase+phase_offset) * a.amplitude
+
 
 func uv_to_graph(uv:Vector2):
 	var offset=Vector2(0.5,0.5)
@@ -138,7 +149,7 @@ func world_to_uv(world:Vector2):
 	return (world - get_global_rect().position) / get_rect().size
 
 func uv_to_world(uv:Vector2):
-	return uv * get_rect().size + get_global_rect().position
+	return uv * get_rect().size #+ get_global_rect().position
 
 func graph_to_world(graph):
 	return uv_to_world(graph_to_uv(graph))
@@ -190,6 +201,10 @@ func set_origin(value):
 
 func set_phase_mode(value):
 	shader_material.set_shader_parameter("phase_mode",value)
+
+func set_diagram_mode(value):
+	shader_material.set_shader_parameter("diagram_mode", value)
+	diagram_mode=value
 
 func set_show_vor_circle(value):
 	shader_material.set_shader_parameter("show_vor_circle", value)

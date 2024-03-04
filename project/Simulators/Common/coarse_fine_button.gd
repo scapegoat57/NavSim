@@ -3,12 +3,10 @@ extends Button
 @export var coarse_step: float = 10: set = coarse_step_set
 @export var fine_step: float = 1: set = fine_step_set
 @export var is_coarse: bool = true: set = is_coarse_set
-@export var slider_path: NodePath
+@export var slider: Slider
 
-var slider:Slider
 
 func _ready():
-	slider= get_node(slider_path)
 	is_coarse=self.button_pressed
 	_update_step()
 
@@ -27,7 +25,7 @@ func is_coarse_set(value):
 	_update_step()
 
 
-func _on_CoarseFineButton_toggled(value):
+func _toggled(value):
 	is_coarse=value;
 	_update_step()
 

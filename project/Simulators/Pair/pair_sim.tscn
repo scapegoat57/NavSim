@@ -1,0 +1,284 @@
+[gd_scene load_steps=10 format=3 uid="uid://dr6agx4nws2m5"]
+
+[ext_resource type="PackedScene" uid="uid://bt7qthyv573qi" path="res://Simulators/Common/GraphControl.tscn" id="1_gqsap"]
+[ext_resource type="Script" path="res://Simulators/Pair/pair_sim_vm.gd" id="2_p6ws7"]
+[ext_resource type="Script" path="res://Simulators/Common/binding_range.gd" id="4_htgvo"]
+[ext_resource type="Theme" uid="uid://bviba2gp6cqj3" path="res://sim_theme.tres" id="5_24lro"]
+[ext_resource type="Script" path="res://Simulators/Common/binding_toggle.gd" id="6_gstc1"]
+[ext_resource type="PackedScene" path="res://Simulators/Common/SliderLabel.tscn" id="16_8357d"]
+[ext_resource type="PackedScene" uid="uid://sujk6ak3foum" path="res://Simulators/Common/CoarseFineButton.tscn" id="17_hocsh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6obd"]
+bg_color = Color(0, 0.203922, 0.231373, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0.203125, 0.230469, 1)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ohy0c"]
+allow_unpress = true
+
+[node name="pair_sim" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/autohide = 0
+split_offset = 300
+
+[node name="Antenna Controls" type="ScrollContainer" parent="HSplitContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i6obd")
+
+[node name="PairSimVM" type="VBoxContainer" parent="HSplitContainer/Antenna Controls" node_paths=PackedStringArray("graph")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_p6ws7")
+graph = NodePath("../../Graph Control")
+
+[node name="ResetButton" type="Button" parent="HSplitContainer/Antenna Controls/PairSimVM"]
+layout_mode = 2
+text = "Reset"
+
+[node name="overlay_button" type="CheckBox" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_ohy0c")
+text = "Interference"
+script = ExtResource("6_gstc1")
+target = NodePath("..")
+target_property = "overlay"
+
+[node name="PhaseModeButton" type="CheckBox" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_ohy0c")
+text = "Phase
+"
+script = ExtResource("6_gstc1")
+target = NodePath("..")
+target_property = "phase_mode"
+
+[node name="DiagramModeButton" type="CheckBox" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_ohy0c")
+text = "Diagram"
+script = ExtResource("6_gstc1")
+target = NodePath("..")
+target_property = "diagram_mode"
+
+[node name="ASpaceLabel" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target") instance=ExtResource("16_8357d")]
+layout_mode = 2
+text = "a-spacing: %.2f"
+target = NodePath("..")
+target_property = "aspace"
+format_string = "a-spacing: %.2f"
+
+[node name="ASpaceHBox" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/PairSimVM"]
+layout_mode = 2
+
+[node name="ASpaceSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/PairSimVM/ASpaceHBox" node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+mouse_force_pass_scroll_events = false
+max_value = 720.0
+step = 45.0
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource("4_htgvo")
+target = NodePath("../..")
+target_property = "aspace"
+
+[node name="ASpaceSliderButton" parent="HSplitContainer/Antenna Controls/PairSimVM/ASpaceHBox" node_paths=PackedStringArray("slider") instance=ExtResource("17_hocsh")]
+layout_mode = 2
+theme = ExtResource("5_24lro")
+button_pressed = true
+coarse_step = 45.0
+fine_step = 0.5
+slider = NodePath("../ASpaceSlider")
+
+[node name="Antenna1Enabled" type="CheckButton" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target")]
+layout_mode = 2
+text = "North Antenna"
+script = ExtResource("6_gstc1")
+target = NodePath("..")
+target_property = "enabled1"
+
+[node name="Antenna1PhaseLabel" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target") instance=ExtResource("16_8357d")]
+layout_mode = 2
+text = "Phase: %.2f"
+target = NodePath("..")
+target_property = "phase1"
+format_string = "Phase: %.2f"
+
+[node name="Antenna1Phase" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/PairSimVM"]
+layout_mode = 2
+
+[node name="Antenna1PhaseSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/PairSimVM/Antenna1Phase" node_paths=PackedStringArray("target")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+tooltip_text = "asdf"
+mouse_force_pass_scroll_events = false
+min_value = -360.0
+max_value = 360.0
+step = 11.25
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource("4_htgvo")
+target = NodePath("../..")
+target_property = "phase1"
+
+[node name="CoarseFineButton" parent="HSplitContainer/Antenna Controls/PairSimVM/Antenna1Phase" node_paths=PackedStringArray("slider") instance=ExtResource("17_hocsh")]
+layout_mode = 2
+theme = ExtResource("5_24lro")
+button_pressed = true
+coarse_step = 45.0
+slider = NodePath("../Antenna1PhaseSlider")
+
+[node name="Antenna1CurrentLabel" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target") instance=ExtResource("16_8357d")]
+layout_mode = 2
+text = "Current: %.2f"
+target = NodePath("..")
+target_property = "current1"
+format_string = "Current: %.2f"
+
+[node name="Antenna1Current" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/PairSimVM"]
+layout_mode = 2
+
+[node name="Antenna1CurrentSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/PairSimVM/Antenna1Current" node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+mouse_force_pass_scroll_events = false
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource("4_htgvo")
+target = NodePath("../..")
+target_property = "current1"
+
+[node name="Antenna1CFButton" parent="HSplitContainer/Antenna Controls/PairSimVM/Antenna1Current" node_paths=PackedStringArray("slider") instance=ExtResource("17_hocsh")]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("5_24lro")
+button_pressed = true
+coarse_step = 0.1
+fine_step = 0.05
+slider = NodePath("../Antenna1CurrentSlider")
+
+[node name="Antenna2Enabled" type="CheckButton" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target")]
+layout_mode = 2
+text = "South Antenna"
+script = ExtResource("6_gstc1")
+target = NodePath("..")
+target_property = "enabled2"
+
+[node name="Antenna2PhaseLabel" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target") instance=ExtResource("16_8357d")]
+layout_mode = 2
+text = "Phase: %.2f"
+target = NodePath("..")
+target_property = "phase2"
+format_string = "Phase: %.2f"
+
+[node name="Antenna2Phase" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/PairSimVM"]
+layout_mode = 2
+
+[node name="Antenna2PhaseSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/PairSimVM/Antenna2Phase" node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+mouse_force_pass_scroll_events = false
+min_value = -360.0
+max_value = 360.0
+step = 11.25
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource("4_htgvo")
+target = NodePath("../..")
+target_property = "phase2"
+
+[node name="CoarseFineButton" parent="HSplitContainer/Antenna Controls/PairSimVM/Antenna2Phase" node_paths=PackedStringArray("slider") instance=ExtResource("17_hocsh")]
+layout_mode = 2
+theme = ExtResource("5_24lro")
+button_pressed = true
+coarse_step = 45.0
+slider = NodePath("../Antenna2PhaseSlider")
+
+[node name="Antenna2CurrentLabel" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target") instance=ExtResource("16_8357d")]
+layout_mode = 2
+text = "Current: %.2f"
+target = NodePath("..")
+target_property = "current2"
+format_string = "Current: %.2f"
+
+[node name="Antenna2Current" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/PairSimVM"]
+layout_mode = 2
+
+[node name="Antenna2CurrentSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/PairSimVM/Antenna2Current" node_paths=PackedStringArray("target")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+mouse_force_pass_scroll_events = false
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource("4_htgvo")
+target = NodePath("../..")
+target_property = "current2"
+
+[node name="Antenna2CFButton" parent="HSplitContainer/Antenna Controls/PairSimVM/Antenna2Current" node_paths=PackedStringArray("slider") instance=ExtResource("17_hocsh")]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("5_24lro")
+button_pressed = true
+coarse_step = 0.1
+fine_step = 0.05
+slider = NodePath("../Antenna2CurrentSlider")
+
+[node name="SipButton" type="Button" parent="HSplitContainer/Antenna Controls/PairSimVM"]
+layout_mode = 2
+text = "SIP"
+
+[node name="SopButton" type="Button" parent="HSplitContainer/Antenna Controls/PairSimVM"]
+layout_mode = 2
+text = "Sop"
+
+[node name="HideUnderground" type="CheckButton" parent="HSplitContainer/Antenna Controls/PairSimVM" node_paths=PackedStringArray("target")]
+layout_mode = 2
+text = "Hide underground"
+script = ExtResource("6_gstc1")
+target = NodePath("..")
+target_property = "underground"
+
+[node name="ExitButton" type="Button" parent="HSplitContainer/Antenna Controls/PairSimVM"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "EXIT"
+
+[node name="Graph Control" parent="HSplitContainer" node_paths=PackedStringArray("target") instance=ExtResource("1_gqsap")]
+layout_mode = 2
+target = NodePath("../Antenna Controls/PairSimVM")
+
+[connection signal="pressed" from="HSplitContainer/Antenna Controls/PairSimVM/ResetButton" to="HSplitContainer/Antenna Controls/PairSimVM" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="HSplitContainer/Antenna Controls/PairSimVM/SipButton" to="HSplitContainer/Antenna Controls/PairSimVM" method="_on_sip_button_pressed"]
+[connection signal="pressed" from="HSplitContainer/Antenna Controls/PairSimVM/SopButton" to="HSplitContainer/Antenna Controls/PairSimVM" method="_on_sop_button_pressed"]
+[connection signal="pressed" from="HSplitContainer/Antenna Controls/PairSimVM/ExitButton" to="HSplitContainer/Antenna Controls/PairSimVM" method="_on_exit_button_pressed"]

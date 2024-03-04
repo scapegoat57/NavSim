@@ -1,25 +1,22 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://bb80otnnam33i"]
 
-[ext_resource path="res://coarse_fine_slider.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Simulators/Common/coarse_fine_slider.gd" id="1"]
 
 [node name="CoarseFineSlider" type="HBoxContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_minimum_size = Vector2( 32, 16 )
-script = ExtResource( 1 )
+custom_minimum_size = Vector2(32, 16)
+offset_right = 32.0
+offset_bottom = 800.0
+script = ExtResource("1")
 
 [node name="HSlider" type="HSlider" parent="."]
-offset_right = 1000.0
-offset_bottom = 16.0
+layout_mode = 2
 size_flags_horizontal = 3
+mouse_force_pass_scroll_events = false
 
 [node name="CoarseToggleButton" type="Button" parent="."]
-offset_left = 1004.0
-offset_right = 1024.0
-offset_bottom = 20.0
+layout_mode = 2
 size_flags_vertical = 0
 toggle_mode = true
-pressed = true
 text = "C"
 
 [connection signal="toggled" from="CoarseToggleButton" to="." method="_on_CoarseToggleButton_toggled"]

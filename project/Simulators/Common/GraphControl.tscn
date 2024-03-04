@@ -1,0 +1,501 @@
+[gd_scene load_steps=20 format=3 uid="uid://bt7qthyv573qi"]
+
+[ext_resource type="Script" path="res://Simulators/Common/graph_control.gd" id="1_ckc4r"]
+[ext_resource type="Material" uid="uid://bj8wvt8vvie5w" path="res://radiation_material.tres" id="2_jnhcn"]
+[ext_resource type="Script" path="res://Simulators/Common/radiation_graph.gd" id="3_w8pvp"]
+[ext_resource type="Texture2D" uid="uid://by0ajhp5lgrjn" path="res://sprites/ui/return.png" id="4_gwmxt"]
+[ext_resource type="Texture2D" uid="uid://dcfi0j3ie8747" path="res://sprites/ui/rewind.png" id="5_ul70d"]
+[ext_resource type="Texture2D" uid="uid://b6d234jj8ohbj" path="res://sprites/ui/pause.png" id="6_hqmtt"]
+[ext_resource type="Script" path="res://Simulators/Common/pause_play_button.gd" id="7_nr5ch"]
+[ext_resource type="Texture2D" uid="uid://lj577gth460o" path="res://sprites/ui/forward.png" id="8_4cn2v"]
+[ext_resource type="Texture2D" uid="uid://mmgdqiu430rc" path="res://sprites/ui/fastForward.png" id="9_irwkn"]
+[ext_resource type="Script" path="res://Simulators/Common/AngleOverlay.gd" id="10_12une"]
+[ext_resource type="Script" path="res://Simulators/Common/AngleRuler.gd" id="11_d0ila"]
+[ext_resource type="Texture2D" uid="uid://bdedbjv41pluq" path="res://sprites/ui/target.png" id="12_nt437"]
+[ext_resource type="Texture2D" uid="uid://y5g2u5207l6d" path="res://sprites/ui/home.png" id="13_hjge0"]
+[ext_resource type="Script" path="res://Simulators/Common/ZoomSlider.gd" id="14_t4hpx"]
+[ext_resource type="Script" path="res://Simulators/Common/PhaseReader.gd" id="15_ofvl3"]
+[ext_resource type="Script" path="res://Simulators/Common/Thumb.gd" id="16_k1r10"]
+[ext_resource type="Script" path="res://Simulators/Common/phasor_viewer.gd" id="16_ll4hl"]
+[ext_resource type="Shader" path="res://circle.gdshader" id="16_ltcpw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_agaxa"]
+shader = ExtResource("16_ltcpw")
+
+[node name="Graph Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ckc4r")
+
+[node name="Graph" type="ColorRect" parent="."]
+unique_name_in_owner = true
+z_index = -100
+material = ExtResource("2_jnhcn")
+clip_contents = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("3_w8pvp")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Graph"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -81.0
+offset_top = -34.0
+offset_right = 187.0
+offset_bottom = 22.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ResetTimeButton" type="Button" parent="Graph/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("4_gwmxt")
+
+[node name="DecreaseButton" type="Button" parent="Graph/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("5_ul70d")
+
+[node name="PausePlayButton" type="Button" parent="Graph/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+icon = ExtResource("6_hqmtt")
+script = ExtResource("7_nr5ch")
+pause_texture = ExtResource("6_hqmtt")
+play_texture = ExtResource("8_4cn2v")
+
+[node name="IncreaseButton" type="Button" parent="Graph/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("9_irwkn")
+
+[node name="GlidePath" type="Line2D" parent="Graph"]
+unique_name_in_owner = true
+visible = false
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+default_color = Color(0.937255, 1, 0.4, 1)
+antialiased = true
+script = ExtResource("10_12une")
+angle = 3.0
+
+[node name="PW" type="Node2D" parent="Graph"]
+unique_name_in_owner = true
+visible = false
+
+[node name="PW+" type="Line2D" parent="Graph/PW"]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+default_color = Color(0.8, 0.4, 1, 1)
+antialiased = true
+script = ExtResource("10_12une")
+angle = 3.7
+
+[node name="PW-" type="Line2D" parent="Graph/PW"]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+default_color = Color(0.8, 0.4, 1, 1)
+antialiased = true
+script = ExtResource("10_12une")
+angle = 2.3
+
+[node name="PEW" type="Node2D" parent="Graph"]
+unique_name_in_owner = true
+visible = false
+
+[node name="PEW-" type="Line2D" parent="Graph/PEW"]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+default_color = Color(0.4, 1, 0.972549, 1)
+antialiased = true
+script = ExtResource("10_12une")
+angle = 2.65
+
+[node name="PEW+" type="Line2D" parent="Graph/PEW"]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+default_color = Color(0.4, 1, 0.972549, 1)
+antialiased = true
+script = ExtResource("10_12une")
+angle = 3.35
+
+[node name="AngleRuler" type="Line2D" parent="." node_paths=PackedStringArray("graph_node", "label_node")]
+visible = false
+z_index = -50
+points = PackedVector2Array(0, 0, 100, 100)
+width = 5.0
+default_color = Color(0.101961, 0.439216, 0, 1)
+script = ExtResource("11_d0ila")
+graph_node = NodePath("../Graph")
+label_node = NodePath("../AngleLabel")
+
+[node name="AngleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_bottom = 14.0
+
+[node name="RulerVisibleButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 135.0
+offset_right = 72.0
+offset_bottom = 191.0
+scale = Vector2(0.5, 0.5)
+toggle_mode = true
+icon = ExtResource("12_nt437")
+
+[node name="HomeButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 170.0
+offset_right = 72.0
+offset_bottom = 226.0
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("13_hjge0")
+
+[node name="ZoomSlider" type="VSlider" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 269.0
+offset_right = 26.0
+offset_bottom = 469.0
+min_value = 1.0
+max_value = 10000.0
+step = 0.0
+value = 10.0
+exp_edit = true
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource("14_t4hpx")
+
+[node name="PhaseReaders" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PhaseReader" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader2" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 22.5
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader2"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader3" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 45.0
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader3"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader4" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 67.5
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader4"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader5" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 90.0
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader5"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader6" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 112.5
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader6"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader7" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 135.0
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader7"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader8" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 157.5
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader8"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader9" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 180.0
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader9"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader10" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 202.5
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader10"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader11" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 225.0
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader11"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader12" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 247.5
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader12"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader13" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 270.0
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader13"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader14" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 292.5
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader14"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader15" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 315.0
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader15"]
+layout_mode = 2
+text = "000.00"
+
+[node name="PhaseReader16" type="PanelContainer" parent="PhaseReaders"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 115.0
+offset_right = 394.0
+offset_bottom = 143.0
+script = ExtResource("15_ofvl3")
+graph_path = NodePath("../../Graph")
+distance = 3.0
+angle = 337.5
+
+[node name="Label" type="Label" parent="PhaseReaders/PhaseReader16"]
+layout_mode = 2
+text = "000.00"
+
+[node name="ant1_thumb" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_agaxa")
+layout_mode = 0
+offset_left = 585.0
+offset_top = 325.0
+offset_right = 605.0
+offset_bottom = 345.0
+color = Color(0.156863, 1, 0, 1)
+script = ExtResource("16_k1r10")
+
+[node name="PhasorViewer" type="PanelContainer" parent="." node_paths=PackedStringArray("graph", "ant1", "ant2", "ant3", "ant1_thumb", "output")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -242.0
+offset_top = -361.0
+offset_right = -2.0
+offset_bottom = -1.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("16_ll4hl")
+graph = NodePath("../Graph")
+ant1 = NodePath("ant1")
+ant2 = NodePath("ant2")
+ant3 = NodePath("ant3")
+ant1_thumb = NodePath("../ant1_thumb")
+output = NodePath("output")
+
+[node name="output" type="Label" parent="PhasorViewer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "asdf
+a
+a"
+
+[node name="yaxis" type="Line2D" parent="PhasorViewer"]
+position = Vector2(120, 240)
+scale = Vector2(1, 1)
+points = PackedVector2Array(0, -120, 0, 120)
+width = 3.0
+default_color = Color(1, 1, 1, 0.513726)
+
+[node name="xaxis" type="Line2D" parent="PhasorViewer"]
+position = Vector2(120, 240)
+scale = Vector2(1, 1)
+points = PackedVector2Array(-120, 0, 120, 0)
+width = 3.0
+default_color = Color(1, 1, 1, 0.513726)
+
+[node name="ant1" type="Line2D" parent="PhasorViewer"]
+position = Vector2(120, 240)
+points = PackedVector2Array(0, 0, 15, -15)
+width = 6.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="ant2" type="Line2D" parent="PhasorViewer"]
+position = Vector2(120, 240)
+points = PackedVector2Array(0, 0, 15, -15)
+width = 6.0
+default_color = Color(0.321569, 0.596078, 1, 1)
+
+[node name="ant3" type="Line2D" parent="PhasorViewer"]
+position = Vector2(120, 240)
+points = PackedVector2Array(0, 0, 15, -15)
+width = 6.0
+default_color = Color(0.960784, 1, 0, 1)
+
+[connection signal="gui_input" from="Graph" to="Graph" method="_on_Graph_gui_input"]
+[connection signal="right_clicked" from="Graph" to="PhasorViewer" method="_on_graph_right_clicked"]
+[connection signal="pressed" from="Graph/HBoxContainer/ResetTimeButton" to="Graph" method="_on_reset_time_button_pressed"]
+[connection signal="pressed" from="Graph/HBoxContainer/DecreaseButton" to="Graph" method="increase_time_scale" binds= [-1.0]]
+[connection signal="toggled" from="Graph/HBoxContainer/PausePlayButton" to="Graph/HBoxContainer/PausePlayButton" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="Graph/HBoxContainer/IncreaseButton" to="Graph" method="increase_time_scale" binds= [1.0]]
+[connection signal="toggled" from="RulerVisibleButton" to="AngleRuler" method="set_visible"]
+[connection signal="pressed" from="HomeButton" to="Graph" method="set_origin" binds= [Vector2(0, 0)]]
+[connection signal="value_changed" from="ZoomSlider" to="Graph" method="set_zoom_level"]

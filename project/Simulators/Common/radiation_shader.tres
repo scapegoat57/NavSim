@@ -7,7 +7,6 @@ render_mode unshaded;
 uniform vec2 aspect_ratio=vec2(1.0);
 
 uniform vec2 origin=vec2(0);
-uniform float a_space=0.0;
 uniform vec2 ant1_pos = vec2(0);
 uniform float ant1_enabled=1.0;
 uniform float ant1_amplitude:hint_range(0.0,1.0,0.1)=1.0;
@@ -36,7 +35,6 @@ uniform float time_shift=0;
 uniform bool overlay=false;
 uniform bool hide_below_ground=false;
 uniform bool phase_mode=false;
-uniform bool diagram_mode=false;
 uniform bool show_vor_circle=false;
 
 vec2 uv_to_graph(vec2 value)
@@ -113,44 +111,7 @@ void fragment(){
 
 	float total_enabled=max(ant_enabled,1.75);
 	float amp_share = 1.0/total_enabled;
-	
-	COLOR=mix(COLOR,vec4(0.95, 0.611, 0.06,1), circle(vec2(0), world_pos, 1.0, 0.01));
-	COLOR=mix(COLOR,vec4(0.95, 0.611, 0.06,1), circle(vec2(0), world_pos, 2.0, 0.01));
-	COLOR=mix(COLOR,vec4(0.95, 0.611, 0.06,1), circle(vec2(0), world_pos, 3.0, 0.01));
-	
-	if (phase_mode)
-	{
-		vec2 ant1=phasor_from(ant1_pos, world_pos, ant1_phase) * ant1_amplitude * ant1_enabled;
-		vec2 ant2=phasor_from(ant2_pos, world_pos, ant2_phase) * ant2_amplitude * ant2_enabled;
-		vec2 ant3=phasor_from(ant3_pos, world_pos, ant3_phase) * ant3_amplitude * ant3_enabled;
-		vec2 ant4=phasor_from(ant4_pos, world_pos, ant4_phase) * ant4_amplitude * ant4_enabled;
-		//vec2 time_phasor = phasor_from(vec2(0,0), world_pos, 0);
-
-		vec2 total_phasor=ant1 + ant2 + ant3 + ant4;
-		float total_phase=atan(total_phasor.y,total_phasor.x) + TAU;
-		float val = total_phase / PI;
-
-		COLOR=hsv_to_rgb(mod(total_phase, TAU)/ TAU, 1.0, 1.0, length(total_phasor));
-
-	}
-	else if (diagram_mode)
-	{
-		float theta=mod(atan(world_pos.y, world_pos.x) + TAU, TAU);
-
-		float d=length(world_pos);
-		float pr = a_space * sin(theta);
-		
-		float x = ant1_amplitude * cos(radians(ant1_phase + pr)) + ant2_amplitude * cos(radians(ant2_phase - pr));
-		float y = ant1_amplitude * sin(radians(ant1_phase + pr)) + ant2_amplitude * sin(radians(ant2_phase - pr));
-		float b = mod(atan(y, x) + TAU, TAU)- radians(ant1_phase);
-		
-		float r = sqrt(pow(x, 2) + pow(y, 2));
-		
-		float show= d <=r ? 1.0 : 0.0;
-		
-		COLOR=hsv_to_rgb(b/TAU, 1.0, show, show);
-	}
-	else
+	if (!phase_mode)
 	{
 		float ant1 = intensity_from(ant1_pos, world_pos, ant1_phase) * ant1_amplitude * ant1_enabled / total_enabled;
 		float ant2 = intensity_from(ant2_pos, world_pos, ant2_phase) * ant2_amplitude * ant2_enabled / total_enabled;
@@ -164,14 +125,40 @@ void fragment(){
 		else
 			COLOR = vec4(-total,step(0.999,abs(total)),total,1);
 
+
 	}
-	
+	else
+	{
+		vec2 ant1=phasor_from(ant1_pos, world_pos, ant1_phase) * ant1_amplitude * ant1_enabled;
+		vec2 ant2=phasor_from(ant2_pos, world_pos, ant2_phase) * ant2_amplitude * ant2_enabled;
+		vec2 ant3=phasor_from(ant3_pos, world_pos, ant3_phase) * ant3_amplitude * ant3_enabled;
+		vec2 ant4=phasor_from(ant4_pos, world_pos, ant4_phase) * ant4_amplitude * ant4_enabled;
+		vec2 time_phasor = phasor_from(vec2(0,0), world_pos, 0);
+
+		vec2 total_phasor=ant1 + ant2 + ant3 + ant4;
+		float total_phase=atan(total_phasor.y,total_phasor.x) + TAU;
+		float val = total_phase / PI;
+//		float val = dot(time_phasor, total_phasor);
+//		COLOR=vec4(val < 0.0 ? -val : 0.0, 0.0, val > 0.0? val : 0.0,length(total_phasor));
+		COLOR=hsv_to_rgb(mod(total_phase, TAU)/ TAU, 1.0, 1.0, length(total_phasor));
+
+//		float ant1= distance(world_pos, ant1_pos);
+//		float ant2= distance(world_pos, ant2_pos);
+//		float diff=ant1-ant2;
+//		float val=sin(diff * PI);
+
+//		float ant1=phase_from(ant1_pos, world_pos, ant1_phase)  * ant1_enabled;
+//		float ant2=phase_from(ant2_pos, world_pos, ant2_phase)  * ant2_enabled;
+//		float ant3=phase_from(ant3_pos, world_pos, ant3_phase)  * ant3_enabled;
+//		float ant4=phase_from(ant4_pos, world_pos, ant3_phase)  * ant3_enabled;
+//		float diff = ant1 - ant2;
+//		float val = sin((diff - PI) / 2.0);
+//		COLOR = vec4(val<0.0? -val: 0.0, 0.0, val>0.0? val: 0.0, 1);
+	}
 	COLOR=mix(COLOR,vec4(1,0,1,1),filled_circle(ant1_pos,world_pos,0.0001) * ant1_enabled);
 	COLOR=mix(COLOR,vec4(0,1,1,1),filled_circle(ant2_pos,world_pos,0.0001) * ant2_enabled);
 	COLOR=mix(COLOR,vec4(1,1,0,1),filled_circle(ant3_pos,world_pos,0.0001) * ant3_enabled);
 	COLOR=mix(COLOR,vec4(1,1,1,1),filled_circle(ant4_pos,world_pos,0.0001) * ant4_enabled);
 	if (show_vor_circle)
 		COLOR=mix(COLOR,vec4(0.95, 0.611, 0.06,1), circle(vec2(0), world_pos, 3.0, 0.1));
-	
-
 }"
