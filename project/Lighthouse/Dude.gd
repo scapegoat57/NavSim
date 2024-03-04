@@ -23,9 +23,9 @@ func intel_changed(value):
 	$Bubble/VBoxContainer/Label.visible = value >=2 and value <=4
 	$"%TimerLabel".visible = value >= 2 and value <= 4
 	$Bubble/VBoxContainer/Label3. visible = value >= 3 and value < 6
-	$Bubble/VBoxContainer/OCContainer.visible = value >= 3and value < 6
-	$Bubble/VBoxContainer/Label5.visible = value >= 4and value < 6
-	$Bubble/VBoxContainer/AzContainer.visible = value >= 4and value < 6
+	$Bubble/VBoxContainer/OCContainer.visible = value >= 3 and value < 6
+	$Bubble/VBoxContainer/Label5.visible = value >= 4 and value < 6
+	$Bubble/VBoxContainer/AzContainer.visible = value >= 4 and value < 6
 	$Bubble/VBoxContainer/Label4.visible = value >= 5
 	$Bubble/VBoxContainer/ErrorContainer.visible = value >= 5
 
