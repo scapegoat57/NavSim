@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cq7rrheinni5v"]
 
-[ext_resource type="Theme" path="res://Lighthouse/2pTheme.tres" id="1"]
+[ext_resource type="Theme" uid="uid://b56d2mae1xbx2" path="res://Lighthouse/2pTheme.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://d3d8r6xvp1awu" path="res://Antenna/Plane.tscn" id="2"]
 [ext_resource type="Script" path="res://Antenna/antenna_player.gd" id="3"]
 [ext_resource type="PackedScene" path="res://Antenna/VariableAntenna.tscn" id="4"]

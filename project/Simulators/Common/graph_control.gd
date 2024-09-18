@@ -5,6 +5,7 @@ class_name GraphControl
 @export var target: Node
 
 func _ready():
+	
 	if (target): target.connect("on_property_changed", on_property_changed)
 
 func on_property_changed(property_name):

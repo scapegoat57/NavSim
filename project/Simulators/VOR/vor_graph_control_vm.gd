@@ -48,4 +48,3 @@ func on_property_changed(property_name):
 
 func toggle_antenna(enabled, index):
 	%Graph.toggle_antenna(enabled, index);
-

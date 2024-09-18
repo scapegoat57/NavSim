@@ -446,7 +446,7 @@ script = ExtResource("16_ll4hl")
 graph = NodePath("../Graph")
 ant1 = NodePath("ant1")
 ant2 = NodePath("ant2")
-ant3 = NodePath("ant3")
+ant3 = NodePath("sumphasor")
 ant1_thumb = NodePath("../ant1_thumb")
 output = NodePath("output")
 
@@ -460,35 +460,33 @@ a"
 
 [node name="yaxis" type="Line2D" parent="PhasorViewer"]
 position = Vector2(120, 240)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -120, 0, 120)
 width = 3.0
 default_color = Color(1, 1, 1, 0.513726)
 
 [node name="xaxis" type="Line2D" parent="PhasorViewer"]
 position = Vector2(120, 240)
-scale = Vector2(1, 1)
 points = PackedVector2Array(-120, 0, 120, 0)
 width = 3.0
 default_color = Color(1, 1, 1, 0.513726)
 
-[node name="ant1" type="Line2D" parent="PhasorViewer"]
-position = Vector2(120, 240)
-points = PackedVector2Array(0, 0, 15, -15)
-width = 6.0
-default_color = Color(1, 0, 0, 1)
-
-[node name="ant2" type="Line2D" parent="PhasorViewer"]
-position = Vector2(120, 240)
-points = PackedVector2Array(0, 0, 15, -15)
-width = 6.0
-default_color = Color(0.321569, 0.596078, 1, 1)
-
-[node name="ant3" type="Line2D" parent="PhasorViewer"]
+[node name="sumphasor" type="Line2D" parent="PhasorViewer"]
 position = Vector2(120, 240)
 points = PackedVector2Array(0, 0, 15, -15)
 width = 6.0
 default_color = Color(0.960784, 1, 0, 1)
+
+[node name="ant1" type="Line2D" parent="PhasorViewer"]
+position = Vector2(120, 240)
+points = PackedVector2Array(0, 0, 15, -15)
+width = 4.0
+default_color = Color(1, 0, 0, 0.784314)
+
+[node name="ant2" type="Line2D" parent="PhasorViewer"]
+position = Vector2(120, 240)
+points = PackedVector2Array(0, 0, 15, -15)
+width = 4.0
+default_color = Color(0.321569, 0.596078, 1, 0.784314)
 
 [connection signal="gui_input" from="Graph" to="Graph" method="_on_Graph_gui_input"]
 [connection signal="right_clicked" from="Graph" to="PhasorViewer" method="_on_graph_right_clicked"]

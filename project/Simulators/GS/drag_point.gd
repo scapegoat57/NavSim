@@ -25,4 +25,3 @@ func _gui_input(event):
 		if event.pressed:
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				drag_offset = Vector2.ZERO# event.position-get_rect().size/2
-

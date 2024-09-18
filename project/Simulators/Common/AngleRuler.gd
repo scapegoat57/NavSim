@@ -20,4 +20,3 @@ func _process(_delta):
 	var c=983_571_056.0
 	if angle<0: angle=360+angle
 	label_node.text= "%.2f°\n%.2fλ\n%.2fft" % [angle, dist, c/freq*dist]
-

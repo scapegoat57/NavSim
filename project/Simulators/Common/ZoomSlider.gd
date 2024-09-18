@@ -6,4 +6,3 @@ func _ready():
 func zoom_level_changed(new_value):
 	if self.value != new_value:
 		self.value = new_value;
-

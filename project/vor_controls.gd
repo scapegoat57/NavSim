@@ -123,4 +123,3 @@ func _on_SidebandButton_pressed():
 
 func set_show_error(value):
 	$"%PhaseReaders".visible=value;
-

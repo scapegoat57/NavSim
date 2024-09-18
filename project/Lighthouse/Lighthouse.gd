@@ -55,4 +55,3 @@ func cycle_toggled(button_pressed):
 	else:
 		if cont_tween:
 			cont_tween.kill();
-
