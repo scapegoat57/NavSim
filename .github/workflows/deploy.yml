@@ -31,8 +31,8 @@ jobs:
             pwd
             #cd $PROJECT_PATH
             godot --headless --verbose --export-release "HTML5" ../build/web/index.html
-            ls
-            ls ../build/web/
+            ls ..
+            ls ../build/
         - name: Upload Artifact
           uses: actions/upload-artifact@v4
           with:
