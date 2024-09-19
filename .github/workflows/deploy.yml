@@ -2,6 +2,7 @@ name: "Publish to GitHub Pages"
 
 env:
   GODOT_VERSION: 4.2.1
+  PROJECT_PATH: project
 
 on:
   workflow_dispatch:
@@ -29,9 +30,10 @@ jobs:
             mkdir -v -p build/web
             ls
             pwd
-            #cd $PROJECT_PATH
-            godot --headless --verbose --export-release "HTML5" build/web/index.html
-            ls build/web/
+            ls project
+            cd $PROJECT_PATH
+            godot --headless --verbose --export-release "HTML5" ../build/web/index.html
+            ls ../build/web/
         - name: Upload Artifact
           uses: actions/upload-artifact@v4
           with:
