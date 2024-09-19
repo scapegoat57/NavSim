@@ -27,16 +27,17 @@ jobs:
         - name: Web Build
           run: |
             mkdir -v -p build/web
+            ls
+            pwd
             #cd $PROJECT_PATH
             godot --headless --verbose --export-release "HTML5" ../build/web/index.html
+            ls
+            ls ../build/web/
         - name: Upload Artifact
           uses: actions/upload-artifact@v4
           with:
             name: web
             path: build/web
-        - name: Install rsync 📚
-          run: |
-            apt-get update && apt-get install -y rsync
         - name: Deploy to GitHub Pages 🚀
           uses: JamesIves/github-pages-deploy-action@releases/v4
           with:
