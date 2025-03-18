@@ -134,7 +134,7 @@ func _on_modmic_value_changed(value: float) -> void:
 
 
 func _on_pre_mix_mute_toggled(toggled_on: bool) -> void:
-	AudioServer.set_bus_mute(AudioServer.get_bus_index("premix stage 1"),toggled_on)
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("premix"),toggled_on)
 
 
 func _on_mod_pacer_value_changed(value: float) -> void:
