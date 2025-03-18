@@ -16,3 +16,7 @@ func _on_lighthouse_button_pressed():
 
 func _on_vor_button_pressed():
 	get_tree().change_scene_to_file("res://Simulators/VOR/vor_sim.tscn")
+
+
+func _on_audio_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://Audio/audio_sim.tscn")

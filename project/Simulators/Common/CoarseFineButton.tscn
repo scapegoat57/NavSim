@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://sujk6ak3foum"]
 
-[ext_resource type="Script" path="res://Simulators/Common/coarse_fine_button.gd" id="1"]
+[ext_resource type="Script" uid="uid://ccjx8l25sqtb1" path="res://Simulators/Common/coarse_fine_button.gd" id="1"]
 
 [node name="CoarseFineButton" type="Button"]
 anchors_preset = 15

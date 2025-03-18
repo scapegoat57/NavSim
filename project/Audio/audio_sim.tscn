@@ -1,0 +1,213 @@
+[gd_scene load_steps=8 format=3 uid="uid://g7ffdvu2n2bu"]
+
+[ext_resource type="Script" uid="uid://bts0hj8pgqdlr" path="res://Audio/tone_wave.gd" id="1_gvqw6"]
+[ext_resource type="AudioStream" uid="uid://clb1dxuo0ot5b" path="res://1020hz.ogg" id="2_371bq"]
+[ext_resource type="AudioStream" uid="uid://dxmmw8uku7e00" path="res://90hz.ogg" id="2_dmhy2"]
+[ext_resource type="AudioStream" uid="uid://cvwcdjbg4pkk8" path="res://150hz.ogg" id="2_j6gf8"]
+[ext_resource type="AudioStream" uid="uid://mqfdc3s37xgp" path="res://PacerTest.ogg" id="5_bxsue"]
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_ghdx6"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_j1yia"]
+
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 100.0
+script = ExtResource("1_gvqw6")
+
+[node name="SweepSlider" type="HSlider" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 166.0
+offset_top = 10.0
+offset_right = 633.0
+offset_bottom = 26.0
+min_value = 0.016
+max_value = 5.0
+step = 0.0
+value = 0.044
+exp_edit = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SweepSlider"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 482.0
+offset_right = 586.0
+offset_bottom = 30.0
+
+[node name="scope" type="Line2D" parent="."]
+position = Vector2(160, 166)
+points = PackedVector2Array(0, 0, 66.798, 66.798, 100, 100)
+width = 1.0
+default_color = Color(1, 1, 1, 0.537255)
+
+[node name="Line2D" type="Line2D" parent="scope"]
+z_index = -10
+z_as_relative = false
+points = PackedVector2Array(0, 0, 800, 0)
+width = 1.0
+default_color = Color(0, 1, 1, 0.333333)
+
+[node name="90hzPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_dmhy2")
+bus = &"tones"
+parameters/looping = true
+
+[node name="150hzPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_j6gf8")
+bus = &"tones"
+parameters/looping = true
+
+[node name="1020hzPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_371bq")
+bus = &"tones"
+parameters/looping = true
+
+[node name="PacerPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_bxsue")
+autoplay = true
+bus = &"tones"
+parameters/looping = true
+
+[node name="MicrophonePlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamMicrophone_ghdx6")
+autoplay = true
+bus = &"microphone"
+
+[node name="DemodPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamGenerator_j1yia")
+autoplay = true
+bus = &"premix"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MicrophoneButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Microphone"
+
+[node name="modmic" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 11
+ticks_on_borders = true
+
+[node name="90HzButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "90hz"
+
+[node name="mod90" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 11
+ticks_on_borders = true
+
+[node name="150HzButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "150hz"
+
+[node name="mod150" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 11
+ticks_on_borders = true
+
+[node name="1020HzButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "1020Hz"
+
+[node name="mod1020" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 11
+ticks_on_borders = true
+
+[node name="PacerButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "Pacer Test"
+
+[node name="modPacer" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 11
+ticks_on_borders = true
+
+[node name="PauseButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+text = "pause"
+
+[node name="PreMixMute" type="CheckButton" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Mute"
+
+[node name="OvermodLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+self_modulate = Color(1, 0.0235294, 0.0156863, 1)
+layout_mode = 2
+text = "OVERMOD"
+horizontal_alignment = 1
+
+[node name="envelope" type="Line2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(160, 425)
+points = PackedVector2Array(0, 0, 500, 0)
+width = 1.0
+
+[node name="Line2D2" type="Line2D" parent="envelope"]
+points = PackedVector2Array(0, 0, 800, 0)
+width = 1.0
+default_color = Color(0, 1, 1, 0.333333)
+
+[node name="Demod" type="Line2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(160, 648)
+points = PackedVector2Array(0, 0, 500, 0)
+width = 1.0
+
+[node name="Line2D2" type="Line2D" parent="Demod"]
+points = PackedVector2Array(0, 0, 800, 0)
+width = 1.0
+default_color = Color(0, 1, 1, 0.333333)
+
+[connection signal="value_changed" from="SweepSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="toggled" from="VBoxContainer/MicrophoneButton" to="." method="_on_microphone_button_toggled"]
+[connection signal="value_changed" from="VBoxContainer/modmic" to="." method="_on_modmic_value_changed"]
+[connection signal="toggled" from="VBoxContainer/90HzButton" to="." method="_on_90hz_button_toggled"]
+[connection signal="value_changed" from="VBoxContainer/mod90" to="." method="_on_mod_90_value_changed"]
+[connection signal="toggled" from="VBoxContainer/150HzButton" to="." method="_on_150hz_button_toggled"]
+[connection signal="value_changed" from="VBoxContainer/mod150" to="." method="_on_mod_150_value_changed"]
+[connection signal="toggled" from="VBoxContainer/1020HzButton" to="." method="_on_1020hz_button_toggled"]
+[connection signal="value_changed" from="VBoxContainer/mod1020" to="." method="_on_mod_1020_value_changed"]
+[connection signal="toggled" from="VBoxContainer/PacerButton" to="." method="_on_pacer_button_toggled"]
+[connection signal="value_changed" from="VBoxContainer/modPacer" to="." method="_on_mod_pacer_value_changed"]
+[connection signal="toggled" from="VBoxContainer/PauseButton" to="." method="_on_pause_toggled"]
+[connection signal="toggled" from="VBoxContainer/PreMixMute" to="." method="_on_pre_mix_mute_toggled"]

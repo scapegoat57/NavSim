@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://dr6agx4nws2m5"]
 
 [ext_resource type="PackedScene" uid="uid://bt7qthyv573qi" path="res://Simulators/Common/GraphControl.tscn" id="1_gqsap"]
-[ext_resource type="Script" path="res://Simulators/Pair/pair_sim_vm.gd" id="2_p6ws7"]
-[ext_resource type="Script" path="res://Simulators/Common/binding_range.gd" id="4_htgvo"]
+[ext_resource type="Script" uid="uid://c1m0rrgf63hc0" path="res://Simulators/Pair/pair_sim_vm.gd" id="2_p6ws7"]
+[ext_resource type="Script" uid="uid://3rtt2x2wf0qt" path="res://Simulators/Common/binding_range.gd" id="4_htgvo"]
 [ext_resource type="Theme" uid="uid://bviba2gp6cqj3" path="res://sim_theme.tres" id="5_24lro"]
-[ext_resource type="Script" path="res://Simulators/Common/binding_toggle.gd" id="6_gstc1"]
-[ext_resource type="PackedScene" path="res://Simulators/Common/SliderLabel.tscn" id="16_8357d"]
+[ext_resource type="Script" uid="uid://dl827em2x7plr" path="res://Simulators/Common/binding_toggle.gd" id="6_gstc1"]
+[ext_resource type="PackedScene" uid="uid://ch2n84sc3wmf7" path="res://Simulators/Common/SliderLabel.tscn" id="16_8357d"]
 [ext_resource type="PackedScene" uid="uid://sujk6ak3foum" path="res://Simulators/Common/CoarseFineButton.tscn" id="17_hocsh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6obd"]

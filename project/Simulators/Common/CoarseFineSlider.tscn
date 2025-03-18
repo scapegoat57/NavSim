@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bb80otnnam33i"]
 
-[ext_resource type="Script" path="res://Simulators/Common/coarse_fine_slider.gd" id="1"]
+[ext_resource type="Script" uid="uid://1tbuc3586ecu" path="res://Simulators/Common/coarse_fine_slider.gd" id="1"]
 
 [node name="CoarseFineSlider" type="HBoxContainer"]
 custom_minimum_size = Vector2(32, 16)

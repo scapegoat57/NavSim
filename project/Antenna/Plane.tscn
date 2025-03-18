@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://tnf367pqumpf" path="res://sprites/ship_0004.png" id="1"]
 [ext_resource type="FontFile" uid="uid://cb0pkynyal1e0" path="res://Lighthouse/Kenney Thick.ttf" id="2"]
-[ext_resource type="Script" path="res://Antenna/Plane.gd" id="3"]
+[ext_resource type="Script" uid="uid://c06gebetaf8a6" path="res://Antenna/Plane.gd" id="3"]
 
 [sub_resource type="FontFile" id="5"]
 fallbacks = Array[Font]([ExtResource("2")])

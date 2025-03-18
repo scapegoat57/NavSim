@@ -1,32 +1,32 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://nvk00h4w7cdv"]
 
-[sub_resource type="RectangleShape2D" id=1]
-size = Vector2( 20, 6.5 )
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(20, 6.5)
 
-[sub_resource type="RectangleShape2D" id=2]
-size = Vector2( 274.5, 22.5 )
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(274.5, 22.5)
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Area2D" type="RigidBody2D" parent="."]
-position = Vector2( 105, 104 )
+position = Vector2(105, 104)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
 [node name="Area2D2" type="RigidBody2D" parent="."]
-position = Vector2( 158, 103 )
+position = Vector2(158, 103)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D2"]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
-position = Vector2( 131, 106 )
+position = Vector2(131, 106)
 node_a = NodePath("../Area2D")
 node_b = NodePath("../Area2D2")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2( 357, 221 )
+position = Vector2(357, 221)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource( 2 )
+shape = SubResource("2")

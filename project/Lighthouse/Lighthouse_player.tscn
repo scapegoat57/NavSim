@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dgngkg0ep2yhs"]
 
 [ext_resource type="Theme" uid="uid://b56d2mae1xbx2" path="res://Lighthouse/2pTheme.tres" id="1"]
-[ext_resource type="Script" path="res://Lighthouse/Lighthouse_player.gd" id="3"]
+[ext_resource type="Script" uid="uid://bxnhqrfcelvea" path="res://Lighthouse/Lighthouse_player.gd" id="3"]
 
 [node name="LighthousePlayer" type="Control"]
 layout_mode = 3

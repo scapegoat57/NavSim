@@ -1,15 +1,15 @@
 [gd_scene load_steps=13 format=3 uid="uid://cpd6wj5j5if75"]
 
-[ext_resource type="Script" path="res://Simulators/GS/gs_sim_vm.gd" id="1_4tjyf"]
-[ext_resource type="Script" path="res://Simulators/Common/binding_toggle.gd" id="2_r84ew"]
-[ext_resource type="PackedScene" path="res://Simulators/Common/SliderLabel.tscn" id="3_n8fa1"]
-[ext_resource type="Script" path="res://Simulators/Common/binding_range.gd" id="4_350ti"]
+[ext_resource type="Script" uid="uid://c2m7ihlo5pegp" path="res://Simulators/GS/gs_sim_vm.gd" id="1_4tjyf"]
+[ext_resource type="Script" uid="uid://dl827em2x7plr" path="res://Simulators/Common/binding_toggle.gd" id="2_r84ew"]
+[ext_resource type="PackedScene" uid="uid://ch2n84sc3wmf7" path="res://Simulators/Common/SliderLabel.tscn" id="3_n8fa1"]
+[ext_resource type="Script" uid="uid://3rtt2x2wf0qt" path="res://Simulators/Common/binding_range.gd" id="4_350ti"]
 [ext_resource type="PackedScene" uid="uid://sujk6ak3foum" path="res://Simulators/Common/CoarseFineButton.tscn" id="5_ky4cm"]
 [ext_resource type="Theme" uid="uid://bviba2gp6cqj3" path="res://sim_theme.tres" id="6_icf5t"]
 [ext_resource type="PackedScene" uid="uid://bt7qthyv573qi" path="res://Simulators/Common/GraphControl.tscn" id="7_obiec"]
-[ext_resource type="Script" path="res://Simulators/GS/gs_graph_control_vm.gd" id="8_4l7dy"]
-[ext_resource type="Script" path="res://Simulators/GS/ddm_reader.gd" id="9_agt8p"]
-[ext_resource type="Script" path="res://Simulators/GS/drag_point.gd" id="9_e48xn"]
+[ext_resource type="Script" uid="uid://1cyo4py2n4u8" path="res://Simulators/GS/gs_graph_control_vm.gd" id="8_4l7dy"]
+[ext_resource type="Script" uid="uid://bf2kgjyvgrs8g" path="res://Simulators/GS/ddm_reader.gd" id="9_agt8p"]
+[ext_resource type="Script" uid="uid://b48ybfirq0psw" path="res://Simulators/GS/drag_point.gd" id="9_e48xn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6obd"]
 bg_color = Color(0, 0.203922, 0.231373, 1)

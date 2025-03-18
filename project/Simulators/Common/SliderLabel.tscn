@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://ch2n84sc3wmf7"]
 
-[ext_resource type="Script" path="res://Simulators/Common/binding_label.gd" id="1"]
+[ext_resource type="Script" uid="uid://dq87mc1pyp12t" path="res://Simulators/Common/binding_label.gd" id="1"]
 
 [node name="SliderLabel" type="Label"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource("1")

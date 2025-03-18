@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dvo2xnboi4mg"]
 
-[ext_resource type="Script" path="res://main_menu_VM.gd" id="1_7rgf1"]
+[ext_resource type="Script" uid="uid://dpmwq4sb71xm6" path="res://main_menu_VM.gd" id="1_7rgf1"]
 
 [node name="SceneRoot" type="Control"]
 layout_mode = 3
@@ -38,7 +38,12 @@ text = "VOR"
 layout_mode = 2
 text = "Lighthouse"
 
+[node name="AudioButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Audio"
+
 [connection signal="pressed" from="CenterContainer/VBoxContainer/AntennasButton" to="." method="_on_antennas_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GSButton" to="." method="_on_gs_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VORButton" to="." method="_on_vor_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/LighthouseButton" to="." method="_on_lighthouse_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/AudioButton" to="." method="_on_audio_button_pressed"]

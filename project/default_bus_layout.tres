@@ -1,0 +1,89 @@
+[gd_resource type="AudioBusLayout" load_steps=12 format=3 uid="uid://ciy4iro6yk0p6"]
+
+[sub_resource type="AudioEffectCapture" id="AudioEffectCapture_njtqj"]
+resource_name = "Capture"
+
+[sub_resource type="AudioEffectCapture" id="AudioEffectCapture_lfo8d"]
+resource_name = "Capture"
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_wbqno"]
+resource_name = "Limiter"
+soft_clip_db = 0.0
+
+[sub_resource type="AudioEffectHardLimiter" id="AudioEffectHardLimiter_j3pel"]
+resource_name = "HardLimiter"
+ceiling_db = 0.0
+
+[sub_resource type="AudioEffectCapture" id="AudioEffectCapture_55bkd"]
+resource_name = "Capture"
+
+[sub_resource type="AudioEffectRecord" id="AudioEffectRecord_cx0fo"]
+resource_name = "Record"
+
+[sub_resource type="AudioEffectChorus" id="AudioEffectChorus_wwvq6"]
+resource_name = "Chorus"
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_xxv5j"]
+resource_name = "Phaser"
+
+[sub_resource type="AudioEffectPanner" id="AudioEffectPanner_6kcy1"]
+resource_name = "Panner"
+pan = 0.5
+
+[sub_resource type="AudioEffectCapture" id="AudioEffectCapture_ym1ok"]
+resource_name = "Capture"
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_8rvjs"]
+resource_name = "Limiter"
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectCapture_njtqj")
+bus/0/effect/0/enabled = false
+bus/1/name = &"premix"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectCapture_lfo8d")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectLimiter_wbqno")
+bus/1/effect/1/enabled = false
+bus/2/name = &"premix stage 1"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"premix"
+bus/2/effect/0/effect = SubResource("AudioEffectCapture_lfo8d")
+bus/2/effect/0/enabled = false
+bus/2/effect/1/effect = SubResource("AudioEffectLimiter_wbqno")
+bus/2/effect/1/enabled = false
+bus/2/effect/2/effect = SubResource("AudioEffectHardLimiter_j3pel")
+bus/2/effect/2/enabled = false
+bus/3/name = &"microphone"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 6.02
+bus/3/send = &"premix stage 1"
+bus/3/effect/0/effect = SubResource("AudioEffectCapture_55bkd")
+bus/3/effect/0/enabled = false
+bus/3/effect/1/effect = SubResource("AudioEffectRecord_cx0fo")
+bus/3/effect/1/enabled = false
+bus/3/effect/2/effect = SubResource("AudioEffectChorus_wwvq6")
+bus/3/effect/2/enabled = false
+bus/3/effect/3/effect = SubResource("AudioEffectPhaser_xxv5j")
+bus/3/effect/3/enabled = false
+bus/3/effect/4/effect = SubResource("AudioEffectPanner_6kcy1")
+bus/3/effect/4/enabled = false
+bus/4/name = &"tones"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = -0.130497
+bus/4/send = &"premix stage 1"
+bus/4/effect/0/effect = SubResource("AudioEffectCapture_ym1ok")
+bus/4/effect/0/enabled = false
+bus/4/effect/1/effect = SubResource("AudioEffectLimiter_8rvjs")
+bus/4/effect/1/enabled = false
