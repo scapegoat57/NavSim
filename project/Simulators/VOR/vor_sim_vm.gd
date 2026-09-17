@@ -53,17 +53,29 @@ signal on_property_changed(property_name:String)
 		if underground == value: return
 		underground=value;
 		emit_signal("on_property_changed","underground")
+@export var frequency: float = 1:
+	set(value):
+		if frequency == value: return
+		frequency=value;
+		emit_signal("on_property_changed","frequency")
+@export var phase_preset: String = "sideband":
+	set(value):
+		if phase_preset == value: return
+		phase_preset=value;
+		emit_signal("on_property_changed","phase_preset")
 
 func _ready():
 	call_deferred("emit_signal","on_property_changed","")
 
 
 func _on_reset_button_pressed():
+	#frequency=1;
 	aspace=27.5;
 	phase1=0;
 	phase2=0;
 	current1=1;
 	current2=1;
+	#frequency=.30
 	enabled1=true;
 	enabled2=true;
 	overlay=false;
@@ -72,13 +84,11 @@ func _on_reset_button_pressed():
 
 
 func _on_sip_button_pressed():
-	phase1=0
-	phase2=0
+	phase_preset="carrier"
 
 
 func _on_sop_button_pressed():
-	phase1=0;
-	phase2=180;
+	phase_preset="sideband"
 
 
 func _on_exit_button_pressed():

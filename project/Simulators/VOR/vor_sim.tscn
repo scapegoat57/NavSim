@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cg3a0ikumhgeg"]
+[gd_scene format=3 uid="uid://cg3a0ikumhgeg"]
 
 [ext_resource type="Script" uid="uid://c5q01ufryouhi" path="res://Simulators/VOR/vor_sim_vm.gd" id="1_3wxwx"]
 [ext_resource type="Script" uid="uid://8bxoniil585" path="res://Simulators/VOR/vor_graph_control_vm.gd" id="1_6msbn"]
@@ -17,7 +17,7 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(0, 0.203125, 0.230469, 1)
 
-[node name="pair_sim" type="Control"]
+[node name="pair_sim" type="Control" unique_id=1383493990]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,7 +25,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
+[node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=959245450]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,48 +33,49 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/autohide = 0
+split_offsets = PackedInt32Array(300)
 split_offset = 300
 
-[node name="Antenna Controls" type="ScrollContainer" parent="HSplitContainer"]
+[node name="Antenna Controls" type="ScrollContainer" parent="HSplitContainer" unique_id=1696321551]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_i6obd")
 
-[node name="VORSimVM" type="VBoxContainer" parent="HSplitContainer/Antenna Controls" node_paths=PackedStringArray("graph")]
+[node name="VORSimVM" type="VBoxContainer" parent="HSplitContainer/Antenna Controls" unique_id=1780921673 node_paths=PackedStringArray("graph")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_3wxwx")
 graph = NodePath("../../Graph Control")
 
-[node name="ResetButton" type="Button" parent="HSplitContainer/Antenna Controls/VORSimVM"]
+[node name="ResetButton" type="Button" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=616764687]
 layout_mode = 2
 text = "Reset"
 
-[node name="overlay_button" type="CheckBox" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target")]
+[node name="overlay_button" type="CheckBox" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=1185367599 node_paths=PackedStringArray("target")]
 layout_mode = 2
 text = "Overlay"
 script = ExtResource("2_rcp5r")
 target = NodePath("..")
 target_property = "overlay"
 
-[node name="PhaseModeButton" type="CheckBox" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target")]
+[node name="PhaseModeButton" type="CheckBox" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=2089218008 node_paths=PackedStringArray("target")]
 layout_mode = 2
 text = "Phase Mode"
 script = ExtResource("2_rcp5r")
 target = NodePath("..")
 target_property = "phase_mode"
 
-[node name="ASpaceLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
+[node name="ASpaceLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=556835029 node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
 layout_mode = 2
 text = "a-spacing: %.2f"
 target = NodePath("..")
 target_property = "aspace"
 format_string = "a-spacing: %.2f"
 
-[node name="ASpaceHBox" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM"]
+[node name="ASpaceHBox" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=1752500744]
 layout_mode = 2
 
-[node name="ASpaceSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/ASpaceHBox" node_paths=PackedStringArray("target")]
+[node name="ASpaceSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/ASpaceHBox" unique_id=1658442312 node_paths=PackedStringArray("target")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -88,7 +89,7 @@ script = ExtResource("4_o7haq")
 target = NodePath("../..")
 target_property = "aspace"
 
-[node name="ASpaceSliderButton" parent="HSplitContainer/Antenna Controls/VORSimVM/ASpaceHBox" node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
+[node name="ASpaceSliderButton" parent="HSplitContainer/Antenna Controls/VORSimVM/ASpaceHBox" unique_id=1872800004 node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
 layout_mode = 2
 theme = ExtResource("6_qku02")
 button_pressed = true
@@ -96,24 +97,24 @@ coarse_step = 0.5
 fine_step = 0.1
 slider = NodePath("../ASpaceSlider")
 
-[node name="Antenna1Enabled" type="CheckButton" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target")]
+[node name="Antenna1Enabled" type="CheckButton" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=476050781 node_paths=PackedStringArray("target")]
 layout_mode = 2
 text = "SBO1"
 script = ExtResource("2_rcp5r")
 target = NodePath("..")
 target_property = "enabled1"
 
-[node name="Antenna1PhaseLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
+[node name="Antenna1PhaseLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=458093352 node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
 layout_mode = 2
 text = "Phase: %.2f"
 target = NodePath("..")
 target_property = "phase1"
 format_string = "Phase: %.2f"
 
-[node name="Antenna1Phase" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM"]
+[node name="Antenna1Phase" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=2083954044]
 layout_mode = 2
 
-[node name="Antenna1PhaseSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna1Phase" node_paths=PackedStringArray("target")]
+[node name="Antenna1PhaseSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna1Phase" unique_id=1118895563 node_paths=PackedStringArray("target")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -128,24 +129,24 @@ script = ExtResource("4_o7haq")
 target = NodePath("../..")
 target_property = "phase1"
 
-[node name="CoarseFineButton" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna1Phase" node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
+[node name="CoarseFineButton" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna1Phase" unique_id=1877743705 node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
 layout_mode = 2
 theme = ExtResource("6_qku02")
 button_pressed = true
 coarse_step = 45.0
 slider = NodePath("../Antenna1PhaseSlider")
 
-[node name="Antenna1CurrentLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
+[node name="Antenna1CurrentLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=855317151 node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
 layout_mode = 2
 text = "Current: %.2f"
 target = NodePath("..")
 target_property = "current1"
 format_string = "Current: %.2f"
 
-[node name="Antenna1Current" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM"]
+[node name="Antenna1Current" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=597968997]
 layout_mode = 2
 
-[node name="Antenna1CurrentSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna1Current" node_paths=PackedStringArray("target")]
+[node name="Antenna1CurrentSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna1Current" unique_id=896902737 node_paths=PackedStringArray("target")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -160,7 +161,7 @@ script = ExtResource("4_o7haq")
 target = NodePath("../..")
 target_property = "current1"
 
-[node name="Antenna1CFButton" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna1Current" node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
+[node name="Antenna1CFButton" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna1Current" unique_id=1034843849 node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("6_qku02")
@@ -169,24 +170,24 @@ coarse_step = 0.1
 fine_step = 0.05
 slider = NodePath("../Antenna1CurrentSlider")
 
-[node name="Antenna2Enabled" type="CheckButton" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target")]
+[node name="Antenna2Enabled" type="CheckButton" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=2032418789 node_paths=PackedStringArray("target")]
 layout_mode = 2
 text = "SBO2"
 script = ExtResource("2_rcp5r")
 target = NodePath("..")
 target_property = "enabled2"
 
-[node name="Antenna2PhaseLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
+[node name="Antenna2PhaseLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=1222539611 node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
 layout_mode = 2
 text = "Phase: %.2f"
 target = NodePath("..")
 target_property = "phase2"
 format_string = "Phase: %.2f"
 
-[node name="Antenna2Phase" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM"]
+[node name="Antenna2Phase" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=1798760199]
 layout_mode = 2
 
-[node name="Antenna2PhaseSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna2Phase" node_paths=PackedStringArray("target")]
+[node name="Antenna2PhaseSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna2Phase" unique_id=22404305 node_paths=PackedStringArray("target")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -201,24 +202,24 @@ script = ExtResource("4_o7haq")
 target = NodePath("../..")
 target_property = "phase2"
 
-[node name="CoarseFineButton" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna2Phase" node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
+[node name="CoarseFineButton" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna2Phase" unique_id=589697103 node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
 layout_mode = 2
 theme = ExtResource("6_qku02")
 button_pressed = true
 coarse_step = 45.0
 slider = NodePath("../Antenna2PhaseSlider")
 
-[node name="Antenna2CurrentLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
+[node name="Antenna2CurrentLabel" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=635114049 node_paths=PackedStringArray("target") instance=ExtResource("3_btnpx")]
 layout_mode = 2
 text = "Current: %.2f"
 target = NodePath("..")
 target_property = "current2"
 format_string = "Current: %.2f"
 
-[node name="Antenna2Current" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM"]
+[node name="Antenna2Current" type="HBoxContainer" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=2141614605]
 layout_mode = 2
 
-[node name="Antenna2CurrentSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna2Current" node_paths=PackedStringArray("target")]
+[node name="Antenna2CurrentSlider" type="HSlider" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna2Current" unique_id=857789131 node_paths=PackedStringArray("target")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -232,7 +233,7 @@ script = ExtResource("4_o7haq")
 target = NodePath("../..")
 target_property = "current2"
 
-[node name="Antenna2CFButton" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna2Current" node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
+[node name="Antenna2CFButton" parent="HSplitContainer/Antenna Controls/VORSimVM/Antenna2Current" unique_id=1762801792 node_paths=PackedStringArray("slider") instance=ExtResource("5_i4n3d")]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("6_qku02")
@@ -241,27 +242,27 @@ coarse_step = 0.1
 fine_step = 0.05
 slider = NodePath("../Antenna2CurrentSlider")
 
-[node name="SipButton" type="Button" parent="HSplitContainer/Antenna Controls/VORSimVM"]
+[node name="SipButton" type="Button" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=1690735977]
 layout_mode = 2
-text = "SIP"
+text = "Carrier"
 
-[node name="SopButton" type="Button" parent="HSplitContainer/Antenna Controls/VORSimVM"]
+[node name="SopButton" type="Button" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=357258807]
 layout_mode = 2
-text = "Sop"
+text = "Sideband"
 
-[node name="HideUnderground" type="CheckButton" parent="HSplitContainer/Antenna Controls/VORSimVM" node_paths=PackedStringArray("target")]
+[node name="HideUnderground" type="CheckButton" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=1770060304 node_paths=PackedStringArray("target")]
 layout_mode = 2
 text = "Hide underground"
 script = ExtResource("2_rcp5r")
 target = NodePath("..")
 target_property = "underground"
 
-[node name="ExitButton" type="Button" parent="HSplitContainer/Antenna Controls/VORSimVM"]
+[node name="ExitButton" type="Button" parent="HSplitContainer/Antenna Controls/VORSimVM" unique_id=1626144281]
 layout_mode = 2
 size_flags_vertical = 10
 text = "EXIT"
 
-[node name="Graph Control" parent="HSplitContainer" node_paths=PackedStringArray("target") instance=ExtResource("7_ihgwq")]
+[node name="Graph Control" parent="HSplitContainer" unique_id=1900552735 node_paths=PackedStringArray("target") instance=ExtResource("7_ihgwq")]
 layout_mode = 2
 script = ExtResource("1_6msbn")
 target = NodePath("../Antenna Controls/VORSimVM")
